@@ -1,0 +1,583 @@
+---
+title: "Google OAuth2 Implementation on Rust Reqwest"
+description: | 
+  An implementation of Google OAuth2 procedures on Rust reqwest for Server-side Web Apps and Service Accounts.
+author:
+  - name: Wilson Yip
+date: 2023-07-30
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+tags: [rust, oauth2, google-oauth]
+categories:
+  - rust
+  - oauth2
+  - google-oauth
+---
+
+
+<head>
+
+<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.0/css/lightgallery.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.1-beta.0/js/lightgallery.min.js"></script>
+
+<!-- lightgallery plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lg-fullscreen/1.2.1/lg-fullscreen.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lg-thumbnail/1.2.1/lg-thumbnail.min.js"></script>
+
+</head>
+
+```{css lightgallery_config, include=F}
+#lightgallery > a > img:hover {
+   transform: scale(1.15, 1.15);
+   transition: 0.4s ease-in-out;
+   cursor: pointer;
+}
+```
+
+# Introduction
+
+It comes to me on many occasions that Google APIs are required to complete the tasks. API keys may be an easy choice for those non-sensitive scopes (for example calling YouTube API for some public videos and channels). But when it comes to handling files in Google Drive, things become complicated as the service requires authentication and authorisation. This article aims to provide a solution on obtaining an authorised token to be put in http requests' header for calling the Google APIs' sensitive scopes in Rust environment. 
+
+A [Github repo](https://github.com/wilsonkkyip/rs-gapi-oauth) was created for the purpose. It can be used in CLI environment and imported as rust crate as well. Below will first briefly describe the OAuth2 procedures, then walk through some important script, and finally will show some examples using of the crate. 
+
+# OAuth2 Procedures
+
+When I first encountered OAuth2, I was confused about what **scopes** and **endpoints** are because both scopes and endpoints are represented by url-like strings in Google APIs. In a nutshell, <u>endpoints represent what services you want to use</u>. For example there is a specific endpoint for reading the metadata of a file in Google Drive; there is another endpoint for you to update the file. On the other hand, <u>scopes are the abilities of your authorised token</u>. For example, is your token able to read the files from Google Drive? It depends on whether your token contains the specific scope. 
+
+Google separates the authorisation method for server-to-server interactions and user-to-server interactions. We will use a **service account** for the prior situation and a **client secret** for the later one. Both can be represented by a JSON file. *To obtain these JSON files, we first need to [create a Google Cloud Project](#create-google-cloud-project). Then within the project, we can create the secret JSON files.*
+
+
+```{r create-image-thumbs, echo=F}
+resize_image <- function(p) {
+  base_path <- getwd()
+  file_name <- basename(p)
+  dir_name <- dirname(p)
+  imFile <- magick::image_read(paste0(base_path, "/", p))
+  imFile_resized <- magick::image_resize(imFile, "5%")
+  thumb_name <- paste0(dir_name, "/thumb-", file_name)
+  magick::image_write(imFile_resized, paste0(base_path, "/", thumb_name))
+}
+
+dir_list <- grep("/", list.dirs("img"), value=T)
+invisible(lapply(dir_list, function(x) {
+  list_png <- list.files(x, full.names=T)
+  list_png <- grep("\\.png$", list_png, value=T)
+  list_png <- list_png[!stringr::str_detect(list_png, "thumb")]
+  invisible(lapply(list_png, resize_image))
+}))
+```
+
+```{r make-gallery-layout, echo=F} 
+library(htmltools)
+make_gallery_layout <- function(p) {
+  # Get the names of all images
+  images <- list.files(p)
+
+  # Get the names of all full-size images
+  images_full_size <- grep("thumb", images, value = TRUE, invert = TRUE)
+
+  # Get the names of all thumbnails
+  images_thumb <- grep("thumb", images, value = TRUE)
+
+  # Create a dataframe where each row is one image (useful for
+  # the apply() function)
+  images <- data.frame(images_thumb = images_thumb,
+                       images_full_size = images_full_size)
+
+  # Create the HTML structure for each image
+  tagList(apply(images, 1, function(x) {
+      tags$a(
+        href = paste0(p, "/", x[["images_full_size"]]),
+        tags$img(src = paste0(p, "/", x[["images_thumb"]]))
+      )
+  }))
+}
+```
+
+## Create Google Cloud Project
+
+1. Go to https://console.developers.google.com and click **Select a project**. 
+2. Click **New Project**.
+3. Enter the **Project name** and click **Create**.
+
+```{r gallery-proj, echo=F}
+withTags(
+  div(
+    class = "row lightgallery",
+    tagList(
+      make_gallery_layout("img/create_proj")
+    )
+  )
+)
+```
+
+## Select Required Library
+
+1. Under **APIs and service**, click **Library**. 
+2. Search the API library(ies) you wish to use. In this example, we choose Google Drive API.
+3. Click the library you want.
+4. Click **Enable**. 
+
+```{r gallery-library, echo=F}
+withTags(
+  div(
+    class = "row lightgallery",
+    tagList(
+      make_gallery_layout("img/select_library")
+    )
+  )
+)
+```
+
+
+## Create OAuth Client ID Secrets
+
+Now we have created a project and picked the required libraries. This section will show how to obtain a `client_secret` of the application for users to authorise. In order to do so, we need to first [configure an OAuth consent screen](#configure-oauth-consent-screen) to inform users about the name of the application and which scopes will be used by the application when they do the authorisation. Then we will [create the application secret (or `client_secret`)](#create-oauth-client-id-for-users) for this application. 
+
+### Configure OAuth Consent Screen
+
+1. Under **APIs and services**, **Credentials**, click **Configure consent screen** or **OAuth consent screen**.
+2. If you are within an organisation, you can pick **Internal** or **External** as User Type. Otherwise, you can only pick **External**. 
+    - For internal apps, it is only available to users within the organisation. But the app is not required to have any privacy policy. 
+    - For external apps, you can add at most 100 test users for testing the application before published. But the `refresh_token` obtained from the authorisation and authentication process is only valid for 1 week only. 
+3. Enter the **App name** and **User support email**.
+4. Scroll down and enter the developer contact information and click **Save and continue**. 
+5. Click **Add or remove scopes**.
+6. Select the scopes you want to use. 
+7. Click **Save and continue**. 
+8. (For external apps only) Click **Add users** as test users for the application. 
+9. (For external apps only) Enter the email address(es) for the test user(s). Then click **Add**. 
+10. Click **Save and continue**. 
+
+```{r gallery-consent, echo=F}
+withTags(
+  div(
+    class = "row lightgallery",
+    tagList(
+      make_gallery_layout("img/config_consent_screen")
+    )
+  )
+)
+```
+
+### Create OAuth Client ID for Users
+
+1. Under **APIs and services**, **Credentials**, click **Create Credentials**, then click **OAuth client ID**.
+2. Select **Web application** as **Application type** and enter the name of the application.
+3. Scroll down and enter the **Authorised redirect URIs**. Please put a slash (/) at the end of the uri. Then click **Create**.
+4. Finally click **Download JSON**. 
+
+```{r gallery-client-id, echo=F}
+withTags(
+  div(
+    class = "row lightgallery",
+    tagList(
+      make_gallery_layout("img/create_client_id")
+    )
+  )
+)
+```
+
+
+## Service Account
+
+This section describe how to obtain a service account JSON. If you wish to handle users' data, please follow [this section](#create-oauth-client-id-secrets). 
+
+1. Under **APIs and services**, **Credentials**, click **Create Credentials**, then click **Service Account**.
+2. Insert the name, account id, and description of the service account. Then click **Done**.
+3. Click the newly created service account email. 
+4. Click **Keys**, then click**Add key** and **Create new key**.
+5. Select **JSON** as key type and click **Create** to download the service account JSON. 
+
+```{r gallery-service-acc, echo=F}
+withTags(
+  div(
+    class = "row lightgallery",
+    tagList(
+      make_gallery_layout("img/create_service_acc")
+    )
+  )
+)
+```
+
+
+# Rust Reqwest Implementation
+
+Now we have obtained the secret JSON (either a `client_seceret` or a `service_account` or both). Depends on which type of secret we have, the authorisation methods are different. 
+
+
+
+## Authorise Client Application (Client ID)
+
+For authorising a client application (see [this figure](#fig:auth-client-id)), we need to 
+
+1. Build a url with the follow query parameters:
+    - `client_id` (the identification of the client application)
+    - `redirect_uri` (those we specified in step 3 in [this section](#create-oauth-client-id-for-users), put 1 uri here only)
+    - `scope` (the scopes the application wants to use; space-delimited if more than one is used)
+    - `access_type` (either `online` of `offline`. A `refresh_token` will be obtained in later step for acquiring updated access token without another consent from the users)
+    
+    You can specified more parameters for different configuration. See more from [here](https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient). 
+2. Send a request to Google OAuth page using the above url. Google will also ask for user consent in this stage. 
+3. Google returns an authorisation `code` to the `redirect_uri` we specified above.
+4. Send another request to Google with the authorisation `code` obtained from the last step to exchange an `access_token` (and `refresh_token` if specified in step 1).
+5. This `access_token` can use used to access the authorised endpoints. 
+
+```{r, auth-client-id, echo=FALSE, fig.cap="Authorise client application", out.width = '50%'}
+knitr::include_graphics("img/auth_client_id.png")
+```
+
+Among the JSON obtained from [this section](#create-oauth-client-id-for-users), we create the following struct for the key-value pairs. 
+
+```{rust struct-client-secret}
+#[derive(Debug, Deserialize, Serialize)]
+pub struct ClientSecret {
+    pub client_id: String,
+    pub project_id: String,
+    pub auth_uri: String,
+    pub token_uri: String,
+    pub auth_provider_x509_cert_url: String,
+    pub client_secret: String,
+    pub redirect_uris: Vec<String>
+}
+```
+
+Then we implement a method to the above struct to build the `url` for step 1.
+
+```{rust fn-auth-url}
+pub fn auth_url(&self, scope: &str) -> String {
+    let params: HashMap<_,_> = HashMap::from([
+        ("response_type", "code"),
+        ("access_type", "offline"), // set 'offline' to obtain 'refresh_token'
+        ("prompt", "consent"),
+        ("client_id", &self.client_id),
+        ("redirect_uri", &self.redirect_uris[0]),
+        ("scope", &scope),
+        ("state", &self.client_id)
+    ]);
+
+    let url = reqwest::Url::parse_with_params(
+        &self.auth_uri, params
+    ).expect("Failed to parse auth url.").to_string();
+    
+    return url;
+}
+```
+
+Now we need to print out the above `url` and set up a http server to listen from Google's response with the authorisation `code` to finish step 3. 
+
+```{rust fn-auth-code}
+#[derive(Debug, Deserialize, Serialize)]
+pub struct AuthCode {
+    pub code: String,
+    pub scope: String
+}
+
+pub fn auth_code(&self, scope: &str, port: u32) -> Result<AuthCode, std::io::Error> {
+    let auth_url: String = self.auth_url(scope);
+    println!("Please visit this URL to authorize this application: {}", auth_url);
+
+    let listener: TcpListener = 
+        TcpListener::bind(format!("localhost:{}", port))
+            .expect("Failed to bind to port");
+    
+    let (mut stream, _) = listener.accept().unwrap();
+    let mut buf = [0;2048];
+    stream.read(&mut buf).unwrap();
+
+    let buf_str: String = String::from_utf8_lossy(&buf[..]).to_string();
+    let buf_vec: Vec<&str> = buf_str
+        .split(" ")
+        .collect::<Vec<&str>>();
+
+    let args: String = buf_vec[1].to_string();
+    let callback_url: Url = Url::parse(
+        (format!("http://localhost:{}", port) + &args).as_str()
+    ).expect("Failed to parse callback URL");
+    let query: HashMap<_,_> = callback_url.query_pairs().into_owned().collect();
+    let output = AuthCode {
+        code: query.get("code").unwrap().to_string(),
+        scope: query.get("scope").unwrap().to_string()
+    };
+    return Ok(output);
+}
+```
+
+For step 4, the following function will prepare a `POST` request to Google to exchange the authorisation `code` for the `access_token` (and `refresh_token`).
+
+```{rust fn-auth-token}
+#[derive(Debug, Deserialize, Serialize)]
+pub struct ClientSecretTokenResponse {
+    pub access_token: String,
+    pub expires_in: i64,
+    pub refresh_token: String,
+    pub scope: String,
+    pub token_type: String
+}
+
+pub async fn auth_token(&self, code: &str) -> Result<ClientSecretTokenResponse, reqwest::Error> {
+    let body: Value = serde_json::json!({
+        "client_id": self.client_id,
+        "client_secret": self.client_secret,
+        "code": code,
+        "grant_type": "authorization_code",
+        "redirect_uri": self.redirect_uris[0]
+    });
+
+    let response = reqwest::Client::new()
+        .post(self.token_uri.as_str())
+        .json(&body)
+        .send()
+        .await?;
+
+    let content: ClientSecretTokenResponse = response.json()
+        .await.expect("Failed to parse http response");
+
+    return Ok(content);
+}
+```
+
+## Authorise Client Application (Refresh Token)
+
+When we obtained the `refresh_token` from the above, we can further request a new `access_token` when the previous one is expired. To do do, we first define a struct and implement an `auth` function to it. 
+
+```{rust refresh-token-fn-auth}
+pub const OAUTH_TOKEN_URL: &str = "https://oauth2.googleapis.com/token";
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Token {
+    pub access_token: String,
+    pub expires_in: i64
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct UserSecret {
+    pub client_id: String,
+    pub client_secret: String,
+    pub refresh_token: String
+}
+
+pub async fn auth(&self) -> Result<Token, reqwest::Error> {
+    // Prepare auth body
+    let mut body: Value = serde_json::to_value(&self)
+        .expect("Could not convert UserSecret to Value");
+    body["grant_type"] = Value::String("refresh_token".to_string());
+
+    // Auth request
+    let response: reqwest::Response = reqwest::Client::new()
+        .post(OAUTH_TOKEN_URL)
+        .json(&body)
+        .send()
+        .await?;
+
+    // Parse response to output
+    let content: Token = response.json().await?;
+
+    return Ok(content)
+}
+```
+
+
+## Authorise Service Account
+
+For authorising a service account (see [this figure](#fig:auth-service-acc)), we need to 
+
+1. Prepare a JWT token. The token is separated into 3 parts:
+    - Header: consist of the algorithm name and the `privated_key_id` (from the secret JSON).
+    - Claim: consist of `client_email`, `scope`, `aud`, `iat` and `exp`.
+    - Key: the `private_key` from the secret JSON.
+2. Use the JWT token to exchange the `access_token`.
+
+```{r, auth-service-acc, echo=FALSE, fig.cap="Authorise service account", out.width = '50%'}
+knitr::include_graphics("img/auth_service_acc.png")
+```
+
+Below shows the implementation.
+
+```{rust service-acc-fn-auth}
+#[derive(Debug, Deserialize, Serialize)]
+pub struct ServiceSecret {
+    pub client_email: String,
+    pub private_key_id: String,
+    pub private_key: String
+}
+
+pub async fn auth(&self, scope: &str) -> Result<Token, reqwest::Error> {
+    // Auth Service Account
+    // https://developers.google.com/identity/protocols/oauth2/service-account
+
+    // Prepare JWT claim
+    let claim: serde_json::Value = serde_json::json!({
+        "iss": self.client_email.to_string(),
+        "scope": scope.to_string(),
+        "aud": "https://oauth2.googleapis.com/token".to_string(),
+        "iat": chrono::offset::Utc::now().timestamp(),
+        "exp": chrono::offset::Utc::now().timestamp() + 3600
+    });
+
+    // Prepare JWT header
+    let header: Header = Header{
+        alg: Algorithm::RS256,
+        kid: Some(self.private_key_id.to_string()),
+        ..Default::default()
+    };
+
+    // Prepare JWT key
+    let key: EncodingKey = EncodingKey::from_rsa_pem(
+        &self.private_key
+            .to_string()
+            .replace("\\n", "\n").as_bytes()
+    ).expect("Cannot build `EncodingKey`.");
+
+    // Generate JWT
+    let token: String = encode(
+        &header, &claim, &key
+    ).expect("Cannot encode `token`.");
+
+    // Auth JWT
+    let response: Response = reqwest::Client::new()
+        .post(OAUTH_TOKEN_URL)
+        .json(&serde_json::json!({
+            "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+            "assertion": token
+        }))
+        .send()
+        .await?;
+    
+    // Prepare output
+    let content: Token = match response.status() {
+        StatusCode::OK => response.json().await.expect("Unable to parse HTTP response JSON."),
+        StatusCode::UNAUTHORIZED => {
+            println!("{}", response.text().await.unwrap());
+            panic!("HTTP request failed: Unauthorized.");
+        },
+        _ => {
+            println!("{}", response.text().await.unwrap());
+            panic!("HTTP request failed.");
+        }
+    };
+
+    return Ok(content);
+}
+```
+
+# Examples
+
+A `main.rs` was also written in the Github repo to provide accessibility from command prompt. 
+
+```{bash example-cli, eval=F}
+cargo run 
+
+# Usage: gapi-oauth <SERVICE> <JSON_PATH> [SCOPE] [PORT]
+# 
+# SERVICE: `user`, `service`, or `consent`
+# JSON_PATH: The path to the JSON file containing the credentials.
+# SCOPE: Only required for `service` and `consent`
+# PORT: Only required for `consent`
+```
+
+```{bash example-cli-cont1, eval=F}
+cargo run user /path/to/client_token.json
+
+# {
+#   "access_token": "...",
+#   "expires_in": 3599
+# }
+```
+
+```{bash example-cli-cont2, eval=F}
+cargo run user /path/to/service_acc.json 'https://www.googleapis.com/auth/drive'
+
+# {
+#   "access_token": "...",
+#   "expires_in": 3599
+# }
+```
+
+```{bash example-cli-cont3, eval=F}
+cargo run consent /path/to/client_secret.json 'https://www.googleapis.com/auth/drive' 8088
+
+# Please visit this URL to authorize this application: 
+# https://accounts.google.com/o/oauth2/auth?client_id=&prompt=consent&...
+# 
+# {
+#   "access_token": "...",
+#   "refresh_token": "...",
+#   "scopes": [
+#     "https://www.googleapis.com/auth/drive"
+#   ],
+#   "expiry": "2023-07-30T17:51:13.123456Z",
+#   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+#   "token_uri": "https://oauth2.googleapis.com/token",
+#   "client_id": "...",
+#   "client_secret": "..."
+# }
+```
+
+It can also be used as crate. After constructing the `UserSecret` or `ServiceSecret`, simply use the corresponding `auth` method to return the `access_token`. 
+
+```{rust example-test}
+use crate::auth_users::UserSecret;
+use crate::auth_service::ServiceSecret;
+
+#[tokio::test]
+async fn test_auth_user() {
+    let client_id = std::env::var("USER_CLIENT_ID")
+        .expect("No USER_CLIENT_ID in env var")
+        .as_str().to_string();
+    let client_secret = std::env::var("USER_CLIENT_SECRET")
+        .expect("No USER_CLIENT_SECRET in env var")
+        .as_str().to_string();
+    let refresh_token = std::env::var("USER_REFRESH_TOKEN")
+        .expect("No USER_REFRESH_TOKEN in env var")
+
+    // Construct UserSecret
+    let client_token = UserSecret {
+        client_id: client_id,
+        client_secret: client_secret,
+        refresh_token: refresh_token,
+    };
+
+    // Auth to Token, will panic if failed.
+    let _token = client_token.auth().await
+        .expect("Unable to authenticate");
+}
+
+#[tokio::test]
+async fn test_auth_service() {
+    let client_email = std::env::var("SERVICE_CLIENT_EMAIL")
+        .expect("No SERVICE_CLIENT_EMAIL in env var")
+        .as_str().to_string();
+    let private_key = std::env::var("SERVICE_PRIVATE_KEY")
+        .expect("No SERVICE_PRIVATE_KEY in env var")
+        .as_str().to_string();
+    let private_key_id = std::env::var("SERVICE_PRIVATE_KEY_ID")
+        .expect("No SERVICE_PRIVATE_KEY_ID in env var")
+        .as_str().to_string();
+
+    let service_secret = ServiceSecret {
+        client_email: client_email,
+        private_key: private_key,
+        private_key_id: private_key_id,
+    };
+
+    let scopes: Vec<String> = vec![
+        "https://www.googleapis.com/auth/drive".to_string(),
+        "https://www.googleapis.com/auth/youtube".to_string()
+    ];
+
+    let scope = scopes.join(" ");
+
+    let _token = service_secret.auth(&scope).await
+        .expect("Unable to authenticate");
+}
+```
+
+
+<script type="text/javascript">
+    document.querySelectorAll('.lightgallery').forEach(x => lightGallery(x)); 
+</script>
+
+

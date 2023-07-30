@@ -1,0 +1,116 @@
+.distill-site-nav {
+    color: #fffcf9;
+    background-color: #343468;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.distill-site-nav a:hover {
+  color: #dedcd9;
+}
+
+body {
+  font-family: Roboto, 'Libre Baskerville', sans-serif; /*, et-book, "Palatino Linotype", "Palatino LT STD", 'Lora', serif*/
+  font-size: 15px;
+  font-weight: 300;
+  color: #404040;        /* #404040*/
+  position: relative;
+  background: #fffdfd;      /* {{ site.page-col }}; */
+}
+
+.index-title h1 {
+  font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans;
+  font-weight: 200;
+  font-size: 65px;
+  font-variant: small-caps;
+  text-align: center;
+  color: #3a3a9f;
+  margin-top: 7rem;
+  margin-bottom: 1.5rem;
+  line-height: 1;
+  border-bottom: 0; /*same as default h2*/
+  padding-bottom: 1rem; 
+}
+
+
+d-article h1 {
+  /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
+  font-style: normal;
+  font-variant: small-caps;
+  font-weight: 400;
+  font-size: 175%;
+  color: #040404;
+  margin-top: 2.1rem;
+  margin-bottom: 1.2rem;
+  line-height: 1;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /*same as default h2*/
+  padding-bottom: 1rem;
+}
+
+d-article h2 {
+  /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
+  font-style: normal;
+  font-weight: 400;
+  font-size: 150%;
+  color: #040404;
+  margin-top: 2.1rem;
+  margin-bottom: 1.2rem;
+  line-height: 1;
+  /* to remove will require something to keep the inline from inserting */
+  border-bottom: 0px solid rgba(0, 0, 0, 0.1); 
+  padding-bottom: 1rem; 
+  
+}
+
+
+d-article h3 {
+  /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
+  font-style: normal;
+  font-weight: 400;
+  font-size: 125%;
+  color: #040404;
+  opacity: .9;
+  margin-top: 2rem;
+  margin-bottom: 1.2rem;
+  line-height: 1;
+}
+
+d-article  h4 {
+  /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
+  font-style: normal;
+  text-transform: none;  /*default is uppercase*/
+  font-weight: 400;
+  font-size: 110%;
+  color: #040404;
+  opacity: .9;
+  margin-top: 1.9rem;
+  margin-bottom: 1.2rem;
+  line-height: 1;
+}
+
+d-article  h5 {
+  /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
+  font-style: normal;
+  text-transform: none;  /*default is uppercase*/
+  font-weight: 400;
+  font-size: 100%;
+  color: #040404;
+  opacity: .9;
+  margin-top: 1.9rem;
+  margin-bottom: 1.2rem;
+  line-height: 1;
+}
+
+d-article li {
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+d-article ul, d-article ol, d-article blockquote {
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+    margin-left: 0;
+    margin-right: 0;
+}
