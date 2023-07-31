@@ -145,4 +145,3 @@ ggplot(aes(x = x, y = value), data = gdat) +
   theme_void()
 
 ```
-
