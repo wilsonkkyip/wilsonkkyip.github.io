@@ -1,0 +1,21 @@
+name: create-linkedin-post
+
+on:
+  push:
+    branches: 
+      - main
+      - linkedin-post-workflow
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Chekcout
+        uses: action/checkout@v3
+      
+      - name: Create Linkedin Post
+        run: which python
