@@ -16,5 +16,8 @@ jobs:
       - name: Chekcout
         uses: actions/checkout@v3
       
+      - name: Install python dependencies
+        run: pip install srsly pyyaml
+      
       - name: Create Linkedin Post
         run: python ./tools/cd/linkedin_post.py
