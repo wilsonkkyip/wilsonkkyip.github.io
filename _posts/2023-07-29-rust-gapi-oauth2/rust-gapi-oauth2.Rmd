@@ -16,7 +16,6 @@ categories:
   - google-oauth
 ---
 
-
 <head>
 
 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.0/css/lightgallery.min.css" />
