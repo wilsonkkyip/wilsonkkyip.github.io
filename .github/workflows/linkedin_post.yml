@@ -18,3 +18,6 @@ jobs:
       
       - name: Create Linkedin Post
         run: python ./tools/cd/linkedin_post.py
+        env: 
+          LINKEDIN_USER_ID: ${{ secrets.LINKEDIN_USER_ID }}
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
