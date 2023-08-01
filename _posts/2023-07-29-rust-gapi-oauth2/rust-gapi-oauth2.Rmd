@@ -14,6 +14,7 @@ categories:
   - rust
   - oauth2
   - google-oauth
+abstract: It comes to me on many occasions that Google APIs are required to complete my tasks. The widely adopted OAuth2 is governing the authentication and authorisation process. This article summarises my knowledge on the OAuth2 implemented by Google APIs. As I am learning Rust recently, the examples in this article were written in Rust. 
 ---
 
 <head>
@@ -37,7 +38,7 @@ categories:
 
 # Introduction
 
-It comes to me on many occasions that Google APIs are required to complete the tasks. API keys may be an easy choice for those non-sensitive scopes (for example calling YouTube API for some public videos and channels). But when it comes to handling files in Google Drive, things become complicated as the service requires authentication and authorisation. This article aims to provide a solution on obtaining an authorised token to be put in http requests' header for calling the Google APIs' sensitive scopes in Rust environment. 
+It comes to me on many occasions that Google APIs are required to complete my tasks. API keys may be an easy choice for those non-sensitive scopes (for example calling YouTube API for some public videos and channels). But when it comes to handling files in Google Drive, things become complicated as the service requires authentication and authorisation. This article aims to provide a solution on obtaining an authorised token to be put in http requests' header for calling the Google APIs' sensitive scopes in Rust environment. 
 
 A [Github repo](https://github.com/wilsonkkyip/rs-gapi-oauth) was created for the purpose. It can be used in CLI environment and imported as rust crate as well. Below will first briefly describe the OAuth2 procedures, then walk through some important script, and finally will show some examples using of the crate. 
 
