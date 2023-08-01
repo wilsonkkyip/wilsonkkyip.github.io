@@ -3,7 +3,8 @@
 import os
 import requests 
 import json 
-import srsly
+from time import time
+import jwt
 import yaml
 
 def build_post_body(
@@ -66,15 +67,83 @@ def read_rmd_yml(path):
     yml_idx = [i for i, x in enumerate(rmd_yml) if x == "---\n"]
     return yaml.safe_load("".join(rmd_yml[(yml_idx[0]+1):(yml_idx[1])]))
 
+def auth_gapi_token(client_email, private_key_id, private_key):
+    payload: dict = {
+        "iss": client_email,
+        "scope": "https://www.googleapis.com/auth/drive",
+        "aud": "https://oauth2.googleapis.com/token",
+        "iat": int(time()),
+        "exp": int(time() + 3599)
+    }
+    headers: dict[str, str] = {'kid': private_key_id}
+
+    signed_jwt: bytes = jwt.encode(
+        payload=payload,
+        key=private_key.replace("\\n", "\n"),
+        algorithm="RS256",
+        headers=headers
+    )
+
+    body: dict = {
+        "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+        "assertion": signed_jwt
+    }
+    response: requests.Response = requests.request(
+        "POST", "https://oauth2.googleapis.com/token", json=body
+    )
+
+    response.raise_for_status()
+
+    content = response.json()
+    return content.get('access_token')
+
+def read_gsheet(ssid, ranges, token):
+    url = f"https://sheets.googleapis.com/v4/spreadsheets/{ssid}/values/{ranges}"
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+def append_gsheet(ssid, ranges, data, token):
+    url = f"https://sheets.googleapis.com/v4/spreadsheets/{ssid}/values/{ranges}:append"
+
+    body = {
+        "range": ranges,
+        "majorDimension": "ROWS",
+        "values": data
+    }
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    response = requests.post(url, params={"valueInputOption": "RAW"}, headers=headers, json=body)
+    response.raise_for_status()
+
+
 def main():
-    linkedin_user_id = os.environ.get("LINKEDIN_USER_ID")
-    linkedin_token = os.environ.get("LINKEDIN_TOKEN")
+    linkedin_user_id = os.getenv("LINKEDIN_USER_ID")
+    linkedin_token = os.getenv("LINKEDIN_TOKEN")
     linkedin_post_endpoint = "https://api.linkedin.com/v2/ugcPosts"
+
+    gcp_client_email = os.getenv("GCP_CLIENT_EMAIL")
+    gcp_private_key_id = os.getenv("GCP_PRIVATE_KEY_ID")
+    gcp_private_key = os.getenv("GCP_PRIVATE_KEY")
+
+    log_ssid = os.getenv("LINKEDIN_POSTS_LOG_SSID")
+    log_range = os.getenv("LINKEDIN_POSTS_LOG_RANGE")
+
+    gcp_token = auth_gapi_token(
+        gcp_client_email, gcp_private_key_id, gcp_private_key
+    )
+
+    logs = read_gsheet(log_ssid, log_range, gcp_token)
+    linkedin_posts = [
+        {logs["values"][0][0]: x[0], logs["values"][0][1]: x[1]} for x in logs["values"][1:]
+    ]
 
     with open("./posts/posts.json", "r") as file:
         page_posts = json.loads(file.read())
-
-    linkedin_posts = list(srsly.read_jsonl("./tools/cd/linkedin_posts.json"))
 
     missing_post = find_latest_missing_post(page_posts, linkedin_posts)
 
@@ -104,12 +173,9 @@ def main():
         )
 
         content = response.json()
-        linkedin_posts.append({
-            "path": missing_post["path"],
-            "id": content.get("id")
-        })
+        appending_data = [[missing_post["path"], content.get("id")]]
 
-        srsly.write_jsonl("./tools/cd/linkedin_posts.json", linkedin_posts)
+        append_gsheet(log_ssid, log_range, appending_data, gcp_token)
 
 if __name__ == "__main__": 
     main()
