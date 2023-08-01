@@ -4,10 +4,6 @@ on:
   push:
     branches: 
       - main
-      - linkedin-post-workflow
-  pull_request:
-    branches:
-      - main
 
 jobs:
   deploy:
@@ -15,7 +11,10 @@ jobs:
 
     steps:
       - name: Chekcout
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
+      
+      - name: Install python dependencies
+        run: pip install srsly pyyaml
       
       - name: Create Linkedin Post
-        run: which python
+        run: python ./tools/cd/linkedin_post.py
