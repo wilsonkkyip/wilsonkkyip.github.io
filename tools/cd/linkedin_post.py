@@ -6,11 +6,6 @@ import json
 import srsly
 import yaml
 
-linkedin_user_id = os.environ.get("LINKEDIN_USER_ID")
-linkedin_token = os.environ.get("LINKEDIN_TOKEN")
-linkedin_post_endpoint = "https://api.linkedin.com/v2/ugcPosts"
-
-
 def build_post_body(
     user_id, 
     post_content, 
@@ -72,6 +67,10 @@ def read_rmd_yml(path):
     return yaml.safe_load("".join(rmd_yml[(yml_idx[0]+1):(yml_idx[1])]))
 
 def main():
+    linkedin_user_id = os.environ.get("LINKEDIN_USER_ID")
+    linkedin_token = os.environ.get("LINKEDIN_TOKEN")
+    linkedin_post_endpoint = "https://api.linkedin.com/v2/ugcPosts"
+
     with open("./posts/posts.json", "r") as file:
         page_posts = json.loads(file.read())
 
@@ -79,37 +78,38 @@ def main():
 
     missing_post = find_latest_missing_post(page_posts, linkedin_posts)
 
-    rmd_file = os.listdir(f"./_{missing_post['path']}")
-    rmd_file = list(filter(lambda x: ".rmd" in x.lower(), rmd_file))[0]
+    if missing_post:
+        rmd_file = os.listdir(f"./_{missing_post['path']}")
+        rmd_file = list(filter(lambda x: ".rmd" in x.lower(), rmd_file))[0]
 
-    rmd_yml = read_rmd_yml(f"./_{missing_post['path']}/{rmd_file}")
-    
-    body = build_post_body(
-        user_id=linkedin_user_id,
-        post_content=rmd_yml["abstract"],
-        media_title=rmd_yml["title"],
-        media_description=rmd_yml["description"],
-        article_url=f"https://wilsonkkyip.github.io/{missing_post['path']}"
-    )
+        rmd_yml = read_rmd_yml(f"./_{missing_post['path']}/{rmd_file}")
+        
+        body = build_post_body(
+            user_id=linkedin_user_id,
+            post_content=rmd_yml["abstract"],
+            media_title=rmd_yml["title"],
+            media_description=rmd_yml["description"],
+            article_url=f"https://wilsonkkyip.github.io/{missing_post['path']}"
+        )
 
-    headers = {
-        "X-Restli-Protocol-Version": "2.0.0",
-        "Authorization": "Bearer " + linkedin_token 
-    }
+        headers = {
+            "X-Restli-Protocol-Version": "2.0.0",
+            "Authorization": "Bearer " + linkedin_token 
+        }
 
-    response = requests.post(
-        url=linkedin_post_endpoint, 
-        json=body, 
-        headers=headers
-    )
+        response = requests.post(
+            url=linkedin_post_endpoint, 
+            json=body, 
+            headers=headers
+        )
 
-    content = response.json()
-    linkedin_posts.append({
-        "path": missing_post["path"],
-        "id": content.get("id")
-    })
+        content = response.json()
+        linkedin_posts.append({
+            "path": missing_post["path"],
+            "id": content.get("id")
+        })
 
-    srsly.write_jsonl("./tools/cd/linkedin_posts.json", linkedin_posts)
+        srsly.write_jsonl("./tools/cd/linkedin_posts.json", linkedin_posts)
 
 if __name__ == "__main__": 
     main()
