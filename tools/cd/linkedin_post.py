@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python
 
 import os
 import requests 
@@ -7,7 +7,10 @@ import json
 linkedin_user_id = os.environ.get("LINKEDIN_USER_ID")
 linkedin_post_endpoint = "https://api.linkedin.com/v2/ugcPosts"
 
+with open("./posts/posts.json", "r") as file:
+    linkedin_posts = json.loads(file.read())
 
+print(linkedin_posts)
 
 def build_post_body(
     user_id, 
