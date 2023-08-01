@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Chekcout
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
       
       - name: Create Linkedin Post
         run: which python
