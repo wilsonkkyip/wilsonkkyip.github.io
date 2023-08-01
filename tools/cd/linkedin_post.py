@@ -152,10 +152,12 @@ def main():
         rmd_file = list(filter(lambda x: ".rmd" in x.lower(), rmd_file))[0]
 
         rmd_yml = read_rmd_yml(f"./_{missing_post['path']}/{rmd_file}")
-        
+        abstract = rmd_yml["abstract"] + "\n\nThe post was created by Github Actions during push or merge to the main branch.\nhttps://github.com/wilsonkkyip/wilsonkkyip.github.io"
+
+
         body = build_post_body(
             user_id=linkedin_user_id,
-            post_content=rmd_yml["abstract"],
+            post_content=abstract,
             media_title=rmd_yml["title"],
             media_description=rmd_yml["description"],
             article_url=f"https://wilsonkkyip.github.io/{missing_post['path']}"

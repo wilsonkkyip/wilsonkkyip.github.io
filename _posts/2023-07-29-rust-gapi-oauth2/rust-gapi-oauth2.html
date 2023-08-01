@@ -94,8 +94,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2023-07-30"/>
-  <meta property="article:created" itemprop="dateCreated" content="2023-07-30"/>
+  <meta property="article:published" itemprop="datePublished" content="2023-07-29"/>
+  <meta property="article:created" itemprop="dateCreated" content="2023-07-29"/>
   <meta name="article:author" content="Wilson Yip"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -113,7 +113,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","tags","categories"]}},"value":[{"type":"character","attributes":{},"value":["Google OAuth2 Implementation on Rust Reqwest"]},{"type":"character","attributes":{},"value":["An implementation of Google OAuth2 procedures on Rust reqwest for Server-side Web Apps and Service Accounts.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Wilson Yip"]}]}]},{"type":"character","attributes":{},"value":["2023-07-30"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["rust","oauth2","google-oauth"]},{"type":"character","attributes":{},"value":["rust","oauth2","google-oauth"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","tags","categories","abstract"]}},"value":[{"type":"character","attributes":{},"value":["Google OAuth2 Implementation on Rust Reqwest"]},{"type":"character","attributes":{},"value":["An implementation of Google OAuth2 procedures on Rust reqwest for Server-side Web Apps and Service Accounts.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Wilson Yip"]}]}]},{"type":"character","attributes":{},"value":["2023-07-29"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["rust","oauth2","google-oauth"]},{"type":"character","attributes":{},"value":["rust","oauth2","google-oauth"]},{"type":"character","attributes":{},"value":["It comes to me on many occasions that Google APIs are required to complete my tasks. The widely adopted OAuth2 is governing the authentication and authorisation process. This article summarises my knowledge on the OAuth2 implemented by Google APIs. As I am learning Rust recently, the examples in this article were written in Rust."]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1496,7 +1496,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Google OAuth2 Implementation on Rust Reqwest","description":"An implementation of Google OAuth2 procedures on Rust reqwest for Server-side Web Apps and Service Accounts.","authors":[{"author":"Wilson Yip","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-07-30T00:00:00.000+00:00","citationText":"Yip, 2023"}
+{"title":"Google OAuth2 Implementation on Rust Reqwest","description":"An implementation of Google OAuth2 procedures on Rust reqwest for Server-side Web Apps and Service Accounts.","authors":[{"author":"Wilson Yip","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-07-29T00:00:00.000+00:00","citationText":"Yip, 2023"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1520,7 +1520,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-byline">
   Wilson Yip  
   
-<br/>2023-07-30
+<br/>2023-07-29
 </div>
 
 <div class="d-article">
@@ -1558,7 +1558,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lg-thumbnail/1.2.1/lg-thumbnail.min.js"></script>
 </head>
 <h1 id="introduction">Introduction</h1>
-<p>It comes to me on many occasions that Google APIs are required to complete the tasks. API keys may be an easy choice for those non-sensitive scopes (for example calling YouTube API for some public videos and channels). But when it comes to handling files in Google Drive, things become complicated as the service requires authentication and authorisation. This article aims to provide a solution on obtaining an authorised token to be put in http requests’ header for calling the Google APIs’ sensitive scopes in Rust environment.</p>
+<p>It comes to me on many occasions that Google APIs are required to complete my tasks. API keys may be an easy choice for those non-sensitive scopes (for example calling YouTube API for some public videos and channels). But when it comes to handling files in Google Drive, things become complicated as the service requires authentication and authorisation. This article aims to provide a solution on obtaining an authorised token to be put in http requests’ header for calling the Google APIs’ sensitive scopes in Rust environment.</p>
 <p>A <a href="https://github.com/wilsonkkyip/rs-gapi-oauth">Github repo</a> was created for the purpose. It can be used in CLI environment and imported as rust crate as well. Below will first briefly describe the OAuth2 procedures, then walk through some important script, and finally will show some examples using of the crate.</p>
 <h1 id="oauth2-procedures">OAuth2 Procedures</h1>
 <p>When I first encountered OAuth2, I was confused about what <strong>scopes</strong> and <strong>endpoints</strong> are because both scopes and endpoints are represented by url-like strings in Google APIs. In a nutshell, <u>endpoints represent what services you want to use</u>. For example there is a specific endpoint for reading the metadata of a file in Google Drive; there is another endpoint for you to update the file. On the other hand, <u>scopes are the abilities of your authorised token</u>. For example, is your token able to read the files from Google Drive? It depends on whether your token contains the specific scope.</p>
@@ -2000,19 +2000,21 @@ Figure 2: Authorise service account
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> run consent /path/to/client_secret.json <span class="st">&#39;https://www.googleapis.com/auth/drive&#39;</span> 8088</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Please</span> visit this URL to authorize this application: https://accounts.google.com/o/oauth2/auth<span class="pp">?</span>client_id=<span class="kw">&amp;</span><span class="va">prompt</span><span class="op">=</span>consent<span class="kw">&amp;</span><span class="ex">...</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># {</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;access_token&quot;: &quot;...&quot;,</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;refresh_token&quot;: &quot;...&quot;,</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;scopes&quot;: [</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#     &quot;https://www.googleapis.com/auth/drive&quot;</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   ],</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;expiry&quot;: &quot;2023-07-30T17:51:13.123456Z&quot;,</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;auth_uri&quot;: &quot;https://accounts.google.com/o/oauth2/auth&quot;,</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;token_uri&quot;: &quot;https://oauth2.googleapis.com/token&quot;,</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;client_id&quot;: &quot;...&quot;,</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;client_secret&quot;: &quot;...&quot;</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span></code></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Please visit this URL to authorize this application: </span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># https://accounts.google.com/o/oauth2/auth?client_id=&amp;prompt=consent&amp;...</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># {</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;access_token&quot;: &quot;...&quot;,</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;refresh_token&quot;: &quot;...&quot;,</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;scopes&quot;: [</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     &quot;https://www.googleapis.com/auth/drive&quot;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   ],</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;expiry&quot;: &quot;2023-07-30T17:51:13.123456Z&quot;,</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;auth_uri&quot;: &quot;https://accounts.google.com/o/oauth2/auth&quot;,</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;token_uri&quot;: &quot;https://oauth2.googleapis.com/token&quot;,</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;client_id&quot;: &quot;...&quot;,</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   &quot;client_secret&quot;: &quot;...&quot;</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span></code></pre></div>
 </div>
 <p>It can also be used as crate. After constructing the <code>UserSecret</code> or <code>ServiceSecret</code>, simply use the corresponding <code>auth</code> method to return the <code>access_token</code>.</p>
 <div class="layout-chunk" data-layout="l-body">
