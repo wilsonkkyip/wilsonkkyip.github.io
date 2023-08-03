@@ -8,6 +8,7 @@ site: distill::distill_website
 css: [styles.css]
 listing: posts
 preview_url: img/wy_logo.png
+favicon: img/wy_logo.png
 ---
 
 ```{r setup, include=FALSE}
