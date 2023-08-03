@@ -107,10 +107,3 @@ d-article li {
     margin-left: 0;
     padding-left: 0;
 }
-
-d-article ul, d-article ol, d-article blockquote {
-    margin-top: 0.1em;
-    margin-bottom: 0.1em;
-    margin-left: 0;
-    margin-right: 0;
-}
