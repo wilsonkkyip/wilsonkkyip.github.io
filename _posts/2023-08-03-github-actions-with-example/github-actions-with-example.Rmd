@@ -213,19 +213,23 @@ As seen from the above body JSON, the first thing we need to know is our own `us
 
 The `user_id` is stored in the `sub` value.
 
-# Github Actions
+# Github Actions Introduction
 
 To start working with Github workflows, we need to first create the nested folder `.github/workflows` within a repo. Simply `mkdir -p .github/workflows` will do.
 
 ## Workflows
 
-## Secrets
+## Events
 
-# Extra
+## Jobs
+
+## Runners
+
+## Secrets
 
 ## Workflow Dependency
 
-## Concurrency
+# Example
 
 
 
