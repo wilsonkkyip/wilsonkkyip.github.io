@@ -14,6 +14,8 @@ categories:
   - rust
   - oauth2
   - google-oauth
+preview_url: img/wy_logo.png
+favicon: img/wy_logo.png
 abstract: It comes to me on many occasions that Google APIs are required to complete my tasks. The widely adopted OAuth2 is governing the authentication and authorisation process. This article summarises my knowledge on the OAuth2 implemented by Google APIs. As I am learning Rust recently, the examples in this article were written in Rust. 
 ---
 
