@@ -16,6 +16,8 @@ categories:
   - cicd
   - github-actions
   - github
+preview_url: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
 abstract: | 
   Github Actions with example - Writing a new LinkedIn post whenever a new blog post is found in a Github repository.
   
