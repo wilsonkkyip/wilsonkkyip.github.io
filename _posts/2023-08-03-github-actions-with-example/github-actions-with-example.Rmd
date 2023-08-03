@@ -16,6 +16,10 @@ categories:
   - cicd
   - github-actions
   - github
+abstract: | 
+  Github Actions with example - Writing a new LinkedIn post whenever a new blog post is found in a Github repository.
+  
+  Github Actions is very useful for continuous integration and delivery (CI/CD). This article introduces the basic of Github Actions to automate different tasks with triggers. It also shows the implementation of how to write a LinkedIn post whenever a new blog post is merge to a Github repository. 
 ---
 
 <head>
