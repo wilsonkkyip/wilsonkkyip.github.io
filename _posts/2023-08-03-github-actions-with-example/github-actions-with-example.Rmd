@@ -1,0 +1,235 @@
+---
+title: "An Example of Continuous Deployment: Creating LinkedIn Post During Merge"
+description: |
+  A short description of the post.
+author:
+  - name: Wilson Yip
+date: 2023-08-01
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+tags: [continuous-deployment, continuous-delivery, github-actions]
+categories:
+  - continuous-deployment
+  - continuous-delivery
+  - cicd
+  - github-actions
+  - github
+---
+
+<head>
+
+<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.0/css/lightgallery.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.1-beta.0/js/lightgallery.min.js"></script>
+
+<!-- lightgallery plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lg-fullscreen/1.2.1/lg-fullscreen.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lg-thumbnail/1.2.1/lg-thumbnail.min.js"></script>
+
+</head>
+
+```{css lightgallery_config, echo=F}
+.lightgallery > a > img:hover {
+   transform: scale(1.2, 1.2);
+   transition: 0.2s ease-in-out;
+   cursor: pointer;
+}
+```
+
+```{r create-image-thumbs, echo=F}
+resize_image <- function(p) {
+  base_path <- getwd()
+  file_name <- basename(p)
+  dir_name <- dirname(p)
+  imFile <- magick::image_read(paste0(base_path, "/", p))
+  imFile_resized <- magick::image_resize(imFile, "10%")
+  thumb_name <- paste0(dir_name, "/thumb-", file_name)
+  magick::image_write(imFile_resized, paste0(base_path, "/", thumb_name))
+}
+
+dir_list <- grep("/", list.dirs("img"), value=T)
+invisible(lapply(dir_list, function(x) {
+  list_png <- list.files(x, full.names=T)
+  list_png <- grep("\\.png$", list_png, value=T)
+  list_png <- list_png[!stringr::str_detect(list_png, "thumb")]
+  invisible(lapply(list_png, resize_image))
+}))
+```
+
+```{r make-gallery-layout, echo=F} 
+library(htmltools)
+make_gallery_layout <- function(p) {
+  # Get the names of all images
+  images <- list.files(p)
+
+  # Get the names of all full-size images
+  images_full_size <- grep("thumb", images, value = TRUE, invert = TRUE)
+
+  # Get the names of all thumbnails
+  images_thumb <- grep("thumb", images, value = TRUE)
+
+  # Create a dataframe where each row is one image (useful for
+  # the apply() function)
+  images <- data.frame(images_thumb = images_thumb,
+                       images_full_size = images_full_size)
+
+  # Create the HTML structure for each image
+  tagList(apply(images, 1, function(x) {
+      tags$a(
+        href = paste0(p, "/", x[["images_full_size"]]),
+        tags$img(src = paste0(p, "/", x[["images_thumb"]]))
+      )
+  }))
+}
+```
+
+# Introduction
+
+In modern software development, an engineer's job does not end when a product is developed. Numerous times are spent on testing and deploying the product, no matter if the product is a website or a programming library or anything. Usually these tasks are repetitive and boring because these products are required to be maintained and updated. The same testing and deploying process will need to be rerun again throughout the life-cycle of the product.
+
+The same problem happens on data scientists and machine learning engineers as well, where the models they have developed are also required to be tested and deployed (and updated and tested and deployed again and again). The concept of continuous integration and deployment came to automate these repetitive tasks and saves our precious time.
+
+This article describes these concepts through an example -- write a LinkedIn post whenever a new blog post is created in this blog. We will first briefly go through how to write a post on LinkedIn through its API. Then we will automate this process using Github Actions so that whenever a merge or push request is made to the main branch. Github Actions will check if there is a new blog post and write a LinkedIn post if there is.
+
+# LinkedIn APIs
+
+LinkedIn offers various [API products](https://developer.linkedin.com/product-catalog) for consumers to do various of things. One of which is to write posts on behalf of the users (see this [documentation](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin)). To do that, we need to
+
+1. Create a company on LinkedIn
+2. Create an application on behalf of the company
+3. Authenticate yourself and authorise the application to write posts on behalf of you
+
+The process is similar to my [previous blog post](https://wilsonkkyip.github.io/posts/2023-07-29-rust-gapi-oauth2/) about OAuth2 for Google APIs. I will briefly describe the process here. 
+
+## OAuth2
+
+We will first create a company on LinkedIn and the application.
+
+1. Go to https://developer.linkedin.com/ and click **Create App** (and login to your LinkedIn account)
+2. Enter the name of the application
+3. Click **Create a new LinkedIn Page** if you do not have a company on LinkedIn
+4. Select **Company**
+5. Enter the name of the company, select the industry, company size, company type. Check the terms and click **Create page**
+6. Go back to the developer page and select the company just created
+7. Upload a logo for the application
+8. Check the **Legal agreement** and click **Create app**
+9. Click **Verify** and follow the instruction
+10. Click **Products**, click **Request access** for both **Share on LinkedIn** and **Sign in with LinkedIn**
+11. Click **Auth** and copy the **Client ID** and **Client Secret**
+12. Under **OAuth 2.0 settings**, enter the **authorised redirect url**
+
+```{r gallery-oauth, echo=F}
+withTags(
+  div(
+    class = "row lightgallery",
+    tagList(
+      make_gallery_layout("img/oauth")
+    )
+  )
+)
+```
+
+Now we have the `client_id`, `client_secret` and `redirect_uri` ready, we can now authenticate ourselves and authorise the application. The following script will generate a url to login to your LinkedIn account. Then it will generate the `access_token`.
+
+```{python linkedin-oauth-request, engine.path="/Users/wilson/python/bin/python", eval=F, code=xfun::read_all("./linkedin_oauth.py")}
+```
+
+```{text linkedin-oauth-response, eval=F}
+# {
+#     "access_token": "...",
+#     "expires_in": 5183999,
+#     "scope": "email,openid,profile,r_liteprofile,w_member_social",
+#     "token_type": "Bearer",
+#     "id_token": "..."
+# }
+```
+
+## Calling the API
+
+We will be calling the [**Share in LinkedIn**](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin) endpoint to write a post in LinkedIn. We will be using
+
+- A `POST` request to the endpoint https://api.linkedin.com/v2/ugcPosts
+- The body of the request will be similar to 
+
+```{json share-in-linkedin-body-sample}
+{
+    "author": "urn:li:person:8675309",
+    "lifecycleState": "PUBLISHED",
+    "specificContent": {
+        "com.linkedin.ugc.ShareContent": {
+            "shareCommentary": {
+                "text": "Learning more about LinkedIn by reading the LinkedIn Blog!"
+            },
+            "shareMediaCategory": "ARTICLE",
+            "media": [
+                {
+                    "status": "READY",
+                    "description": {
+                        "text": "Official LinkedIn Blog - Your source for insights and information about LinkedIn."
+                    },
+                    "originalUrl": "https://blog.linkedin.com/",
+                    "title": {
+                        "text": "Official LinkedIn Blog"
+                    }
+                }
+            ]
+        }
+    },
+    "visibility": {
+        "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
+    }
+}
+```
+
+What we will be modifying is the following key values:
+
+- `author`
+- `shareCommentary.text`
+- `media.description.text`
+- `media.title.text`
+- `media.originalUrl`
+
+As seen from the above body JSON, the first thing we need to know is our own `user_id` for the `author` value. To find this, we need to use the **Sign In with LinkedIn** endpoint. The following script shows how to do it.
+
+```{python linkedin-find-userid, eval=F, code=xfun::read_all("./linkedin_userinfo.py")}
+```
+
+```{text linkedin-find-userid-response}
+{
+    "sub": "....",
+    "email_verified": true,
+    "name": "Wilson Yip",
+    "locale": {
+        "country": "US",
+        "language": "en"
+    },
+    "given_name": "Wilson",
+    "family_name": "Yip",
+    "email": "wilsonyip@elitemail.org",
+    "picture": "https://media.licdn.com/dms/image/C4E03AQGo1BKbUYmyBA/profile-displayphoto-shrink_100_100/0/1646639382257?e=1696464000&v=beta&t=6lhHrDK3vx6GOC01wIKkfVYAmCiSWoZtc8XpE0JoUmM"
+}
+```
+
+The `user_id` is stored in the `sub` value.
+
+# Github Actions
+
+To start working with Github workflows, we need to first create the nested folder `.github/workflows` within a repo. Simply `mkdir -p .github/workflows` will do.
+
+## Workflows
+
+## Secrets
+
+# Extra
+
+## Workflow Dependency
+
+## Concurrency
+
+
+
+
+<script type="text/javascript">
+    document.querySelectorAll('.lightgallery').forEach(x => lightGallery(x)); 
+</script>

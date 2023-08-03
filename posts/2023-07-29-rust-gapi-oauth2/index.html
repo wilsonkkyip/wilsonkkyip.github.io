@@ -2211,12 +2211,6 @@ d-article li {
     padding-left: 0;
 }
 
-d-article ul, d-article ol, d-article blockquote {
-    margin-top: 0.1em;
-    margin-bottom: 0.1em;
-    margin-left: 0;
-    margin-right: 0;
-}
 </style>
 <!--/radix_placeholder_site_in_header-->
 
@@ -2310,6 +2304,15 @@ d-article ul, d-article ol, d-article blockquote {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lg-fullscreen/1.2.1/lg-fullscreen.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lg-thumbnail/1.2.1/lg-thumbnail.min.js"></script>
 </head>
+<div class="layout-chunk" data-layout="l-body">
+<style type="text/css">
+.lightgallery > a > img:hover {
+   transform: scale(1.2, 1.2);
+   transition: 0.2s ease-in-out;
+   cursor: pointer;
+}
+</style>
+</div>
 <h1 id="introduction">Introduction</h1>
 <p>It comes to me on many occasions that Google APIs are required to complete my tasks. API keys may be an easy choice for those non-sensitive scopes (for example calling YouTube API for some public videos and channels). But when it comes to handling files in Google Drive, things become complicated as the service requires authentication and authorisation. This article aims to provide a solution on obtaining an authorised token to be put in http requests’ header for calling the Google APIs’ sensitive scopes in Rust environment.</p>
 <p>A <a href="https://github.com/wilsonkkyip/rs-gapi-oauth">Github repo</a> was created for the purpose. It can be used in CLI environment and imported as rust crate as well. Below will first briefly describe the OAuth2 procedures, then walk through some important script, and finally will show some examples using of the crate.</p>
