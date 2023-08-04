@@ -150,6 +150,7 @@ def create_linkedin_post(post):
         json=body, 
         headers=headers
     )
+    response.raise_for_status()
 
     content = response.json()
 
