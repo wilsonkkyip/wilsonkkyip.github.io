@@ -5,6 +5,7 @@ description: |
 author:
   - name: Wilson Yip
 date: 2023-07-29
+preview: img/auth_client_id.png
 output:
   distill::distill_article:
     toc: true
