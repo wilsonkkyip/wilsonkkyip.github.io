@@ -1,21 +1,27 @@
 ---
-title: "An Example of Continuous Deployment: Creating LinkedIn Post During Merge"
+title: "Github Actions with Example"
 description: |
-  A short description of the post.
+  An introduction to Github Actions with an example to write a post whenever a new blog post is merged to the main branch.
 author:
   - name: Wilson Yip
-date: 2023-08-01
+date: 2023-08-03
+preview: img/github-actions.png
 output:
   distill::distill_article:
     toc: true
     self_contained: false
-tags: [continuous-deployment, continuous-delivery, github-actions]
+tags: [continuous-delivery, github-actions]
 categories:
-  - continuous-deployment
   - continuous-delivery
   - cicd
   - github-actions
   - github
+preview_url: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+abstract: | 
+  Github Actions with example - Writing a new LinkedIn post whenever a new blog post is found in a Github repository.
+  
+  Github Actions is very useful for continuous integration and delivery (CI/CD). This article introduces the basic of Github Actions to automate different tasks with triggers. It also shows the implementation of how to write a LinkedIn post whenever a new blog post is merge to a Github repository. 
 ---
 
 <head>
@@ -88,11 +94,78 @@ make_gallery_layout <- function(p) {
 
 In modern software development, an engineer's job does not end when a product is developed. Numerous times are spent on testing and deploying the product, no matter if the product is a website or a programming library or anything. Usually these tasks are repetitive and boring because these products are required to be maintained and updated. The same testing and deploying process will need to be rerun again throughout the life-cycle of the product.
 
-The same problem happens on data scientists and machine learning engineers as well, where the models they have developed are also required to be tested and deployed (and updated and tested and deployed again and again). The concept of continuous integration and deployment came to automate these repetitive tasks and saves our precious time.
+The same problem happens on data scientists and machine learning engineers as well, where the models they have developed are also required to be tested and deployed (and updated and tested and deployed again and again). The concept of continuous integration and delivery came to automate these repetitive tasks and saves our precious time.
 
-This article describes these concepts through an example -- write a LinkedIn post whenever a new blog post is created in this blog. We will first briefly go through how to write a post on LinkedIn through its API. Then we will automate this process using Github Actions so that whenever a merge or push request is made to the main branch. Github Actions will check if there is a new blog post and write a LinkedIn post if there is.
+This article describes these concepts through an example -- write a LinkedIn post whenever a new blog post is created in this blog. We will first briefly go through what Github Actions is, then we will talk about how to write a post on LinkedIn through its API. Finally we will create a workflow to check if there is a new blog post and write a LinkedIn post if there is.
 
-# LinkedIn APIs
+# Github Actions
+
+Github Actions is a platform for continuous integration / continuous delivery (CI/CD). One can write [workflows](#workflows) to automate build, testing, and deployment pipelines. Each workflow is triggered by one or more [events](#events) and can be run by different [runners](#runners). We will describe these concepts more below. 
+
+Each workflow must be defined in the folder of `.github/workflows` in a repo and it must be specified in a YAML file like below. We will go through each section of the file. 
+
+<div id="workflow-sample">
+```{yml, label="workflow-sample", code=xfun::read_all("./sample-workflow.yml")}
+```
+</div>
+
+## Workflows
+
+The entire YAML file specified in [this code chunk](#workflow-sample) is a workflow. There can be multiple workflows in different YAML files stored inside `.github/workflows` directory. Each workflow can be triggered by one or more [events](#events), or they can be triggered manually, or at a defined schedule. Each workflow can also contains one or more [jobs](#jobs). 
+
+## Events
+
+An event is an activity within the repository. For example, an event can be a pull / push request. It can also be the completion of another workflow or scheduled by cron syntax. 
+
+The [above workflow](#workflow-sample) will be triggered whenever one of the two specified events occurs. These two events are
+
+- Every time the main branch is pushed or merged from another branch, this workflow will be started.
+- Whenever another workflow `pages-build-deployment` is completed, this workflow will be started.
+
+## Jobs
+
+A job is a series of steps that will be executed on the same [runner](#runners). Each step is either a shell script or an [action](#actions). The steps will be executed in order and dependent on each other. By default, each job will be run by a different runner and concurrently. One can specify the dependency of jobs by the key `needs`. The above example shows an implementation. 
+
+Also, one can also specify a strategy matrix to repeat the same job for different conditions. For example, the following job will be executed 6 times, namely
+
+- `{node-version: 10, os: ubuntu-22.04}`
+- `{node-version: 10, os: ubuntu-20.04}`
+- `{node-version: 12, os: ubuntu-22.04}`
+- `{node-version: 12, os: ubuntu-20.04}`
+- `{node-version: 14, os: ubuntu-22.04}`
+- `{node-version: 14, os: ubuntu-20.04}`
+
+```{yml}
+jobs:
+  example_matrix:
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, ubuntu-20.04]
+        version: [10, 12, 14]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.version }}
+```
+
+## Actions
+
+Actions are custom applications for GitHub Actions that perform complex but repetitive tasks. You can write an action from scratch or use an existing action available from the GitHub Marketplace in your workflow.
+
+## Runners
+
+A runner is an OS on a virtual machine or container to execute a specific job. GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners to run the workflows. One can also host their own machine as runner.
+
+## Secrets
+
+For each step or job, one can specify an `env` session to define environment variables. But if we are dealing with credentials, this might not be a good choice. One can go to Settings of the repository, under Security, click Secrets and variables, then click Actions. Inside the page, one can define secrets for the repository and can access them within the `env` session inside a workflow as shown in the example.
+
+## Github Context
+
+Contexts are a way to access information about workflow runs, variables, runner environments, jobs, and steps. For example the name of the working branch, the working directory of Github Actions, etc. The keyword `secrets` in the above section is also a context. See more from [this page](https://docs.github.com/en/actions/learn-github-actions/contexts).
+
+# LinkedIn API
 
 LinkedIn offers various [API products](https://developer.linkedin.com/product-catalog) for consumers to do various of things. One of which is to write posts on behalf of the users (see this [documentation](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin)). To do that, we need to
 
@@ -145,52 +218,11 @@ Now we have the `client_id`, `client_secret` and `redirect_uri` ready, we can no
 # }
 ```
 
-## Calling the API
+## Calling API
 
-We will be calling the [**Share in LinkedIn**](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin) endpoint to write a post in LinkedIn. We will be using
+### Identify User Id
 
-- A `POST` request to the endpoint https://api.linkedin.com/v2/ugcPosts
-- The body of the request will be similar to 
-
-```{json share-in-linkedin-body-sample}
-{
-    "author": "urn:li:person:8675309",
-    "lifecycleState": "PUBLISHED",
-    "specificContent": {
-        "com.linkedin.ugc.ShareContent": {
-            "shareCommentary": {
-                "text": "Learning more about LinkedIn by reading the LinkedIn Blog!"
-            },
-            "shareMediaCategory": "ARTICLE",
-            "media": [
-                {
-                    "status": "READY",
-                    "description": {
-                        "text": "Official LinkedIn Blog - Your source for insights and information about LinkedIn."
-                    },
-                    "originalUrl": "https://blog.linkedin.com/",
-                    "title": {
-                        "text": "Official LinkedIn Blog"
-                    }
-                }
-            ]
-        }
-    },
-    "visibility": {
-        "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
-    }
-}
-```
-
-What we will be modifying is the following key values:
-
-- `author`
-- `shareCommentary.text`
-- `media.description.text`
-- `media.title.text`
-- `media.originalUrl`
-
-As seen from the above body JSON, the first thing we need to know is our own `user_id` for the `author` value. To find this, we need to use the **Sign In with LinkedIn** endpoint. The following script shows how to do it.
+To write a post on LinkedIn, We need to first identify the author's `user_id`. A GET request to https://api.linkedin.com/v2/userinfo with the `access_token` obtained from the above are needed.
 
 ```{python linkedin-find-userid, eval=F, code=xfun::read_all("./linkedin_userinfo.py")}
 ```
@@ -213,21 +245,31 @@ As seen from the above body JSON, the first thing we need to know is our own `us
 
 The `user_id` is stored in the `sub` value.
 
-# Github Actions
+### Write Post
 
-To start working with Github workflows, we need to first create the nested folder `.github/workflows` within a repo. Simply `mkdir -p .github/workflows` will do.
+We will be calling the [**Share in LinkedIn**](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin) endpoint to write a post in LinkedIn along with the specific request body to attach an article to the post. The following scripts shows an example. 
 
-## Workflows
-
-## Secrets
-
-# Extra
-
-## Workflow Dependency
-
-## Concurrency
+```{python linkedin-api-write-post, eval=F, code=xfun::read_all("./linkedin_write_post.py")}
+```
 
 
+# Auto Posting Workflow
+
+A workflow is created to write a post on LinkedIn whenever there is a new article merged to the `main` branch of a repository. The workflow is triggered every time after completion of the `pages-build-deployment` workflow, which is the workflow to build the website. Yet, there is a problem:
+
+> We need to keep tract which article was posted to LinkedIn already in order to define which article is new.
+
+For simplicity, I have created a Google Sheet to store the article paths and the corresponding LinkedIn `post_id`. If an article's path does not appear in the table, that is the new article and will further trigger the scripts.
+
+The workflow is quite simple. It just runs a Python file. The Python file will check if there are any new article path, write a LinkedIn post if there is one, and update the log file. 
+
+### The Workflow
+```{yml, code=xfun::read_utf8("../../.github/workflows/linkedin_post.yml")}
+```
+
+### The Python Script
+```{python, eval=F, code=xfun::read_utf8("../../tools/cd/linkedin_post.py")}
+```
 
 
 <script type="text/javascript">

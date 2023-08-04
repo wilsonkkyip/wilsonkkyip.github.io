@@ -120,12 +120,43 @@ def append_gsheet(ssid, ranges, data, token):
     response = requests.post(url, params={"valueInputOption": "RAW"}, headers=headers, json=body)
     response.raise_for_status()
 
-
-def main():
+def create_linkedin_post(post):
     linkedin_user_id = os.getenv("LINKEDIN_USER_ID")
     linkedin_token = os.getenv("LINKEDIN_TOKEN")
     linkedin_post_endpoint = "https://api.linkedin.com/v2/ugcPosts"
 
+    rmd_file = os.listdir(f"./_{post['path']}")
+    rmd_file = list(filter(lambda x: ".rmd" in x.lower(), rmd_file))[0]
+
+    rmd_yml = read_rmd_yml(f"./_{post['path']}/{rmd_file}")
+    post_note = "The post was created by Github Actions.\nhttps://github.com/wilsonkkyip/wilsonkkyip.github.io"
+    abstract = rmd_yml["abstract"] + f"\n\n{post_note}"
+
+    body = build_post_body(
+        user_id=linkedin_user_id,
+        post_content=abstract,
+        media_title=rmd_yml["title"],
+        media_description=rmd_yml["description"],
+        article_url=f"https://wilsonkkyip.github.io/{post['path']}"
+    )
+
+    headers = {
+        "X-Restli-Protocol-Version": "2.0.0",
+        "Authorization": "Bearer " + linkedin_token 
+    }
+
+    response = requests.post(
+        url=linkedin_post_endpoint, 
+        json=body, 
+        headers=headers
+    )
+
+    content = response.json()
+
+    return content
+
+
+def main():
     gcp_client_email = os.getenv("GCP_CLIENT_EMAIL")
     gcp_private_key_id = os.getenv("GCP_PRIVATE_KEY_ID")
     gcp_private_key = os.getenv("GCP_PRIVATE_KEY")
@@ -148,35 +179,8 @@ def main():
     missing_post = find_latest_missing_post(page_posts, linkedin_posts)
 
     if missing_post:
-        rmd_file = os.listdir(f"./_{missing_post['path']}")
-        rmd_file = list(filter(lambda x: ".rmd" in x.lower(), rmd_file))[0]
-
-        rmd_yml = read_rmd_yml(f"./_{missing_post['path']}/{rmd_file}")
-        abstract = rmd_yml["abstract"] + "\n\nThe post was created by Github Actions during push or merge to the main branch.\nhttps://github.com/wilsonkkyip/wilsonkkyip.github.io"
-
-
-        body = build_post_body(
-            user_id=linkedin_user_id,
-            post_content=abstract,
-            media_title=rmd_yml["title"],
-            media_description=rmd_yml["description"],
-            article_url=f"https://wilsonkkyip.github.io/{missing_post['path']}"
-        )
-
-        headers = {
-            "X-Restli-Protocol-Version": "2.0.0",
-            "Authorization": "Bearer " + linkedin_token 
-        }
-
-        response = requests.post(
-            url=linkedin_post_endpoint, 
-            json=body, 
-            headers=headers
-        )
-
-        content = response.json()
-        appending_data = [[missing_post["path"], content.get("id")]]
-
+        response = create_linkedin_post(missing_post)
+        appending_data = [[missing_post["path"], response.get("id")]]
         append_gsheet(log_ssid, log_range, appending_data, gcp_token)
 
 if __name__ == "__main__": 

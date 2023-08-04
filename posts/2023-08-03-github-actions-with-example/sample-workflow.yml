@@ -1,0 +1,41 @@
+# Workflow Name
+name: Release Process
+
+on:
+  # Events
+  push:                                   # One event
+    branches:
+      - main
+
+  workflow_run:                           # Another event
+    workflows: [pages-build-deployment]
+    types: 
+      - completed
+
+jobs:
+  # Job
+  generate-release:                 # Job id
+    name: Create GitHub Release     # Job name
+    runs-on: ubuntu-latest          # Runner
+    steps:
+    - name: Checkout Repository     # Step1
+      uses: actions/checkout@v2     # Actions
+      
+    - name: Run release code        # Step2
+      run: |
+        cd /target/directory
+        ./run-release-code
+  
+  # Another Job
+  another-job:                      # Job id
+    name: Another Job               # Job name
+    needs: [generate-release]       # Requires the job to complete successfully
+    runs-on: ubuntu-latest          # Runner
+    steps:
+    - name: Checkout Repository     # Step1
+      uses: actions/checkout@v2     # Actions
+      
+    - name: do other stuffs         # Step2
+      run: echo $CUSTOM_VAR
+      env: 
+        CUSTOM_VAR: "${{ secrets.CUSTOM_VAR }}" # Secret value
