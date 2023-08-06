@@ -1,0 +1,282 @@
+---
+title: "Introduction to Docker with Airflow and Postgres stack"
+description: |
+  A short description of the post.
+author:
+  - name: Wilson Yip
+date: 2023-08-05
+preview: img/preview.png
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+tags: [docker, airflow, postgres]
+categories:
+  - docker
+  - airflow
+  - postgres
+preview_url: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+abstract: |
+  I have set up a Docker containers stack with Apache Airflow and Postgres. The article below gives a brief introduction to Docker and records the workflow as an example implementation. 
+---
+
+# Introduction
+
+Docker is a software hosting *containers*. A container is an isolated place on top of the running operating system (OS) where an application can run without affecting other applications on the OS. Developers have been creating *images* to run on Docker. An image is a template of an application, like Postgres, that are ready to run in a container. It allows users to take the image and run it in seconds in a container and save tremendous times to install the application from scratch.
+
+In this document, we will install a *stack* of containers to run Apache Airflow, a workflow management tool, and Postgres database. In later articles, we will be writing ETL workflows on Airflow using this stack. You can find the code source from [my Github repo](https://github.com/wilsonkkyip/yt-docker-stack). If you have not installed Docker and Docker Compose, please follow the documentation below:
+
+- Docker: https://www.docker.com/products/docker-desktop/
+- Docker Compose: https://docs.docker.com/compose/install/
+
+We will first describe how to tell Docker what images we want to use in a `docker-compose.yaml` specification file. Then we will setup Airflow and Postgres as an example.
+
+# Docker Compose YAML File
+
+In this section, we will briefly introduce how to specify what images to use in a `docker-compose.yaml`. We first take a look on a sample of the YAML file for creating a Postgres container.
+
+```{yaml}
+version: '3.8'           # Version of the specification file 
+
+services: 
+  mypostgres:            # Name of the local container
+    image: postgres:13   # image_name:version
+    ports: 
+      - "5431:5432"      # [local port]:[cotainer port]
+    environment:         # The key-value pairs depends on image
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: airflow
+    volumes:
+      - /path/in/local:/path/in/container
+      - /another/path:/another/path
+    
+  myairflow:             # Another container
+    ...
+```
+
+A full documentation on the sections can be found [here](https://github.com/compose-spec/compose-spec/blob/master/spec.md). Below we will only introduce some of them. 
+
+## Service Name
+
+From the above example, we have specified 2 containers, one is `mypostgres` and the other is `myairflow`. These are the local names of the containers, where you can see them from 
+
+```{bash, eval=F}
+docker container ls
+```
+
+## Image Name
+
+Under the block `mypostgres`, we have specified to use the image `postgres:13`. We can find published images from https://hub.docker.com/ and put the image's name in `docker-compose.yaml`. We can also specify the version of the image. In this example, we are using version 13.
+
+```{r, echo=F}
+knitr::include_graphics("img/dockerhub.png")
+```
+
+## Ports
+
+We have also put `5431:5432` as the port configuration, meaning that we can use the local port `5431` to connect to the port `5432` of the container. In other words, we can connect the database via the following command
+
+```{bash, eval=F}
+psql postgres://username:password@localhost:5431
+```
+
+## Environment
+
+The `environment` section stores the environment variables to be passed to the container. In this example, we are passing `POSTGRES_USER`, `POSTGRES_PASSWORD` and `POSTGRES_DB` to the container. The image will pick up these environment variables to build the Postgres database in the container. 
+
+When we are passing sensitive information like the password in this example, we can create and store key-value pairs in `.env` file besides the `docker-compose.yaml`. Then we can use the keys defind in the `.env` file in the specification file. The expression `${POSTGRES_PASSWORD:-password}` means it will look for the key-value pair inside `.env` and `password` will be use instead if the key-value pair cannot be found. Below shows and example of the `.env` file.
+
+```{text}
+POSTGRES_PASSWORD="AnotherPassword"
+```
+
+## Volumes
+
+We can share files and directories under the `volumes` session with the below format.
+
+```{text}
+/path_to_local_file:/path_to_container_file
+```
+
+## Anchor
+
+When working with a stack of containers, it is common to repeated use some configuration. For example to put the same environment variables into different containers. From the example below, we can both the services `airflow-scheduler` and `airflow-website` share the same set of configuration on `image` and `environment` from the `airflow-common` configuration.
+
+```{yaml}
+x-airflow-common:
+  &airflow-common
+  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.6.3}
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+  ...
+  
+services:
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    ...
+    
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    ...
+```
+
+
+## Starting containers
+
+We can start a single service from the stack with the following command:
+
+```{bash, eval=F}
+docker-compose up <service-name>
+```
+
+Or start the whole stack with the following command:
+
+```{bash, eval=F}
+docker-compose up --build -d
+```
+
+The option `-d` lets the stack to run in background. We can check the status of each container with the following command:
+
+```{bash, eval=F}
+docker container ls
+
+# CONTAINER ID   IMAGE                  ...   PORTS                    NAMES
+# 4c26970df34a   postgres:13            ...   0.0.0.0:5431->5432/tcp   postgres-mypostgres-1
+# 05365378f0f0   apache/airflow:2.6.3   ...   8080/tcp                 yt-docker-stack-airflow-triggerer-1
+# cf43be7e9755   apache/airflow:2.6.3   ...   8080/tcp                 yt-docker-stack-airflow-scheduler-1
+# 12fdbf84054e   apache/airflow:2.6.3   ...   0.0.0.0:8081->8080/tcp   yt-docker-stack-airflow-webserver-1
+# 73cfeea83789   postgres:13            ...   0.0.0.0:5432->5432/tcp   yt-docker-stack-postgres-1
+```
+
+We can also go into the `bash` environment of a container with the following command:
+
+```{bash, eval=F}
+docker exec -it <container_id | container_name> bash
+```
+
+Finally, if we want to close the whole stack of containers, we can use the following command:
+
+```{bash, eval=F}
+docker-compose down -v
+```
+
+The option `-v` removes all the volumes used by the stack.
+
+# Airflow and Postgres stack
+
+In this section, we will show an example to build a stack of containers with Apache Airflow and Postgres database. 
+
+## Obtaining docker compose YAML template
+
+We need to first obtain a `docker-compose.yaml` template file from [here](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#fetching-docker-compose-yaml). I was using Airflow version `2.6.3` at the moment. Hence the YAML file is
+
+```
+https://airflow.apache.org/docs/apache-airflow/2.6.3/docker-compose.yaml
+```
+
+## Customise the YAML file (optional)
+
+In this example, I have customised the YAML file to fit my purposes. You can find my specification file from [Github](https://github.com/wilsonkkyip/yt-docker-stack).
+
+I will be using the `LocalExecutor` instead of the `CeleryExecutor`. Hence I have changed the environment variable `AIRFLOW__CORE__EXECUTOR` from `CeleryyExecutor` to `LocalExecutor` under the `airflow-common` section, and removed the following items:
+
+```{yaml}
+# THE FOLLOWING SECTIONS ARE REMOVED
+x-airflow-common:
+  environment:
+    AIRFLOW__CELERY__RESULT_BACKEND: ...
+    AIRFLOW__CELERY__BROKER_URL: ...
+  depends_on:
+    redis:
+      ...
+
+services:
+  redis:
+    ...
+
+  airflow-worker:
+    ...
+  
+  flower:
+    ...
+```
+
+I have also changed / added the followings:
+
+```{yaml}
+# THE FOLLOWING VALUES ARE CHANGED / ADDED
+x-airflow-common:
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW_INPUT_DIR: '/opt/airflow/dag-inputs'
+    POSTGRES_USER: airflow
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    GAPI_KEY: ${GAPI_KEY}
+    
+services:
+  postgres:
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+      - ./init/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init/postgres:/mnt/sources/init
+  
+  airflow-init:
+    environment:
+      _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
+      _AIRFLOW_WWW_USER_PASSWORD: ${AIRFLOW_PASSWORD}
+```
+
+## Create initial databases and tables (optional)
+
+The Postgres docker image will execute the files in `/docker-entrypoint-initdb.d` during initialisation. One can put some queries in this folder for initial execution, which is why I share some `volumes` in the above section.
+
+```{sql, eval=F}
+CREATE DATABASE youtube;
+\c youtube;
+\i /mnt/sources/init/enum_iso3166.sql;
+CREATE TABLE channel (
+    uuid UUID default gen_random_uuid() NOT NULL,
+    etag CHAR(27) NOT NULL,
+    id CHAR(24) NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    "description" VARCHAR(5000),
+    custom_url VARCHAR(31),
+    published_at Timestamp,
+    country country_alpha2,
+    uploads CHAR(24),
+    view_count INTEGER,
+    subscriber INTEGER,
+    video_count INTEGER,
+    topic_category TEXT[],
+    updated_at TIMESTAMP NOT NULL default CURRENT_TIMESTAMP
+);
+```
+
+## Start the stack
+
+As described in previous sections, I now start the stack with the following cammands:
+
+```{bash, eval=F}
+docker-compose up airflow-init
+
+docker-compose up --build -d
+```
+
+And you can find Airflow is running on http://localhost:8080 or via `docker container ls`.
+
+
+```{r, echo=F, out.width = '100%'}
+knitr::include_graphics("img/airflow.png")
+```
+
