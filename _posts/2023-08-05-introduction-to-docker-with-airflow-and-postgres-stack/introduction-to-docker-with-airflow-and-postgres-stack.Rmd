@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Docker with Airflow and Postgres stack"
 description: |
-  A short description of the post.
+  Deploying Docker stacks of Airflow and Postgres database with docker-compose. 
 author:
   - name: Wilson Yip
 date: 2023-08-05
