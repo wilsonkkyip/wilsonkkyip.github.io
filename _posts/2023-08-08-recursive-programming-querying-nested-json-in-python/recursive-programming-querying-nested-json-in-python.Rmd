@@ -1,0 +1,171 @@
+---
+title: "Recursive Programming - Querying nested JSON in Python"
+description: |
+  Querying nested JSON in Python with recursive programming.
+author:
+  - name: Wilson Yip
+date: 2023-08-08
+preview: img/preview.png
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+tags: [python, recursive-programming]
+categories:
+  - python
+  - recursive-programming
+preview_url: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+abstract: |
+  Querying a nested JSON dictionary in Python is very tedious. You feel the pain already when querying the second layer of dictionary. A recursive function is written to solve the problem.
+---
+
+# Introduction
+
+As we are requesting REST API heavily nowadays, we need to deal with JSON frequently. JSON objects can be transfer into Python dictionaries very easily by the `json` library. Yet, it is quite tedious to query nested JSON if it contains many layers. 
+
+```{python}
+d = {
+    "layer1_item1": {"layer2_item1": {"layer3_item1": "some_info", "layer3_item2": "another_info"}},
+    "layer1_item2": {"layer2_item1": {"layer3_item1": "some_info", "layer3_item2": "another_info"}}
+}
+```
+
+For example if we want to query `layer3_item2` from the above JSON, 
+
+```{python}
+d.get("layer1_item1").get("layer2_item1").get("layer3_item2")
+```
+
+It involves so much brackets and quotes. I have written a recursive function to query these nested JSON dictionary in Python. But we will first take a look what a recursive functions is. 
+
+# Recursive function
+
+A recursive function means the function execute itself within its own definition. A simple but endless definition is shown below.
+
+```{python, eval=F}
+def foo():
+    foo()
+```
+
+The function `foo` calls itself within its own definition. It simply creates a loop (but an endless one in the above example). 
+
+We now take a look on a practical factorial function. Recall the factorial of $n$ is given by 
+
+$$n! = n \cdot (n - 1) \cdot (n - 2) \cdots 3 \cdot 2 \cdot 1.$$
+
+In Python, we can illustrate this by 
+
+```{python}
+def factorial(n):
+    if n == 1:
+        return n
+    return n * factorial(n - 1)
+```
+
+```{python}
+factorial(5)
+```
+
+# Querying nested JSON dictionary
+
+The following function can query nested dictonary with syntax like `key1.key2.key3` instead of multiple `get`, brackets and quotes. See some examples in the coming section.
+
+```{python}
+from typing import Any, Optional
+
+def pjq(
+    json_dict: 'list | dict', 
+    query: 'list[str] | str', 
+    default: Optional[Any] = None, 
+    sep: str = ".", 
+    idx_sep: str = ",", 
+    trim: bool = True, 
+    prev_q: Optional[str] = None
+) -> Any:
+    query = query.split(sep) if isinstance(query, str) else query
+    # Cannot pop query index otherwise affecting the for loop in list
+    q: str = query[0]
+    query: list[str] = query[1:]
+    if json_dict == default:
+        # If `default` is set to a list of dict, it cannot go through this
+        return default
+
+    elif isinstance(json_dict, dict):
+        json_dict = json_dict.get(q, default)
+        
+        if query:
+            return pjq(json_dict, query, default, sep, idx_sep, trim=trim, prev_q=q)
+        return json_dict
+
+    elif isinstance(json_dict, list):
+        if q:
+            try:
+                idx: list[int] = [int(i) for i in q.split(idx_sep)]
+                json_dict = [json_dict[i] for i in idx]
+            except Exception:
+                return default
+        if query:
+            json_dict = [pjq(jd, query, default, sep, idx_sep, trim=trim, prev_q=q) for jd in json_dict]
+
+        if trim:
+            json_dict = json_dict[0] if len(json_dict) == 1 else json_dict
+
+        return json_dict
+
+    else:
+        return None 
+```
+
+# Examples
+
+## Example 1
+
+```{python}
+d = {
+    "a": {
+        "b": {"b1": 1, "b2": 2},
+        "c": {"c1": 3, "c2": 4}
+    }
+}
+```
+
+```{python}
+pjq(d, "a.b.b2")
+```
+
+## Example 2
+
+```{python}
+d = {
+    "a": [
+        {"b1": 1, "b2": 2},
+        {"b1": 3, "b2": 4},
+        {"b1": 5, "b2": 6}
+    ]
+}
+```
+
+```{python}
+pjq(d, "a.1,2.b2")
+```
+
+
+```{python}
+pjq(d, "a..b2")
+```
+
+
+## Example 3
+
+```{python}
+d = [
+    {"a": {"b": {"x": 1}, "c": {"y": 3}}},
+    {"a": {"b": {"x": 2}, "c": {"y": 4}}}
+]
+```
+
+```{python}
+pjq(d, ".a.c.y")
+```
+

@@ -88,41 +88,41 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-<title>Wilson Yip's Blog: Introduction to Docker with Airflow and Postgres stack</title>
+<title>Wilson Yip's Blog: Recursive Programming - Querying nested JSON in Python</title>
 
-<meta property="description" itemprop="description" content="Deploying Docker stacks of Airflow and Postgres database with docker-compose."/>
+<meta property="description" itemprop="description" content="Querying nested JSON in Python with recursive programming."/>
 
 <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"/>
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2023-08-05"/>
-<meta property="article:created" itemprop="dateCreated" content="2023-08-05"/>
+<meta property="article:published" itemprop="datePublished" content="2023-08-08"/>
+<meta property="article:created" itemprop="dateCreated" content="2023-08-08"/>
 <meta name="article:author" content="Wilson Yip"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Wilson Yip&#39;s Blog: Introduction to Docker with Airflow and Postgres stack"/>
+<meta property="og:title" content="Wilson Yip&#39;s Blog: Recursive Programming - Querying nested JSON in Python"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="Deploying Docker stacks of Airflow and Postgres database with docker-compose."/>
+<meta property="og:description" content="Querying nested JSON in Python with recursive programming."/>
 <meta property="og:image" content="https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Wilson Yip&#39;s Blog"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary_large_image"/>
-<meta property="twitter:title" content="Wilson Yip&#39;s Blog: Introduction to Docker with Airflow and Postgres stack"/>
-<meta property="twitter:description" content="Deploying Docker stacks of Airflow and Postgres database with docker-compose."/>
+<meta property="twitter:title" content="Wilson Yip&#39;s Blog: Recursive Programming - Querying nested JSON in Python"/>
+<meta property="twitter:description" content="Querying nested JSON in Python with recursive programming."/>
 <meta property="twitter:image" content="https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output","tags","categories","preview_url","favicon","abstract"]}},"value":[{"type":"character","attributes":{},"value":["Introduction to Docker with Airflow and Postgres stack"]},{"type":"character","attributes":{},"value":["Deploying Docker stacks of Airflow and Postgres database with docker-compose."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Wilson Yip"]}]}]},{"type":"character","attributes":{},"value":["2023-08-05"]},{"type":"character","attributes":{},"value":["img/preview.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["docker","airflow","postgres"]},{"type":"character","attributes":{},"value":["docker","airflow","postgres"]},{"type":"character","attributes":{},"value":["https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"]},{"type":"character","attributes":{},"value":["https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"]},{"type":"character","attributes":{},"value":["I have set up a Docker containers stack with Apache Airflow and Postgres. The article below gives a brief introduction to Docker and records the workflow as an example implementation. "]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output","tags","categories","preview_url","favicon","abstract"]}},"value":[{"type":"character","attributes":{},"value":["Recursive Programming - Querying nested JSON in Python"]},{"type":"character","attributes":{},"value":["Querying nested JSON in Python with recursive programming."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Wilson Yip"]}]}]},{"type":"character","attributes":{},"value":["2023-08-08"]},{"type":"character","attributes":{},"value":["img/preview.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["python","recursive-programming"]},{"type":"character","attributes":{},"value":["python","recursive-programming"]},{"type":"character","attributes":{},"value":["https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"]},{"type":"character","attributes":{},"value":["https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"]},{"type":"character","attributes":{},"value":["Querying a nested JSON dictionary in Python is very tedious. You feel the pain already when querying the second layer of dictionary. A recursive function is written to solve the problem."]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["img/airflow.png","img/dockerhub.png","img/preview.png","introduction-to-docker-with-airflow-and-postgres-stack_files/anchor-4.2.2/anchor.min.js","introduction-to-docker-with-airflow-and-postgres-stack_files/bowser-1.9.3/bowser.min.js","introduction-to-docker-with-airflow-and-postgres-stack_files/distill-2.2.21/template.v2.js","introduction-to-docker-with-airflow-and-postgres-stack_files/header-attrs-2.23/header-attrs.js","introduction-to-docker-with-airflow-and-postgres-stack_files/jquery-3.6.0/jquery-3.6.0.js","introduction-to-docker-with-airflow-and-postgres-stack_files/jquery-3.6.0/jquery-3.6.0.min.js","introduction-to-docker-with-airflow-and-postgres-stack_files/jquery-3.6.0/jquery-3.6.0.min.map","introduction-to-docker-with-airflow-and-postgres-stack_files/popper-2.6.0/popper.min.js","introduction-to-docker-with-airflow-and-postgres-stack_files/tippy-6.2.7/tippy-bundle.umd.min.js","introduction-to-docker-with-airflow-and-postgres-stack_files/tippy-6.2.7/tippy-light-border.css","introduction-to-docker-with-airflow-and-postgres-stack_files/tippy-6.2.7/tippy.css","introduction-to-docker-with-airflow-and-postgres-stack_files/tippy-6.2.7/tippy.umd.min.js","introduction-to-docker-with-airflow-and-postgres-stack_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["img/preview.png","recursive-programming-querying-nested-json-in-python_files/anchor-4.2.2/anchor.min.js","recursive-programming-querying-nested-json-in-python_files/bowser-1.9.3/bowser.min.js","recursive-programming-querying-nested-json-in-python_files/distill-2.2.21/template.v2.js","recursive-programming-querying-nested-json-in-python_files/header-attrs-2.23/header-attrs.js","recursive-programming-querying-nested-json-in-python_files/jquery-3.6.0/jquery-3.6.0.js","recursive-programming-querying-nested-json-in-python_files/jquery-3.6.0/jquery-3.6.0.min.js","recursive-programming-querying-nested-json-in-python_files/jquery-3.6.0/jquery-3.6.0.min.map","recursive-programming-querying-nested-json-in-python_files/popper-2.6.0/popper.min.js","recursive-programming-querying-nested-json-in-python_files/tippy-6.2.7/tippy-bundle.umd.min.js","recursive-programming-querying-nested-json-in-python_files/tippy-6.2.7/tippy-light-border.css","recursive-programming-querying-nested-json-in-python_files/tippy-6.2.7/tippy.css","recursive-programming-querying-nested-json-in-python_files/tippy-6.2.7/tippy.umd.min.js","recursive-programming-querying-nested-json-in-python_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2225,7 +2225,7 @@ d-article li {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Introduction to Docker with Airflow and Postgres stack","description":"Deploying Docker stacks of Airflow and Postgres database with docker-compose.","authors":[{"author":"Wilson Yip","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-08-05T00:00:00.000+00:00","citationText":"Yip, 2023"}
+{"title":"Recursive Programming - Querying nested JSON in Python","description":"Querying nested JSON in Python with recursive programming.","authors":[{"author":"Wilson Yip","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-08-08T00:00:00.000+00:00","citationText":"Yip, 2023"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2256,21 +2256,20 @@ d-article li {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Introduction to Docker with Airflow and Postgres stack</h1>
+<h1>Recursive Programming - Querying nested JSON in Python</h1>
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
-  <a href="../../index.html#category:docker" class="dt-tag">docker</a>
-  <a href="../../index.html#category:airflow" class="dt-tag">airflow</a>
-  <a href="../../index.html#category:postgres" class="dt-tag">postgres</a>
+  <a href="../../index.html#category:python" class="dt-tag">python</a>
+  <a href="../../index.html#category:recursive-programming" class="dt-tag">recursive-programming</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>Deploying Docker stacks of Airflow and Postgres database with docker-compose.</p></p>
+<p><p>Querying nested JSON in Python with recursive programming.</p></p>
 </div>
 
 <div class="d-byline">
   Wilson Yip  
   
-<br/>2023-08-05
+<br/>2023-08-08
 </div>
 
 <div class="d-article">
@@ -2279,225 +2278,142 @@ d-article li {
 <h3>Contents</h3>
 <ul>
 <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
-<li><a href="#docker-compose-yaml-file" id="toc-docker-compose-yaml-file">Docker Compose YAML File</a>
+<li><a href="#recursive-function" id="toc-recursive-function">Recursive function</a></li>
+<li><a href="#querying-nested-json-dictionary" id="toc-querying-nested-json-dictionary">Querying nested JSON dictionary</a></li>
+<li><a href="#examples" id="toc-examples">Examples</a>
 <ul>
-<li><a href="#service-name" id="toc-service-name">Service Name</a></li>
-<li><a href="#image-name" id="toc-image-name">Image Name</a></li>
-<li><a href="#ports" id="toc-ports">Ports</a></li>
-<li><a href="#environment" id="toc-environment">Environment</a></li>
-<li><a href="#volumes" id="toc-volumes">Volumes</a></li>
-<li><a href="#anchor" id="toc-anchor">Anchor</a></li>
-<li><a href="#starting-containers" id="toc-starting-containers">Starting containers</a></li>
-</ul></li>
-<li><a href="#airflow-and-postgres-stack" id="toc-airflow-and-postgres-stack">Airflow and Postgres stack</a>
-<ul>
-<li><a href="#obtaining-docker-compose-yaml-template" id="toc-obtaining-docker-compose-yaml-template">Obtaining docker compose YAML template</a></li>
-<li><a href="#customise-the-yaml-file-optional" id="toc-customise-the-yaml-file-optional">Customise the YAML file (optional)</a></li>
-<li><a href="#create-initial-databases-and-tables-optional" id="toc-create-initial-databases-and-tables-optional">Create initial databases and tables (optional)</a></li>
-<li><a href="#start-the-stack" id="toc-start-the-stack">Start the stack</a></li>
+<li><a href="#example-1" id="toc-example-1">Example 1</a></li>
+<li><a href="#example-2" id="toc-example-2">Example 2</a></li>
+<li><a href="#example-3" id="toc-example-3">Example 3</a></li>
 </ul></li>
 </ul>
 </nav>
 </div>
 <h1 id="introduction">Introduction</h1>
-<p>Docker is a software hosting <em>containers</em>. A container is an isolated place on top of the running operating system (OS) where an application can run without affecting other applications on the OS. Developers have been creating <em>images</em> to run on Docker. An image is a template of an application, like Postgres, that are ready to run in a container. It allows users to take the image and run it in seconds in a container and save tremendous times to install the application from scratch.</p>
-<p>In this document, we will install a <em>stack</em> of containers to run Apache Airflow, a workflow management tool, and Postgres database. In later articles, we will be writing ETL workflows on Airflow using this stack. You can find the code source from <a href="https://github.com/wilsonkkyip/yt-docker-stack">my Github repo</a>. If you have not installed Docker and Docker Compose, please follow the documentation below:</p>
-<ul>
-<li>Docker: <a href="https://www.docker.com/products/docker-desktop/" class="uri">https://www.docker.com/products/docker-desktop/</a></li>
-<li>Docker Compose: <a href="https://docs.docker.com/compose/install/" class="uri">https://docs.docker.com/compose/install/</a></li>
-</ul>
-<p>We will first describe how to tell Docker what images we want to use in a <code>docker-compose.yaml</code> specification file. Then we will setup Airflow and Postgres as an example.</p>
-<h1 id="docker-compose-yaml-file">Docker Compose YAML File</h1>
-<p>In this section, we will briefly introduce how to specify what images to use in a <code>docker-compose.yaml</code>. We first take a look on a sample of the YAML file for creating a Postgres container.</p>
+<p>As we are requesting REST API heavily nowadays, we need to deal with JSON frequently. JSON objects can be transfer into Python dictionaries very easily by the <code>json</code> library. Yet, it is quite tedious to query nested JSON if it contains many layers.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;3.8&#39;</span><span class="co">           # Version of the specification file </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">mypostgres</span><span class="kw">:</span><span class="co">            # Name of the local container</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> postgres:13</span><span class="co">   # image_name:version</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;5431:5432&quot;</span><span class="co">      # [local port]:[cotainer port]</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span><span class="co">         # The key-value pairs depends on image</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">POSTGRES_USER</span><span class="kw">:</span><span class="at"> airflow</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">POSTGRES_PASSWORD</span><span class="kw">:</span><span class="at"> ${POSTGRES_PASSWORD:-password}</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">POSTGRES_DB</span><span class="kw">:</span><span class="at"> airflow</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> /path/in/local:/path/in/container</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> /another/path:/another/path</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">myairflow</span><span class="kw">:</span><span class="co">             # Another container</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="at">    ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;layer1_item1&quot;</span>: {<span class="st">&quot;layer2_item1&quot;</span>: {<span class="st">&quot;layer3_item1&quot;</span>: <span class="st">&quot;some_info&quot;</span>, <span class="st">&quot;layer3_item2&quot;</span>: <span class="st">&quot;another_info&quot;</span>}},</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;layer1_item2&quot;</span>: {<span class="st">&quot;layer2_item1&quot;</span>: {<span class="st">&quot;layer3_item1&quot;</span>: <span class="st">&quot;some_info&quot;</span>, <span class="st">&quot;layer3_item2&quot;</span>: <span class="st">&quot;another_info&quot;</span>}}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<p>A full documentation on the sections can be found <a href="https://github.com/compose-spec/compose-spec/blob/master/spec.md">here</a>. Below we will only introduce some of them.</p>
-<h2 id="service-name">Service Name</h2>
-<p>From the above example, we have specified 2 containers, one is <code>mypostgres</code> and the other is <code>myairflow</code>. These are the local names of the containers, where you can see them from</p>
+<p>For example if we want to query <code>layer3_item2</code> from the above JSON,</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> container ls</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>d.get(<span class="st">&quot;layer1_item1&quot;</span>).get(<span class="st">&quot;layer2_item1&quot;</span>).get(<span class="st">&quot;layer3_item2&quot;</span>)</span></code></pre></div>
+<pre><code>&#39;another_info&#39;</code></pre>
 </div>
-<h2 id="image-name">Image Name</h2>
-<p>Under the block <code>mypostgres</code>, we have specified to use the image <code>postgres:13</code>. We can find published images from <a href="https://hub.docker.com/" class="uri">https://hub.docker.com/</a> and put the image’s name in <code>docker-compose.yaml</code>. We can also specify the version of the image. In this example, we are using version 13.</p>
+<p>It involves so much brackets and quotes. I have written a recursive function to query these nested JSON dictionary in Python. But we will first take a look what a recursive functions is.</p>
+<h1 id="recursive-function">Recursive function</h1>
+<p>A recursive function means the function execute itself within its own definition. A simple but endless definition is shown below.</p>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="img/dockerhub.png" width="954" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> foo():</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    foo()</span></code></pre></div>
 </div>
-<h2 id="ports">Ports</h2>
-<p>We have also put <code>5431:5432</code> as the port configuration, meaning that we can use the local port <code>5431</code> to connect to the port <code>5432</code> of the container. In other words, we can connect the database via the following command</p>
+<p>The function <code>foo</code> calls itself within its own definition. It simply creates a loop (but an endless one in the above example).</p>
+<p>We now take a look on a practical factorial function. Recall the factorial of <span class="math inline">\(n\)</span> is given by</p>
+<p><span class="math display">\[n! = n \cdot (n - 1) \cdot (n - 2) \cdots 3 \cdot 2 \cdot 1.\]</span></p>
+<p>In Python, we can illustrate this by</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">psql</span> postgres://username:password@localhost:5431</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> factorial(n):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> n</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n <span class="op">*</span> factorial(n <span class="op">-</span> <span class="dv">1</span>)</span></code></pre></div>
 </div>
-<h2 id="environment">Environment</h2>
-<p>The <code>environment</code> section stores the environment variables to be passed to the container. In this example, we are passing <code>POSTGRES_USER</code>, <code>POSTGRES_PASSWORD</code> and <code>POSTGRES_DB</code> to the container. The image will pick up these environment variables to build the Postgres database in the container.</p>
-<p>When we are passing sensitive information like the password in this example, we can create and store key-value pairs in <code>.env</code> file besides the <code>docker-compose.yaml</code>. Then we can use the keys defind in the <code>.env</code> file in the specification file. The expression <code>${POSTGRES_PASSWORD:-password}</code> means it will look for the key-value pair inside <code>.env</code> and <code>password</code> will be use instead if the key-value pair cannot be found. Below shows and example of the <code>.env</code> file.</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="text"><code>POSTGRES_PASSWORD=&quot;AnotherPassword&quot;</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>factorial(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>120</code></pre>
 </div>
-<h2 id="volumes">Volumes</h2>
-<p>We can share files and directories under the <code>volumes</code> session with the below format.</p>
+<h1 id="querying-nested-json-dictionary">Querying nested JSON dictionary</h1>
+<p>The following function can query nested dictonary with syntax like <code>key1.key2.key3</code> instead of multiple <code>get</code>, brackets and quotes. See some examples in the coming section.</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="text"><code>/path_to_local_file:/path_to_container_file</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Any, Optional</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pjq(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    json_dict: <span class="st">&#39;list | dict&#39;</span>, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    query: <span class="st">&#39;list[str] | str&#39;</span>, </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    default: Optional[Any] <span class="op">=</span> <span class="va">None</span>, </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    sep: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;.&quot;</span>, </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    idx_sep: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;,&quot;</span>, </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    trim: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>, </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    prev_q: Optional[<span class="bu">str</span>] <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Any:</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> query.split(sep) <span class="cf">if</span> <span class="bu">isinstance</span>(query, <span class="bu">str</span>) <span class="cf">else</span> query</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cannot pop query index otherwise affecting the for loop in list</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    q: <span class="bu">str</span> <span class="op">=</span> query[<span class="dv">0</span>]</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    query: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">=</span> query[<span class="dv">1</span>:]</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> json_dict <span class="op">==</span> default:</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If `default` is set to a list of dict, it cannot go through this</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> default</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="bu">isinstance</span>(json_dict, <span class="bu">dict</span>):</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        json_dict <span class="op">=</span> json_dict.get(q, default)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> query:</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> pjq(json_dict, query, default, sep, idx_sep, trim<span class="op">=</span>trim, prev_q<span class="op">=</span>q)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json_dict</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="bu">isinstance</span>(json_dict, <span class="bu">list</span>):</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> q:</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>                idx: <span class="bu">list</span>[<span class="bu">int</span>] <span class="op">=</span> [<span class="bu">int</span>(i) <span class="cf">for</span> i <span class="kw">in</span> q.split(idx_sep)]</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>                json_dict <span class="op">=</span> [json_dict[i] <span class="cf">for</span> i <span class="kw">in</span> idx]</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> default</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> query:</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>            json_dict <span class="op">=</span> [pjq(jd, query, default, sep, idx_sep, trim<span class="op">=</span>trim, prev_q<span class="op">=</span>q) <span class="cf">for</span> jd <span class="kw">in</span> json_dict]</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> trim:</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>            json_dict <span class="op">=</span> json_dict[<span class="dv">0</span>] <span class="cf">if</span> <span class="bu">len</span>(json_dict) <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> json_dict</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json_dict</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span> </span></code></pre></div>
 </div>
-<h2 id="anchor">Anchor</h2>
-<p>When working with a stack of containers, it is common to repeated use some configuration. For example to put the same environment variables into different containers. From the example below, we can both the services <code>airflow-scheduler</code> and <code>airflow-website</code> share the same set of configuration on <code>image</code> and <code>environment</code> from the <code>airflow-common</code> configuration.</p>
+<h1 id="examples">Examples</h1>
+<h2 id="example-1">Example 1</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">x-airflow-common</span><span class="kw">:</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="ot">&amp;airflow-common</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.6.3}</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">environment</span><span class="kw">:</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">AIRFLOW__CORE__EXECUTOR</span><span class="kw">:</span><span class="at"> LocalExecutor</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">AIRFLOW__DATABASE__SQL_ALCHEMY_CONN</span><span class="kw">:</span><span class="at"> postgresql+psycopg2://airflow:airflow@postgres/airflow</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="at">  ...</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">airflow-scheduler</span><span class="kw">:</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">&lt;&lt;</span><span class="kw">:</span><span class="at"> </span><span class="ot">*airflow-common</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> scheduler</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="at">    ...</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">airflow-webserver</span><span class="kw">:</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">&lt;&lt;</span><span class="kw">:</span><span class="at"> </span><span class="ot">*airflow-common</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> webserver</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="at">    ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;a&quot;</span>: {</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;b&quot;</span>: {<span class="st">&quot;b1&quot;</span>: <span class="dv">1</span>, <span class="st">&quot;b2&quot;</span>: <span class="dv">2</span>},</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;c&quot;</span>: {<span class="st">&quot;c1&quot;</span>: <span class="dv">3</span>, <span class="st">&quot;c2&quot;</span>: <span class="dv">4</span>}</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<h2 id="starting-containers">Starting containers</h2>
-<p>We can start a single service from the stack with the following command:</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> up <span class="op">&lt;</span>service-name<span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pjq(d, <span class="st">&quot;a.b.b2&quot;</span>)</span></code></pre></div>
+<pre><code>2</code></pre>
 </div>
-<p>Or start the whole stack with the following command:</p>
+<h2 id="example-2">Example 2</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> up <span class="at">--build</span> <span class="at">-d</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;a&quot;</span>: [</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        {<span class="st">&quot;b1&quot;</span>: <span class="dv">1</span>, <span class="st">&quot;b2&quot;</span>: <span class="dv">2</span>},</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        {<span class="st">&quot;b1&quot;</span>: <span class="dv">3</span>, <span class="st">&quot;b2&quot;</span>: <span class="dv">4</span>},</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        {<span class="st">&quot;b1&quot;</span>: <span class="dv">5</span>, <span class="st">&quot;b2&quot;</span>: <span class="dv">6</span>}</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<p>The option <code>-d</code> lets the stack to run in background. We can check the status of each container with the following command:</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> container ls</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># CONTAINER ID   IMAGE                  ...   PORTS                    NAMES</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 4c26970df34a   postgres:13            ...   0.0.0.0:5431-&gt;5432/tcp   postgres-mypostgres-1</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 05365378f0f0   apache/airflow:2.6.3   ...   8080/tcp                 yt-docker-stack-airflow-triggerer-1</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># cf43be7e9755   apache/airflow:2.6.3   ...   8080/tcp                 yt-docker-stack-airflow-scheduler-1</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 12fdbf84054e   apache/airflow:2.6.3   ...   0.0.0.0:8081-&gt;8080/tcp   yt-docker-stack-airflow-webserver-1</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 73cfeea83789   postgres:13            ...   0.0.0.0:5432-&gt;5432/tcp   yt-docker-stack-postgres-1</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pjq(d, <span class="st">&quot;a.1,2.b2&quot;</span>)</span></code></pre></div>
+<pre><code>[4, 6]</code></pre>
 </div>
-<p>We can also go into the <code>bash</code> environment of a container with the following command:</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> exec <span class="at">-it</span> <span class="op">&lt;</span>container_id <span class="kw">|</span> <span class="ex">container_name</span><span class="op">&gt;</span> bash</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pjq(d, <span class="st">&quot;a..b2&quot;</span>)</span></code></pre></div>
+<pre><code>[2, 4, 6]</code></pre>
 </div>
-<p>Finally, if we want to close the whole stack of containers, we can use the following command:</p>
+<h2 id="example-3">Example 3</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> down <span class="at">-v</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> [</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">&quot;a&quot;</span>: {<span class="st">&quot;b&quot;</span>: {<span class="st">&quot;x&quot;</span>: <span class="dv">1</span>}, <span class="st">&quot;c&quot;</span>: {<span class="st">&quot;y&quot;</span>: <span class="dv">3</span>}}},</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">&quot;a&quot;</span>: {<span class="st">&quot;b&quot;</span>: {<span class="st">&quot;x&quot;</span>: <span class="dv">2</span>}, <span class="st">&quot;c&quot;</span>: {<span class="st">&quot;y&quot;</span>: <span class="dv">4</span>}}}</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
 </div>
-<p>The option <code>-v</code> removes all the volumes used by the stack.</p>
-<h1 id="airflow-and-postgres-stack">Airflow and Postgres stack</h1>
-<p>In this section, we will show an example to build a stack of containers with Apache Airflow and Postgres database.</p>
-<h2 id="obtaining-docker-compose-yaml-template">Obtaining docker compose YAML template</h2>
-<p>We need to first obtain a <code>docker-compose.yaml</code> template file from <a href="https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#fetching-docker-compose-yaml">here</a>. I was using Airflow version <code>2.6.3</code> at the moment. Hence the YAML file is</p>
-<pre><code>https://airflow.apache.org/docs/apache-airflow/2.6.3/docker-compose.yaml</code></pre>
-<h2 id="customise-the-yaml-file-optional">Customise the YAML file (optional)</h2>
-<p>In this example, I have customised the YAML file to fit my purposes. You can find my specification file from <a href="https://github.com/wilsonkkyip/yt-docker-stack">Github</a>.</p>
-<p>I will be using the <code>LocalExecutor</code> instead of the <code>CeleryExecutor</code>. Hence I have changed the environment variable <code>AIRFLOW__CORE__EXECUTOR</code> from <code>CeleryyExecutor</code> to <code>LocalExecutor</code> under the <code>airflow-common</code> section, and removed the following items:</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb13"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># THE FOLLOWING SECTIONS ARE REMOVED</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">x-airflow-common</span><span class="kw">:</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">environment</span><span class="kw">:</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">AIRFLOW__CELERY__RESULT_BACKEND</span><span class="kw">:</span><span class="at"> ...</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">AIRFLOW__CELERY__BROKER_URL</span><span class="kw">:</span><span class="at"> ...</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">depends_on</span><span class="kw">:</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">redis</span><span class="kw">:</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="at">      ...</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">redis</span><span class="kw">:</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="at">    ...</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">airflow-worker</span><span class="kw">:</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="at">    ...</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">flower</span><span class="kw">:</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="at">    ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pjq(d, <span class="st">&quot;.a.c.y&quot;</span>)</span></code></pre></div>
+<pre><code>[3, 4]</code></pre>
 </div>
-<p>I have also changed / added the followings:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb14"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># THE FOLLOWING VALUES ARE CHANGED / ADDED</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">x-airflow-common</span><span class="kw">:</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">environment</span><span class="kw">:</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">AIRFLOW__CORE__EXECUTOR</span><span class="kw">:</span><span class="at"> LocalExecutor</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">AIRFLOW_INPUT_DIR</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;/opt/airflow/dag-inputs&#39;</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">POSTGRES_USER</span><span class="kw">:</span><span class="at"> airflow</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">POSTGRES_PASSWORD</span><span class="kw">:</span><span class="at"> ${POSTGRES_PASSWORD}</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">GAPI_KEY</span><span class="kw">:</span><span class="at"> ${GAPI_KEY}</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">postgres</span><span class="kw">:</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;5432:5432&quot;</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">POSTGRES_USER</span><span class="kw">:</span><span class="at"> airflow</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">POSTGRES_PASSWORD</span><span class="kw">:</span><span class="at"> ${POSTGRES_PASSWORD}</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">POSTGRES_DB</span><span class="kw">:</span><span class="at"> airflow</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> postgres-db-volume:/var/lib/postgresql/data</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./init/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql</span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./init/postgres:/mnt/sources/init</span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="at">  </span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">airflow-init</span><span class="kw">:</span></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">_AIRFLOW_WWW_USER_USERNAME</span><span class="kw">:</span><span class="at"> ${_AIRFLOW_WWW_USER_USERNAME:-airflow}</span></span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">_AIRFLOW_WWW_USER_PASSWORD</span><span class="kw">:</span><span class="at"> ${AIRFLOW_PASSWORD}</span></span></code></pre></div>
-</div>
-<h2 id="create-initial-databases-and-tables-optional">Create initial databases and tables (optional)</h2>
-<p>The Postgres docker image will execute the files in <code>/docker-entrypoint-initdb.d</code> during initialisation. One can put some queries in this folder for initial execution, which is why I share some <code>volumes</code> in the above section.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb15"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> youtube;</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>\c youtube;</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>\i <span class="op">/</span>mnt<span class="op">/</span>sources<span class="op">/</span>init<span class="op">/</span>enum_iso3166.sql;</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> channel (</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    uuid UUID <span class="kw">default</span> gen_random_uuid() <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    etag <span class="dt">CHAR</span>(<span class="dv">27</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span> <span class="dt">CHAR</span>(<span class="dv">24</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    title <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">&quot;description&quot;</span> <span class="dt">VARCHAR</span>(<span class="dv">5000</span>),</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    custom_url <span class="dt">VARCHAR</span>(<span class="dv">31</span>),</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    published_at <span class="dt">Timestamp</span>,</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    country country_alpha2,</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    uploads <span class="dt">CHAR</span>(<span class="dv">24</span>),</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    view_count <span class="dt">INTEGER</span>,</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    subscriber <span class="dt">INTEGER</span>,</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    video_count <span class="dt">INTEGER</span>,</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    topic_category TEXT[],</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    updated_at <span class="dt">TIMESTAMP</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">default</span> <span class="fu">CURRENT_TIMESTAMP</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div>
-</div>
-<h2 id="start-the-stack">Start the stack</h2>
-<p>As described in previous sections, I now start the stack with the following cammands:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> up airflow-init</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> up <span class="at">--build</span> <span class="at">-d</span></span></code></pre></div>
-</div>
-<p>And you can find Airflow is running on <a href="http://localhost:8080" class="uri">http://localhost:8080</a> or via <code>docker container ls</code>.</p>
-<div class="layout-chunk" data-layout="l-body">
-<p><img src="img/airflow.png" width="100%" /></p>
-</div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2505,6 +2421,15 @@ d-article li {
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
