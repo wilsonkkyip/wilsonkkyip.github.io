@@ -1,7 +1,7 @@
 ---
-title: "Airflow ETL Dags - From YouTube API to Postgres Database"
+title: "Writing Airflow DAGs"
 description: |
-  Intro to how to write a dag on Airflow with an example to extract, transform and load data from YouTube API to Postgres database.
+  Introduction to how to write a DAG on Airflow. Including writing custom operators, XComs, branching operators, triggers and variables.
 author:
   - name: Wilson Yip
 date: 2023-08-10
@@ -10,150 +10,152 @@ output:
   distill::distill_article:
     toc: true
     self_contained: false
-tags: [python, airflow, postgres, etl, youtube-api, etag, if-none-match]
+tags: [python, airflow]
 categories:
   - python
   - airflow
-  - postgres
-  - etl
-  - youtube-api
-  - etag
-  - if-none-match
-preview_url: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+preview_url: img/preview.png
 favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
 abstract: |
-  This article gives an introduction on how to write a dag on Airflow with an example of implementing an ETL pipeline from YouTube API to Postgres database. 
+  This article gives an introduction on how to write a DAG on Airflow. Including writing custom operators, using XComs to comunicate with different tasks, using branching operators, triggers and variables. 
 ---
+
 
 # Introduction
 
-This article aims to introduce how to write an airflow dag with an example to build an ETL pipeline from YouTube Data API to a Postgres database. Please refer to the [previous article](../2023-08-05-introduction-to-docker-with-airflow-and-postgres-stack/) on how to host an Airflow and Postgres Docker container. It is good to have a controlled environment for these two applications in containers so that they will not have any dependency issues. 
+This article aims to introduce how to write an airflow DAG. We will go through the basic `BashOperator` and `PythonOperator`, using Airflow TaskFlow decorators, Airflow context, passing information between tasks using XComs, branching tasks based on conditions, and more. 
 
-As we will involve YouTueb Data API in the example, this article will first start with a brief introduction to YouTube Data API, then it will dive into how to write an Airflow DAG. Finally it will provide an ETL pipeline example to be run on Airflow. 
-
-# YouTube Data API
-
-To use [YouTube Data API](https://developers.google.com/youtube/v3), we need to have an API key or an authorised token. Please refer to the [previous article](../2023-07-29-rust-gapi-oauth2/) to obtain an authorised token. You can get an API key with similar method as shown in the article. 
-
-After having either of the above, we can add the following headers when requesting the endpoints:
-
-- For API key: `headers = {"x-goog-api-key": api_key}`
-- For authorised token: `headers = {"Authorization": f"Bearer {access_token}"}`
-
-## Channels List Endpoint
-
-The [`channels.list` method](https://developers.google.com/youtube/v3/docs/channels/list) allows us to fetch information about YouTube channels, including their number of subscribers and number of videos. It also offers a list of videos that have been uploaded by this channel. We can utilise this information for further analysis. 
-
-Below shows a code snippet to fetch a channel information with this endpoint. 
-
-```{python, eval=F}
-import os 
-import requests 
-
-API_KEY = os.getenv("GAPI_KEY")
-url = "https://www.googleapis.com/youtube/v3/channels"
-
-parts = [
-    "brandingSettings", "contentDetails", "contentOwnerDetails", "id", 
-    "localizations", "snippet", "statistics", "status", "topicDetails"
-]
-params = {
-    "id": "UCSXwxpWZQ7XZ1WL3wqevChA",    # comma separated channel id. Max 50
-    "part": ",".join(parts)
-}
-
-headers = {"x-goog-api-key": API_KEY}
-
-response = requests.get(url, params=params, headers=headers)
-response.json()
-
-# {
-#     "kind": "youtube#channelListResponse",
-#     "etag": "Tv4R37RghCrjIhGjwzOU4LMObXU",
-#     "pageInfo": {...},
-#     "items": [
-#         {
-#             "kind": "youtube#channel",
-#             "etag": "uSDEMv9Bq-jmBQ944jhPmIThLG4",
-#             "id": "UCSXwxpWZQ7XZ1WL3wqevChA",
-#             "snippet": {
-#                 "title": "Apache Airflow",
-#                 "description": "...",
-#                 "customUrl": "@apacheairflow",
-#                 "publishedAt": "2019-06-27T10:06:48Z",
-#                 "thumbnails": {...},
-#                 "localized": {...},
-#                 "country": "US"
-#             },
-#             "contentDetails": {
-#                 "relatedPlaylists": {
-#                     "likes": "",
-#                     "uploads": "UUSXwxpWZQ7XZ1WL3wqevChA"
-#                 }
-#             },
-#             "statistics": {
-#                 "viewCount": "771386",
-#                 "subscriberCount": "9490",
-#                 "hiddenSubscriberCount": false,
-#                 "videoCount": "176"
-#             },
-#             "topicDetails": {
-#                 "topicIds": [...],
-#                 "topicCategories": [
-#                     "https://en.wikipedia.org/wiki/Lifestyle_(sociology)",
-#                     "https://en.wikipedia.org/wiki/Technology",
-#                     "https://en.wikipedia.org/wiki/Knowledge"
-#                 ]
-#             },
-#             "status": {
-#                 "privacyStatus": "public",
-#                 "isLinked": true,
-#                 "longUploadsStatus": "longUploadsUnspecified"
-#             },
-#             "brandingSettings": {...},
-#             "contentOwnerDetails": {}
-#         }
-#     ]
-# }
+```{r, echo=F}
+knitr::include_graphics("img/dag-list.png")
 ```
 
+<!-- This article aims to introduce how to write an airflow dag with an example to build an ETL pipeline from YouTube Data API to a Postgres database. Please refer to the [previous article](../2023-08-05-introduction-to-docker-with-airflow-and-postgres-stack/) on how to host an Airflow and Postgres Docker container. It is good to have a controlled environment for these two applications in containers so that they will not have any dependency issues.  -->
+
+<!-- As we will involve YouTueb Data API in the example, this article will first start with a brief introduction to YouTube Data API, then it will dive into how to write an Airflow DAG. Finally it will provide an ETL pipeline example to be run on Airflow.  -->
+
+<!-- # YouTube Data API -->
+
+<!-- To use [YouTube Data API](https://developers.google.com/youtube/v3), we need to have an API key or an authorised token. Please refer to the [previous article](../2023-07-29-rust-gapi-oauth2/) to obtain an authorised token. You can get an API key with similar method as shown in the article.  -->
+
+<!-- After having either of the above, we can add the following headers when requesting the endpoints: -->
+
+<!-- - For API key: `headers = {"x-goog-api-key": api_key}` -->
+<!-- - For authorised token: `headers = {"Authorization": f"Bearer {access_token}"}` -->
+
+<!-- ## Channels List Endpoint -->
+
+<!-- The [`channels.list` method](https://developers.google.com/youtube/v3/docs/channels/list) allows us to fetch information about YouTube channels, including their number of subscribers and number of videos. It also offers a list of videos that have been uploaded by this channel. We can utilise this information for further analysis.  -->
+
+<!-- Below shows a code snippet to fetch a channel information with this endpoint.  -->
+
+<!-- ```{python, eval=F} -->
+<!-- import os  -->
+<!-- import requests  -->
+
+<!-- API_KEY = os.getenv("GAPI_KEY") -->
+<!-- url = "https://www.googleapis.com/youtube/v3/channels" -->
+
+<!-- parts = [ -->
+<!--     "brandingSettings", "contentDetails", "contentOwnerDetails", "id",  -->
+<!--     "localizations", "snippet", "statistics", "status", "topicDetails" -->
+<!-- ] -->
+<!-- params = { -->
+<!--     "id": "UCSXwxpWZQ7XZ1WL3wqevChA",    # comma separated channel id. Max 50 -->
+<!--     "part": ",".join(parts) -->
+<!-- } -->
+
+<!-- headers = {"x-goog-api-key": API_KEY} -->
+
+<!-- response = requests.get(url, params=params, headers=headers) -->
+<!-- response.json() -->
+
+<!-- # { -->
+<!-- #     "kind": "youtube#channelListResponse", -->
+<!-- #     "etag": "Tv4R37RghCrjIhGjwzOU4LMObXU", -->
+<!-- #     "pageInfo": {...}, -->
+<!-- #     "items": [ -->
+<!-- #         { -->
+<!-- #             "kind": "youtube#channel", -->
+<!-- #             "etag": "uSDEMv9Bq-jmBQ944jhPmIThLG4", -->
+<!-- #             "id": "UCSXwxpWZQ7XZ1WL3wqevChA", -->
+<!-- #             "snippet": { -->
+<!-- #                 "title": "Apache Airflow", -->
+<!-- #                 "description": "...", -->
+<!-- #                 "customUrl": "@apacheairflow", -->
+<!-- #                 "publishedAt": "2019-06-27T10:06:48Z", -->
+<!-- #                 "thumbnails": {...}, -->
+<!-- #                 "localized": {...}, -->
+<!-- #                 "country": "US" -->
+<!-- #             }, -->
+<!-- #             "contentDetails": { -->
+<!-- #                 "relatedPlaylists": { -->
+<!-- #                     "likes": "", -->
+<!-- #                     "uploads": "UUSXwxpWZQ7XZ1WL3wqevChA" -->
+<!-- #                 } -->
+<!-- #             }, -->
+<!-- #             "statistics": { -->
+<!-- #                 "viewCount": "771386", -->
+<!-- #                 "subscriberCount": "9490", -->
+<!-- #                 "hiddenSubscriberCount": false, -->
+<!-- #                 "videoCount": "176" -->
+<!-- #             }, -->
+<!-- #             "topicDetails": { -->
+<!-- #                 "topicIds": [...], -->
+<!-- #                 "topicCategories": [ -->
+<!-- #                     "https://en.wikipedia.org/wiki/Lifestyle_(sociology)", -->
+<!-- #                     "https://en.wikipedia.org/wiki/Technology", -->
+<!-- #                     "https://en.wikipedia.org/wiki/Knowledge" -->
+<!-- #                 ] -->
+<!-- #             }, -->
+<!-- #             "status": { -->
+<!-- #                 "privacyStatus": "public", -->
+<!-- #                 "isLinked": true, -->
+<!-- #                 "longUploadsStatus": "longUploadsUnspecified" -->
+<!-- #             }, -->
+<!-- #             "brandingSettings": {...}, -->
+<!-- #             "contentOwnerDetails": {} -->
+<!-- #         } -->
+<!-- #     ] -->
+<!-- # } -->
+<!-- ``` -->
 
 
-## Etag
 
-An `etag` can be found from every response from the YouTube API. It is used to determine if a resource has changed (see more from [here](https://developers.google.com/youtube/v3/getting-started#etags)). As there is a quota limit on how many times we can call the API on each day, the `etag` can be used to check with the server if the requested resource has changed. If the resource has not changed, it will return http status `304` and we can reuse the same response from previous request. See the following example. 
+<!-- ## Etag -->
+
+<!-- An `etag` can be found from every response from the YouTube API. It is used to determine if a resource has changed (see more from [here](https://developers.google.com/youtube/v3/getting-started#etags)). As there is a quota limit on how many times we can call the API on each day, the `etag` can be used to check with the server if the requested resource has changed. If the resource has not changed, it will return http status `304` and we can reuse the same response from previous request. See the following example.  -->
 
 
-```{python, eval=F}
-import os 
-import requests 
+<!-- ```{python, eval=F} -->
+<!-- import os  -->
+<!-- import requests  -->
 
-API_KEY = os.getenv("GAPI_KEY")
-url = "https://www.googleapis.com/youtube/v3/channels"
+<!-- API_KEY = os.getenv("GAPI_KEY") -->
+<!-- url = "https://www.googleapis.com/youtube/v3/channels" -->
 
-parts = [
-    "brandingSettings", "contentDetails", "contentOwnerDetails", "id", 
-    "localizations", "snippet", "statistics", "status", "topicDetails"
-]
-params = {
-    "id": "UCSXwxpWZQ7XZ1WL3wqevChA",    # comma separated channel id. Max 50
-    "part": ",".join(parts)
-}
+<!-- parts = [ -->
+<!--     "brandingSettings", "contentDetails", "contentOwnerDetails", "id",  -->
+<!--     "localizations", "snippet", "statistics", "status", "topicDetails" -->
+<!-- ] -->
+<!-- params = { -->
+<!--     "id": "UCSXwxpWZQ7XZ1WL3wqevChA",    # comma separated channel id. Max 50 -->
+<!--     "part": ",".join(parts) -->
+<!-- } -->
 
-headers = {"x-goog-api-key": API_KEY}
+<!-- headers = {"x-goog-api-key": API_KEY} -->
 
-response = requests.get(url, params=params, headers=headers)
-etag = response.json()["etag"]
+<!-- response = requests.get(url, params=params, headers=headers) -->
+<!-- etag = response.json()["etag"] -->
 
-# Another request
-headers["if-none-match"] = etag     # Add previous etag to headers
-response2 = requests.get(url, params=params, headers=headers)
-response2
+<!-- # Another request -->
+<!-- headers["if-none-match"] = etag     # Add previous etag to headers -->
+<!-- response2 = requests.get(url, params=params, headers=headers) -->
+<!-- response2 -->
 
-# <Response [304]>
-```
+<!-- # <Response [304]> -->
+<!-- ``` -->
 
-# Airflow Dag
+# DAG Location
 
 This section will introduce how to write a  Directed Acyclic Graph (DAG) in Airflow. Within the Docker image's main folder, you should find a directory named `dags`. Create one if you do not. This directory should link to the containers as it is specified in the `docker-compose.yaml`. 
 
@@ -175,6 +177,10 @@ x-airflow-common:
 </div>
 
 Inside the `dags` directory, create a file named `trial_dag.py` with the following content. It will create a DAG in Airflow and you can find it in the main page of Airflow (default: `localhost:8080`).
+
+# Basic DAG File
+
+Below shows an example of a DAG. 
 
 ```{python, eval=F}
 from airflow import DAG
@@ -221,7 +227,7 @@ A task in a dag is an operator object. There are two basic operators: `BashOpera
 
 Finally we need to specify the order of the tasks by `task1 >> task2`. 
 
-## Custom Operator
+# Custom Operator
 
 We can also create custom operators inside the `plugins` directory which is located at the main Docker image directory. Please make sure the directory is created and specified in [docker-compose.yaml](#docker-compose). Please also create an empty `__init__.py` in the `plugins` directory. Now, we can create a `.py` file inside the `plugins` directory to create operators like below.
 
@@ -252,11 +258,11 @@ with Dag() as dag:
     task1
 ```
 
-## Airflow Context
+# Airflow Context
 
 Like Gibhub context (see [this article](../2023-08-03-github-actions-with-example/index.html#github-context)), Airflow also provide a way to access information about the running dag and task. As seen in the [custom operator](#custom-operator), the `execute` method in the operator class takes in a `context` argument. 
 
-Below shows an example on how to use these context information.
+Below shows two examples on how to use these context information.
 
 ```{python, eval=F}
 # plugins/hello_operator.py
@@ -278,6 +284,8 @@ class HelloOperator(BaseOperator):
         print(f"This DAG started at {ts}")
 ```
 
+The above snippet describe how to use the `context` variable inside a custom operator. One can also use `jinja` syntax to specify the information like below. Just remember to specify which argument will be using jinja syntax in the custom operator class (see above `template_fields = ['name']`).
+
 ```{python, eval=F}
 # dags/hello_dag.py
 
@@ -289,98 +297,11 @@ with Dag() as dag:
     task1
 ```
 
-The subsections show what information can we obtain from `context` and `context.dag`.
+A detailed list of available values from context can be found in [appendix][#appendix].
 
-### Context
+# Taskflow
 
-As seen from [Airflow Github](https://github.com/apache/airflow/blob/main/airflow/utils/context.pyi), the `context` argument is of the `Context` class defined as below.
-
-```{python, eval=F}
-class Context(TypedDict, total=False):
-    conf: AirflowConfigParser
-    conn: Any
-    dag: DAG
-    dag_run: DagRun | DagRunPydantic
-    data_interval_end: DateTime
-    data_interval_start: DateTime
-    ds: str                    # '2023-08-11'
-    ds_nodash: str             # '20230811'
-    exception: KeyboardInterrupt | Exception | str | None
-    execution_date: DateTime
-    expanded_ti_count: int | None
-    inlets: list
-    logical_date: DateTime
-    macros: Any
-    next_ds: str | None
-    next_ds_nodash: str | None
-    next_execution_date: DateTime | None
-    outlets: list
-    params: ParamsDict
-    prev_data_interval_start_success: DateTime | None
-    prev_data_interval_end_success: DateTime | None
-    prev_ds: str | None
-    prev_ds_nodash: str | None
-    prev_execution_date: DateTime | None
-    prev_execution_date_success: DateTime | None
-    prev_start_date_success: DateTime | None
-    run_id: str                # 'manual__2023-08-11T11:51:11.303634+00:00'
-    task: BaseOperator
-    task_instance: TaskInstance | TaskInstancePydantic
-    task_instance_key_str: str # 'trial_dag__task2__20230811'
-    test_mode: bool
-    templates_dict: Mapping[str, Any] | None
-    ti: TaskInstance | TaskInstancePydantic
-    tomorrow_ds: str           # '2023-08-12'
-    tomorrow_ds_nodash: str    # '20230812'
-    triggering_dataset_events: Mapping[str, Collection[DatasetEvent | DatasetEventPydantic]]
-    ts: str                    # '2023-08-11T11:51:11.303634+00:00'
-    ts_nodash: str             # '20230811T115111'
-    ts_nodash_with_tz: str     # '20230811T115111.303634+0000'
-    try_number: int | None
-    var: _VariableAccessors    # Airflow variables. See below section
-    yesterday_ds: str          # '2023-08-10'
-    yesterday_ds_nodash: str   # '20230810'
-```
-
-### DAG
-
-```{python, eval=F}
-{
-    'concurrency': 16, 
-    'dag_id': 'trial_dag', 
-    'default_args': {'owner': '***', 'retries': 0, 'retry_delay': datetime.timedelta(seconds=120)}, 
-    'default_view': 'grid', 
-    'description': 'A trial dag', 
-    'doc_md': None, 
-    'end_date': None, 
-    'fileloc': '/opt/***/dags/trial_dag.py', 
-    'filepath': 'trial_dag.py', 
-    'folder': '/opt/***/dags', 
-    'full_filepath': '/opt/***/dags/trial_dag.py', 
-    'has_on_failure_callback': False, 
-    'has_on_success_callback': False, 
-    'log': <Logger ***.models.dag.DAG (INFO)>, 
-    'logger': <bound method LoggingMixin.logger of <class '***.models.dag.DAG'>>, 
-    'owner': '***', 
-    'params': {}, 
-    'parent_dag': None,  # A DAG object
-    'safe_dag_id': 'trial_dag', 
-    'schedule_interval': '@once', 
-    'start_date': DateTime(2023, 8, 1, 0, 0, 0, tzinfo=Timezone('UTC')), 
-    'sub_dag': <bound method DAG.sub_dag of <DAG: trial_dag>>, 
-    'subdags': [], 
-    'tags': [], 'task': functools.partial(<***.decorators.TaskDecoratorCollection object at 0xffff7aafde10>, dag=<DAG: trial_dag>), 
-    'task_count': 2, 
-    'task_dict': {'task1': <Task(BashOperator): task1>, 'task2': <Task(HelloOperator): task2>}, 
-    'task_ids': ['task1', 'task2'], 
-    'tasks': [<Task(BashOperator): task1>, <Task(HelloOperator): task2>],  
-    'timezone': Timezone('UTC'), 
-}
-```
-
-## Taskflow
-
-This section describe how to write a DAG with the TaskFlow API paradigm. 
+This section describe how to write a DAG with the TaskFlow API paradigm. The paradigm converts functions into Airflow DAGs or tasks with the `dag` and `task` decorators. Below shows a simple DAG written in this paradigm.
 
 ```{python, eval=F}
 from airflow.decorators import task, dag
@@ -406,7 +327,7 @@ def trial_dag():
     
     @task(task_id="task2")
     def task2(name):
-        context = get_current_context()
+        context = get_current_context()    # Use context within TaskFlow API
         print(f"The name of the DAG is {name}")
         dag_loc = context["dag"].fileloc
         print(f"The location of the DAG is {dag_loc}")
@@ -416,7 +337,20 @@ def trial_dag():
 trial_dag()    # Initialise the DAG
 ```
 
-## XCOM
+# XComs
+
+Often times, we would like to pass some information from the upstream task to the downstream task. In Airflow, we can achieve this via the XComs. Please note that XComs is not designed to transfer large data. If you are using MySQL as the Airflow database, you can only transfer information within 64kb. You can define your own XComs backend if needed. Yet, this is out of the scope of this article. 
+
+There are two ways to send information in one task. 
+
+1. Simply return the value (see `ModelTrainingOperator`)
+2. Using `ti.xcom_push` (see `ETLOperator`)
+
+The pushed values are stored in the Airflow context in the form of key-value pairs. That means, there is a specific key to each returned or pushed value. The key for the first method is always `return_value` but you can specify the key you want in the second method. 
+
+As the pushed values are stored in the Airflow context, it can be accessed via the `context` argument (see `ModelSelectionOperator`) or via the jinja template (see `model_training_task1`). Yet, the values pulled from jinja template are always in text form. 
+
+The script below mimics a ML model training pipeline, which utilises the XComs to transfer information between tasks. 
 
 ```{python, eval=F}
 from airflow import DAG
@@ -439,7 +373,7 @@ class ETLOperator(BaseOperator):
 
     def execute(self, context):
         self.log.info(f"Input parameter: {self.name}")
-        return f"This DAG is {self.name}"
+        context["ti"].xcom_push(key="dag_id", value=self.name)
 
 class ModelTrainingOperator(BaseOperator):
     template_fields = ['name']
@@ -481,17 +415,17 @@ with DAG(
     
     model_training_task1 = ModelTrainingOperator(
         task_id="model_training_task1",
-        name="{{ ti.xcom_pull(task_ids=['etl_task']) }}"
+        name="{{ ti.xcom_pull(task_ids=['etl_task'], key='dag_id') }}"
     )
     
     model_training_task2 = ModelTrainingOperator(
         task_id="model_training_task2",
-        name="{{ ti.xcom_pull(task_ids=['etl_task']) }}"
+        name="{{ ti.xcom_pull(task_ids=['etl_task'], key='dag_id') }}"
     )
     
     model_training_task3 = ModelTrainingOperator(
         task_id="model_training_task3",
-        name="{{ ti.xcom_pull(task_ids=['etl_task']) }}"
+        name="{{ ti.xcom_pull(task_ids=['etl_task'], key='dag_id') }}"
     )
 
     model_selection_task = ModelSelectionOperator(
@@ -499,15 +433,24 @@ with DAG(
         models="model_training_task1,model_training_task2,model_training_task3"
     )
     
-    etl_task >> [model_training_task1, model_training_task2, model_training_task3] >> model_selection_task
+    etl_task >> \
+    [model_training_task1, model_training_task2, model_training_task3] >> \
+    model_selection_task
 ```
 
-## Branching
+```{r, echo=F}
+knitr::include_graphics("img/split-dag.png")
+```
+
+# Branching
+
+The previous example will run all three `model_training` tasks after the `etl_task` has finished. This section shows how to do branching, which means to execute a particular task based on some conditions. 
 
 ```{python, eval=F}
 from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.models import BaseOperator
+from airflow.utils.trigger_rule import TriggerRule
 from airflow.operators.branch import BaseBranchOperator
 from airflow.operators.empty import EmptyOperator
 from airflow.utils.edgemodifier import Label
@@ -528,9 +471,6 @@ class CriteriaBranchingOperator(BaseBranchOperator):
         return choice(self.methods)
 
 class ModelTrainingOperator(BaseOperator):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-    
     def execute(self, context):
         task_id = context["ti"].task_id
         return {"task_id": task_id, "score": randint(1, 10)}
@@ -557,7 +497,7 @@ with DAG(
 
     deploy_model = EmptyOperator(
         task_id="deploy_model",
-        trigger_rule="none_failed_min_one_success"
+        trigger_rule=TriggerRule.NONE_FAILED_MIN_ONE_SUCCESS
     )
 
     for method in methods:
@@ -572,126 +512,248 @@ with DAG(
 knitr::include_graphics("img/branching-dag.png")
 ```
 
-## Triggers
+# Triggers
 
-### Datasets
+This section introduce triggers to start a DAG from another DAG. We will go through 2 different methods: 
 
-### TriggerDAGRunOperator
+1. Datasets
+2. TriggerDAGRunOperator
 
-## Variables
+## Datasets
 
-For encryption, in `docker-compose.yaml`, set the following parameters.
+To trigger a DAG using `Datasets`, the `Dataset` class must be imported first. Then define a dataset with an uri. In one of the task in the `trigger_dag`, set the `outlets` to a list of the defined dataset. Finally, in the `target_dag`, set the `schedule` to be a list of datasets that will trigger the DAG to run. See an example below.
 
-```{yaml}
-AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY:-}
+```{python, eval=F}
+from airflow import Dataset, DAG 
+from airflow.models import BaseOperator
+from datetime import datetime
+
+dataset = Dataset("/opt/airflow/dag-outputs/test_data.json")
+
+class TriggerOperator(BaseOperator):
+    def execute(self, context):
+        outlets = context["outlets"]
+        ts = context["ts_nodash"]
+        for outlet in outlets:
+            with open(outlet.uri, "w") as f:
+                f.write(ts)
+        
+        self.log.info(context["outlets"])
+        # [2023-08-13, 21:34:06 UTC] {trial_dag.py:15} INFO - 
+        #  [Dataset(uri='/opt/airflow/dag-outputs/test_data.json', extra=None)]
+
+        self.log.info("Triggering Dataset")
+        # [2023-08-13, 21:34:06 UTC] {trial_dag.py:16} INFO - Triggering Dataset
+
+class ActionOperator(BaseOperator):
+    def execute(self, context):
+        self.log.info(context["dag"].schedule_interval)
+        # [2023-08-13, 21:34:06 UTC] {trial_dag.py:20} INFO - Dataset
+        
+        self.log.info(context["dag"].dataset_triggers)
+        # [2023-08-13, 21:34:06 UTC] {trial_dag.py:21} INFO - 
+        #  [Dataset(uri='/opt/airflow/dag-outputs/test_data.json', extra=None)]
+
+with DAG(
+    dag_id="trigger_dag",
+    schedule="@once",
+    start_date=datetime(2023,8,1)
+) as dag:
+    trigger_task = TriggerOperator(
+        task_id="trigger_task",
+        outlets=[dataset]
+    )
+
+    trigger_task
+
+with DAG(
+    dag_id="target_dag",
+    schedule=[dataset],
+    start_date=datetime(2023,8,1)
+) as dag:
+    action_task = ActionOperator(
+        task_id="action_task"
+    )
+
+    action_task
 ```
 
-Go to Admin --> Variables, set up variables.
+## TriggerDAGRunOperator
 
-Set environment with name `AIRFLOW_VAR_<KEY_OF_THE_VAR>`
+Another method to trigger a DAG to run is to use the `TriggerDAGRunOperator`. In the `trigger_dag`, create a task with `TriggerDAGRunOperator`, set the `trigger_dag_id` to the DAG you wish to trigger. You can also pass some information to the `target_dag` using the `conf` argument as shown below. 
 
-https://airflow.apache.org/docs/apache-airflow/stable/security/secrets/mask-sensitive-values.html
+In the `target_dag`, you can retrieve the `conf` by accessing `context["dag_run"].conf`. 
+
+```{python, eval=F}
+from airflow import DAG 
+from airflow.models import BaseOperator
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
+from datetime import datetime
+
+class ActionOperator(BaseOperator):
+    def execute(self, context):
+        # Retrieving conf from previous dag in TriggerDagRunOperator
+        self.log.info(context["dag_run"].conf)
+        # {"upstream_dag_id": "trigger_dag", "last_update": "..."}
+
+with DAG(
+    dag_id="trigger_dag",
+    start_date=datetime(2023,8,1),
+    schedule="@once"
+) as dag:
+    trigger_task = TriggerDagRunOperator(
+        task_id="trigger_task",
+        trigger_dag_id="target_dag",
+        conf = {
+            "upstream_dag_id": "{{ dag.dag_id }}",
+            "last_update": "{{ ts_nodash }}"
+        }
+    )
+
+    trigger_task
+
+with DAG(
+    dag_id="target_dag",
+    start_date=datetime(2023,8,1),
+    schedule="@once"
+) as dag:
+    action_task = ActionOperator(
+        task_id="action_task"
+    )
+
+    action_task
+```
+
+# Variables
+
+This section will cover how to define and use variables in Airflow context. 
+
+## Set Up Variables
+
+There are two ways to set up Airflow variables. 
+
+1. On Airflow main page, go to *Admin --> Variables* and set up there. 
+2. Set up environment variables with prefix `AIRFLOW_VAR_<NAME_OF_VAR>`.
+
+## Calling Variables
+
+```{python, eval=F}
+from airflow import DAG 
+from airflow.models import BaseOperator
+from datetime import datetime
+from airflow.models import Variable
+
+class TrialOperator(BaseOperator):
+    template_fields = ["json_var", "value_var"]
+    def __init__(self, json_var, value_var, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.json_var = json_var
+        self.value_var = value_var
+
+    def execute(self, context):
+        # Access from jinja template with type dict
+        self.log.info(self.json_var)
+
+        # Access from Variable with type dict
+        self.log.info(Variable.get("my_var", deserialize_json=True))
+
+        # Access from jinja template with type str
+        self.log.info(self.value_var)
+
+        # Access from Variable with type str
+        self.log.info(Variable.get("my_var", deserialize_json=False))
+
+        # The following will fail
+        self.log.info(context["var"]["json"]["my_var"])
+
+        # The following will fail
+        self.log.info(context["var"]["value"]["my_var"])
 
 
-https://wilsonkkyip.github.io/posts/2023-08-05-introduction-to-docker-with-airflow-and-postgres-stack/
+with DAG(
+    dag_id="trial_dag",
+    start_date=datetime(2023,8,1),
+    schedule="@once"
+) as dag:
+    task1 = TrialOperator(
+        task_id="task1",
+        json_var="{{  var.json.my_var  }}",
+        value_var="{{  var.value.my_var  }}"
+    )
 
+    task1
 
-In [previous article](../2023-08-09-sample-youtube-channels-id-with-async-functions/), we have successfully obtained more than 300 channel ids. We will put them into 
+# [2023-08-13, 18:12:03 UTC] {trial_dag.py:16} INFO - {'name': 'Bob', 'age': 21}
+# [2023-08-13, 18:12:03 UTC] {trial_dag.py:19} INFO - {'name': 'Bob', 'age': 21}
+# [2023-08-13, 18:12:03 UTC] {trial_dag.py:22} INFO - {"name": "Bob", "age": 21}
+# [2023-08-13, 18:12:03 UTC] {trial_dag.py:25} INFO - {"name": "Bob", "age": 21}
+```
 
-https://wilsonkkyip.github.io/posts/2023-08-08-recursive-programming-querying-nested-json-in-python/
+## Encrypt Values
 
-[previous article](../2023-08-08-recursive-programming-querying-nested-json-in-python/)
+To encrypt the value of variables, first generate a `fernet_key` from the following.
 
-# YouTube Postgres ETL Pipeline
+```{python, eval=F}
+from cryptography.fernet import Fernet
+Fernet.generate_key().decode()
 
-<style>
-/* Style the tab */
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
+# 'bbg62_v203tply8_kXf8rD4WJ93IDYw6EVdQ7u2G-Bk='
+```
 
-/* Style the buttons that are used to open the tab content */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-}
+Then change the following line in `airflow.cfg` under `[core]` section.
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
+```{zsh, eval=F}
+[core]
+...
+fernet_key = bbg62_v203tply8_kXf8rD4WJ93IDYw6EVdQ7u2G-Bk=
+```
 
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
+Finally rebuild the Docker containers. Now all the variables created in *Admin --> Variables* are encrypted. One can check the `variable` table from the Postgres container.
 
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-</style>
+```{sql, eval=F}
+SELECT * FROM variable;
 
-<div class="tab">
-  <button id="london-btn" class="tablinks" onclick="openCity(event, 'London')">London</button>
-  <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
-  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
-</div>
+--  id |   key    |          val          | description | is_encrypted 
+-- ----+----------+-----------------------+-------------+--------------
+--   1 | my_var   | gAAAAABk2...wiuSFTRw= |             | t
+--   2 | my_token | gAAAAABk2...goZh6tg== |             | t
+```
 
-<!-- Tab content -->
-<div id="London" class="tabcontent">
-  <h3>London</h3>
-  <p>London is the capital city of England.</p>
-</div>
+## Masking Values
 
-<div id="Paris" class="tabcontent">
-  <h3>Paris</h3>
-  <p>Paris is the capital of France.</p>
-</div>
+By default, Airflow will hide the variable value if its key contains `access_token`, `api_key`, `apikey`,`authorization`, `passphrase`, `passwd`, `password`, `private_key`, `secret` or `token`. To extend the list, you can specify them in the `airflow.cfg`.
 
-<div id="Tokyo" class="tabcontent">
-  <h3>Tokyo</h3>
-  <p>Tokyo is the capital of Japan.</p>
-</div>
+```{yml}
+[core]
+sensitive_var_conn_names = comma,separated,sensitive,names
+```
 
-<script>
-function openCity(evt, cityName) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
+```{python, eval=F}
+from airflow import DAG 
+from airflow.models import BaseOperator
+from datetime import datetime
+from airflow.models import Variable
 
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+class TrialOperator(BaseOperator):
+    def execute(self, context):
+        my_token = Variable.get("my_token", deserialize_json=False)
+        self.log.info(my_token)
+        self.log.info(my_token == "123456")
 
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+with DAG(
+    dag_id="trial_dag",
+    start_date=datetime(2023,8,1),
+    schedule="@once"
+) as dag:
+    task1 = TrialOperator(
+        task_id="task1"
+    )
 
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
+    task1
 
-document.getElementById("london-btn").click();
-</script>
-
-https://wilsonkkyip.github.io/posts/2023-08-09-sample-youtube-channels-id-with-async-functions/
-
-## Postgres Table
+# [2023-08-13, 18:16:04 UTC] {trial_dag.py:9} INFO - ***
+# [2023-08-13, 18:16:04 UTC] {trial_dag.py:10} INFO - True
+```
 
 # Appendix
 
