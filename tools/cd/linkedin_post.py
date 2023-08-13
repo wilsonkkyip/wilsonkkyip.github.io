@@ -32,7 +32,12 @@ def build_post_body(
                         "originalUrl": article_url,
                         "title": {
                             "text": media_title
-                        }
+                        },
+                        "thumbnails": [
+                            {
+                                "url": f"{article_url}/img/preview.png"
+                            }
+                        ]
                     }
                 ]
             }
