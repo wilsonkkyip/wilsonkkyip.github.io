@@ -10,12 +10,14 @@ output:
   distill::distill_article:
     toc: true
     self_contained: false
-tags: [continuous-delivery, github-actions]
+tags: [continuous-delivery, cicd, github-actions, github, linkedin-api, oauth2]
 categories:
   - continuous-delivery
   - cicd
   - github-actions
   - github
+  - linkedin-api
+  - oauth2
 preview_url: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
 favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
 abstract: | 
