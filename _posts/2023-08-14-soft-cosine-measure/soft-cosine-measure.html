@@ -88,638 +88,42 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Wilson Yip's Blog: </title>
+  <title>Mathematical reasoning behind soft cosine measure and reduce complexity from O(N²) to O(N)</title>
 
+  <meta property="description" itemprop="description" content="Mathmatical proofs of validity of soft cosine measure and reduce complexity from O(N²) to O(N) in deployment."/>
 
-  <link rel="icon" type="image/png" href="img/wy_logo.png"/>
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"/>
 
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2023-08-14"/>
+  <meta property="article:created" itemprop="dateCreated" content="2023-08-14"/>
+  <meta name="article:author" content="Wilson Yip"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Wilson Yip&#39;s Blog: "/>
+  <meta property="og:title" content="Mathematical reasoning behind soft cosine measure and reduce complexity from O(N²) to O(N)"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:image" content="img/wy_logo.png"/>
+  <meta property="og:description" content="Mathmatical proofs of validity of soft cosine measure and reduce complexity from O(N²) to O(N) in deployment."/>
+  <meta property="og:image" content="img/preview.png"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="Wilson Yip&#39;s Blog"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary_large_image"/>
-  <meta property="twitter:title" content="Wilson Yip&#39;s Blog: "/>
-  <meta property="twitter:image" content="img/wy_logo.png"/>
+  <meta property="twitter:title" content="Mathematical reasoning behind soft cosine measure and reduce complexity from O(N²) to O(N)"/>
+  <meta property="twitter:description" content="Mathmatical proofs of validity of soft cosine measure and reduce complexity from O(N²) to O(N) in deployment."/>
+  <meta property="twitter:image" content="img/preview.png"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output","site","css","listing","preview_url","favicon"]}},"value":[{"type":"character","attributes":{},"value":[""]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","anchor_sections"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["styles.css"]},{"type":"character","attributes":{},"value":["posts"]},{"type":"character","attributes":{},"value":["img/wy_logo.png"]},{"type":"character","attributes":{},"value":["img/wy_logo.png"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output","tags","categories","preview_url","favicon","abstract"]}},"value":[{"type":"character","attributes":{},"value":["Mathematical reasoning behind soft cosine measure and reduce complexity from O(N²) to O(N)"]},{"type":"character","attributes":{},"value":["Mathmatical proofs of validity of soft cosine measure and reduce complexity from O(N²) to O(N) in deployment.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Wilson Yip"]}]}]},{"type":"character","attributes":{},"value":["2023-08-14"]},{"type":"character","attributes":{},"value":["img/preview.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["bookdown::html_document2"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["base_format","toc","self_contained"]}},"value":[{"type":"character","attributes":{},"value":["distill::distill_article"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["math","linear-algebra","soft-cosine","time-complexity"]},{"type":"character","attributes":{},"value":["math","linear-algebra","soft-cosine","time-complexity"]},{"type":"character","attributes":{},"value":["img/preview.png"]},{"type":"character","attributes":{},"value":["https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"]},{"type":"character","attributes":{},"value":["Soft cosine similarity is widely adapted in text mining to model the similarity between documents more realisticly. This article dives deep into the mathmatical reasoning behind the method and provide a method to reduce complexity from O(N²) to O(N) in Deployment."]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["img/preview.png","soft-cosine-measure_files/anchor-4.2.2/anchor.min.js","soft-cosine-measure_files/bowser-1.9.3/bowser.min.js","soft-cosine-measure_files/distill-2.2.21/template.v2.js","soft-cosine-measure_files/jquery-3.6.0/jquery-3.6.0.js","soft-cosine-measure_files/jquery-3.6.0/jquery-3.6.0.min.js","soft-cosine-measure_files/jquery-3.6.0/jquery-3.6.0.min.map","soft-cosine-measure_files/popper-2.6.0/popper.min.js","soft-cosine-measure_files/tippy-6.2.7/tippy-bundle.umd.min.js","soft-cosine-measure_files/tippy-6.2.7/tippy-light-border.css","soft-cosine-measure_files/tippy-6.2.7/tippy.css","soft-cosine-measure_files/tippy-6.2.7/tippy.umd.min.js","soft-cosine-measure_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
   <!--radix_placeholder_navigation_in_header-->
-  <meta name="distill:offset" content=""/>
-
-  <script type="application/javascript">
-
-    window.headroom_prevent_pin = false;
-
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-
-      // initialize headroom for banner
-      var header = $('header').get(0);
-      var headerHeight = header.offsetHeight;
-      var headroom = new Headroom(header, {
-        tolerance: 5,
-        onPin : function() {
-          if (window.headroom_prevent_pin) {
-            window.headroom_prevent_pin = false;
-            headroom.unpin();
-          }
-        }
-      });
-      headroom.init();
-      if(window.location.hash)
-        headroom.unpin();
-      $(header).addClass('headroom--transition');
-
-      // offset scroll location for banner on hash change
-      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-      window.addEventListener("hashchange", function(event) {
-        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-      });
-
-      // responsive menu
-      $('.distill-site-header').each(function(i, val) {
-        var topnav = $(this);
-        var toggle = topnav.find('.nav-toggle');
-        toggle.on('click', function() {
-          topnav.toggleClass('responsive');
-        });
-      });
-
-      // nav dropdowns
-      $('.nav-dropbtn').click(function(e) {
-        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-        $(this).parent().siblings('.nav-dropdown')
-           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $("body").click(function(e){
-        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $(".nav-dropdown").click(function(e){
-        e.stopPropagation();
-      });
-    });
-  </script>
-
-  <style type="text/css">
-
-  /* Theme (user-documented overrideables for nav appearance) */
-
-  .distill-site-nav {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #0F2E3D;
-    font-size: 15px;
-    font-weight: 300;
-  }
-
-  .distill-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .distill-site-nav a:hover {
-    color: white;
-  }
-
-  @media print {
-    .distill-site-nav {
-      display: none;
-    }
-  }
-
-  .distill-site-header {
-
-  }
-
-  .distill-site-footer {
-
-  }
-
-
-  /* Site Header */
-
-  .distill-site-header {
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 3;
-  }
-
-  .distill-site-header .nav-left {
-    display: inline-block;
-    margin-left: 8px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header .nav-left {
-      margin-left: 0;
-    }
-  }
-
-
-  .distill-site-header .nav-right {
-    float: right;
-    margin-right: 8px;
-  }
-
-  .distill-site-header a,
-  .distill-site-header .title {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px 14px 10px;
-  }
-
-  .distill-site-header .title {
-    font-size: 18px;
-    min-width: 150px;
-  }
-
-  .distill-site-header .logo {
-    padding: 0;
-  }
-
-  .distill-site-header .logo img {
-    display: none;
-    max-height: 20px;
-    width: auto;
-    margin-bottom: -4px;
-  }
-
-  .distill-site-header .nav-image img {
-    max-height: 18px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: -3px;
-  }
-
-
-
-  @media screen and (min-width: 1000px) {
-    .distill-site-header .logo img {
-      display: inline-block;
-    }
-    .distill-site-header .nav-left {
-      margin-left: 20px;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 20px;
-    }
-    .distill-site-header .title {
-      padding-left: 12px;
-    }
-  }
-
-
-  .distill-site-header .nav-toggle {
-    display: none;
-  }
-
-  .nav-dropdown {
-    display: inline-block;
-    position: relative;
-  }
-
-  .nav-dropdown .nav-dropbtn {
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 10px;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    margin-top: 1px;
-    z-index: 2;
-  }
-
-  .nav-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-    z-index: 1;
-    margin-top: 2px;
-    white-space: nowrap;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-
-  .nav-dropdown-content hr {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .nav-dropdown-active {
-    display: block;
-  }
-
-  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-    color: black;
-    padding: 6px 24px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-
-  .nav-dropdown-content .nav-dropdown-header {
-    display: block;
-    padding: 5px 24px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #999999;
-    white-space: nowrap;
-  }
-
-  .nav-dropdown:hover .nav-dropbtn {
-    color: white;
-  }
-
-  .nav-dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-
-  .nav-right .nav-dropdown-content {
-    margin-left: -45%;
-    right: 0;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-    .distill-site-header a.nav-toggle {
-      float: right;
-      display: block;
-    }
-    .distill-site-header .title {
-      margin-left: 0;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 0;
-    }
-    .distill-site-header {
-      overflow: hidden;
-    }
-    .nav-right .nav-dropdown-content {
-      margin-left: 0;
-    }
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header.responsive {position: relative; min-height: 500px; }
-    .distill-site-header.responsive a.nav-toggle {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .distill-site-header.responsive a,
-    .distill-site-header.responsive .nav-dropdown {
-      display: block;
-      text-align: left;
-    }
-    .distill-site-header.responsive .nav-left,
-    .distill-site-header.responsive .nav-right {
-      width: 100%;
-    }
-    .distill-site-header.responsive .nav-dropdown {float: none;}
-    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-
-  /* Site Footer */
-
-  .distill-site-footer {
-    width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 3;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-
-  /* Headroom */
-
-  d-title {
-    padding-top: 6rem;
-  }
-
-  @media print {
-    d-title {
-      padding-top: 4rem;
-    }
-  }
-
-  .headroom {
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  .headroom--transition {
-    transition: all .4s ease-in-out;
-  }
-
-  .headroom--unpinned {
-    top: -100px;
-  }
-
-  .headroom--pinned {
-    top: 0;
-  }
-
-  /* adjust viewport for navbar height */
-  /* helps vertically center bootstrap (non-distill) content */
-  .min-vh-100 {
-    min-height: calc(100vh - 100px) !important;
-  }
-
-  </style>
-
-  <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet"/>
-  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
-  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
-  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
-
-  <script type="application/javascript">
-
-  function getMeta(metaName) {
-    var metas = document.getElementsByTagName('meta');
-    for (let i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('name') === metaName) {
-        return metas[i].getAttribute('content');
-      }
-    }
-    return '';
-  }
-
-  function offsetURL(url) {
-    var offset = getMeta('distill:offset');
-    return offset ? offset + '/' + url : url;
-  }
-
-  function createFuseIndex() {
-
-    // create fuse index
-    var options = {
-      keys: [
-        { name: 'title', weight: 20 },
-        { name: 'categories', weight: 15 },
-        { name: 'description', weight: 10 },
-        { name: 'contents', weight: 5 },
-      ],
-      ignoreLocation: true,
-      threshold: 0
-    };
-    var fuse = new window.Fuse([], options);
-
-    // fetch the main search.json
-    return fetch(offsetURL('search.json'))
-      .then(function(response) {
-        if (response.status == 200) {
-          return response.json().then(function(json) {
-            // index main articles
-            json.articles.forEach(function(article) {
-              fuse.add(article);
-            });
-            // download collections and index their articles
-            return Promise.all(json.collections.map(function(collection) {
-              return fetch(offsetURL(collection)).then(function(response) {
-                if (response.status === 200) {
-                  return response.json().then(function(articles) {
-                    articles.forEach(function(article) {
-                      fuse.add(article);
-                    });
-                  })
-                } else {
-                  return Promise.reject(
-                    new Error('Unexpected status from search index request: ' +
-                              response.status)
-                  );
-                }
-              });
-            })).then(function() {
-              return fuse;
-            });
-          });
-
-        } else {
-          return Promise.reject(
-            new Error('Unexpected status from search index request: ' +
-                        response.status)
-          );
-        }
-      });
-  }
-
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-
-    // get search element (bail if we don't have one)
-    var searchEl = window.document.getElementById('distill-search');
-    if (!searchEl)
-      return;
-
-    createFuseIndex()
-      .then(function(fuse) {
-
-        // make search box visible
-        searchEl.classList.remove('hidden');
-
-        // initialize autocomplete
-        var options = {
-          autoselect: true,
-          hint: false,
-          minLength: 2,
-        };
-        window.autocomplete(searchEl, options, [{
-          source: function(query, callback) {
-            const searchOptions = {
-              isCaseSensitive: false,
-              shouldSort: true,
-              minMatchCharLength: 2,
-              limit: 10,
-            };
-            var results = fuse.search(query, searchOptions);
-            callback(results
-              .map(function(result) { return result.item; })
-            );
-          },
-          templates: {
-            suggestion: function(suggestion) {
-              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
-                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
-                : '';
-              var html = `
-                <div class="search-item">
-                  <h3>${suggestion.title}</h3>
-                  <div class="search-item-description">
-                    ${suggestion.description || ''}
-                  </div>
-                  <div class="search-item-preview">
-                    ${img}
-                  </div>
-                </div>
-              `;
-              return html;
-            }
-          }
-        }]).on('autocomplete:selected', function(event, suggestion) {
-          window.location.href = offsetURL(suggestion.path);
-        });
-        // remove inline display style on autocompleter (we want to
-        // manage responsive display via css)
-        $('.algolia-autocomplete').css("display", "");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-
-  });
-
-  </script>
-
-  <style type="text/css">
-
-  .nav-search {
-    font-size: x-small;
-  }
-
-  /* Algolioa Autocomplete */
-
-  .algolia-autocomplete {
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: sub;
-    background-color: white;
-    color: black;
-    padding: 6px;
-    padding-top: 8px;
-    padding-bottom: 0;
-    border-radius: 6px;
-    border: 1px #0F2E3D solid;
-    width: 180px;
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-nav .algolia-autocomplete {
-      display: none;
-      visibility: hidden;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete {
-      display: inline-block;
-      visibility: visible;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
-      margin-left: 0;
-      width: 400px;
-      max-height: 400px;
-    }
-  }
-
-  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
-    width: 90%;
-    outline: none;
-    border: none;
-  }
-
-  .algolia-autocomplete .aa-hint {
-    color: #999;
-  }
-  .algolia-autocomplete .aa-dropdown-menu {
-    width: 550px;
-    max-height: 70vh;
-    overflow-x: visible;
-    overflow-y: scroll;
-    padding: 5px;
-    margin-top: 3px;
-    margin-left: -150px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #999;
-    border-top: none;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
-    cursor: pointer;
-    padding: 5px 4px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
-    border-bottom: none;
-    margin-bottom: 2px;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
-    overflow: hidden;
-    font-size: 0.8em;
-    line-height: 1.4em;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
-    font-size: 1rem;
-    margin-block-start: 0;
-    margin-block-end: 5px;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
-    display: inline-block;
-    overflow: hidden;
-    height: 2.8em;
-    width: 80%;
-    margin-right: 4%;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
-    display: inline-block;
-    width: 15%;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
-    height: 3em;
-    width: auto;
-    display: none;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
-    display: initial;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-    background-color: #eee;
-  }
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
-    font-weight: bold;
-    font-style: normal;
-  }
-
-  </style>
-
-
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
 
@@ -2074,569 +1478,309 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.23/header-attrs.js"></script>
-  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
-  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
-  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
-  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
-  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
-  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <script src="soft-cosine-measure_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="soft-cosine-measure_files/popper-2.6.0/popper.min.js"></script>
+  <link href="soft-cosine-measure_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="soft-cosine-measure_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="soft-cosine-measure_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="soft-cosine-measure_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="soft-cosine-measure_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="soft-cosine-measure_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="soft-cosine-measure_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
-  <script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-XQNDRLY681"></script>
-  <script type="text/javascript" cookie-consent="tracking">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XQNDRLY681');
-  </script>
-  <style type="text/css">
-  .distill-site-nav {
-      color: #fffcf9;
-      background-color: #343468;
-      font-size: 20px;
-      font-weight: 300;
-  }
-
-  .distill-site-nav a:hover {
-    color: #dedcd9;
-  }
-
-  body {
-    font-family: Roboto, 'Libre Baskerville', sans-serif; /*, et-book, "Palatino Linotype", "Palatino LT STD", 'Lora', serif*/
-    font-size: 15px;
-    font-weight: 300;
-    color: #404040;        /* #404040*/
-    position: relative;
-    background: #fffdfd;      /* {{ site.page-col }}; */
-  }
-
-  .index-title h1 {
-    font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans;
-    font-weight: 200;
-    font-size: 65px;
-    font-variant: small-caps;
-    text-align: center;
-    color: #3a3a9f;
-    margin-top: 7rem;
-    margin-bottom: 1.5rem;
-    line-height: 1;
-    border-bottom: 0; /*same as default h2*/
-    padding-bottom: 1rem; 
-  }
-
-
-  d-article h1 {
-    /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
-    font-style: normal;
-    font-variant: small-caps;
-    font-weight: 400;
-    font-size: 175%;
-    color: #040404;
-    margin-top: 2.1rem;
-    margin-bottom: 1.2rem;
-    line-height: 1;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /*same as default h2*/
-    padding-bottom: 1rem;
-  }
-
-  d-article h2 {
-    /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
-    font-style: normal;
-    font-weight: 400;
-    font-size: 150%;
-    color: #040404;
-    margin-top: 2.1rem;
-    margin-bottom: 1.2rem;
-    line-height: 1;
-    /* to remove will require something to keep the inline from inserting */
-    border-bottom: 0px solid rgba(0, 0, 0, 0.1); 
-    padding-bottom: 1rem; 
-    
-  }
-
-
-  d-article h3 {
-    /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
-    font-style: normal;
-    font-weight: 400;
-    font-size: 125%;
-    color: #040404;
-    opacity: .9;
-    margin-top: 2rem;
-    margin-bottom: 1.2rem;
-    line-height: 1;
-  }
-
-  d-article  h4 {
-    /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
-    font-style: normal;
-    text-transform: none;  /*default is uppercase*/
-    font-weight: 400;
-    font-size: 110%;
-    color: #040404;
-    opacity: .9;
-    margin-top: 1.9rem;
-    margin-bottom: 1.2rem;
-    line-height: 1;
-  }
-
-  d-article  h5 {
-    /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
-    font-style: normal;
-    text-transform: none;  /*default is uppercase*/
-    font-weight: 400;
-    font-size: 100%;
-    color: #040404;
-    opacity: .9;
-    margin-top: 1.9rem;
-    margin-bottom: 1.2rem;
-    line-height: 1;
-  }
-
-  d-article li {
-      margin-top: 0.1em;
-      margin-bottom: 0.1em;
-      margin-left: 0;
-      padding-left: 0;
-  }
-
-  </style>
   <!--/radix_placeholder_site_in_header-->
 
-  <link rel="stylesheet" href="style.css" type="text/css"/>
 
 </head>
 
-<body class="layout-listing">
+<body>
 
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"","authors":[]}
+{"title":"Mathematical reasoning behind soft cosine measure and reduce complexity from O(N²) to O(N)","description":"Mathmatical proofs of validity of soft cosine measure and reduce complexity from O(N²) to O(N) in deployment.","authors":[{"author":"Wilson Yip","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-08-14T00:00:00.000+00:00","citationText":"Yip, 2023"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
-<div class="nav-left">
-<a class="logo" href="index.html">
-<img src="img/wy_logo.png" alt="Logo"/>
-</a>
-<a href="index.html" class="title">Wilson Yip's Blog</a>
-<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
-</div>
-<div class="nav-right">
-<a href="about.html">About</a>
-<a href="https://github.com/wilsonkkyip">
-<i class="fab fa-github-alt fa-1x" aria-hidden="true"></i>
-</a>
-<a href="https://www.linkedin.com/in/wilson-yip-a6b148215/">
-<i class="fab fa-brands fa-linkedin fa-1x" aria-hidden="true"></i>
-</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
-<!--radix_placeholder_article_listing-->
 
-
-<script type="application/javascript">
-
-function init_posts_list() {
-
-  function load_image(img) {
-    var src = $(img).attr('data-src');
-    if (src) {
-      $(img).attr('src', src);
-      $(img).on("load", function() {
-        img.removeAttribute('data-src');
-      });
-    }
-  }
-
-  function set_posts_visible(posts, visible) {
-    if (visible) {
-
-      // show bottom border by default
-      $(posts).removeClass('post-preview-last');
-
-      // apply limits if need be
-      var max_posts = 25;
-      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
-      if (apply_limits && posts.length > max_posts) {
-        posts = $(posts).slice(0, max_posts);
-      } else {
-        $('.posts-more a').addClass('hidden');
-      }
-
-      // apply last style
-      $(posts.slice(-1)[0]).addClass('post-preview-last');
-
-      $(posts).removeClass('hidden');
-      $(posts).find('img[data-src]').each(function(i, img) {
-        load_image(img);
-      });
-    } else {
-      $(posts).addClass('hidden');
-    }
-  }
-
-  function apply_hash_filter() {
-
-    // clear active state
-    $('.categories .active').removeClass('active');
-
-    // mark all posts invisible to start
-    set_posts_visible($('.posts-list').children('a'), false);
-
-    // if we have a hash filter
-    if (window.location.hash && window.location.hash.startsWith("#category:")) {
-
-      // mark posts that match the category visible
-      var page_category = window.location.hash.replace(/^#category:/, "");
-      page_category = decodeURIComponent(page_category)
-      var posts = $('.post-metadata').map(function(idx, script) {
-        var metadata = $.parseJSON($(script).html());
-        var post = null;
-        $.each(metadata.categories, function(idx, category) {
-          category = category.replace(/ /g,"_");
-          if ((page_category || '').toLowerCase() === "articles" || category === page_category) {
-            post = $(script).parent().get();
-            return false;
-          }
-        });
-        return post;
-      });
-      set_posts_visible(posts, true);
-
-      // mark the hash active
-      $('.categories li>a[href="' + decodeURIComponent(window.location.hash) + '"]').addClass('active');
-
-      // update the list_caption
-      var list_caption = $('.posts-list-caption');
-      var caption = (page_category || '').toLowerCase() === "articles"
-        ? list_caption.attr('data-caption')
-        : ('Category: ' + page_category.replace(/_/g," "));
-      list_caption.text(caption);
-
-    } else {
-
-      // no hash filter, make all posts visible (subject to max display)
-      set_posts_visible($('.posts-list').children(), true);
-
-      // reset list caption
-      var list_caption = $('.posts-list-caption');
-      list_caption.text(list_caption.attr('data-caption'));
-
-
-    }
-  }
-
-  // more articles
-  function apply_post_limits(apply) {
-    if (apply) {
-      $('.posts-container').addClass('posts-apply-limit');
-      $('.posts-more a').removeClass('hidden');
-    } else {
-      $('.posts-container').removeClass('posts-apply-limit');
-      $('.posts-more a').addClass('hidden');
-    }
-  }
-
-  // click handling for tags
-  $('.dt-tag').click(function(ev) {
-    window.location.hash = '#category:' + $(this).text().replace(/ /g, "_");
-    return false;
-  })
-
-  // hash filter handling
-  apply_hash_filter();
-  $(window).on('hashchange',function() {
-    apply_post_limits(true);
-    apply_hash_filter();
-  });
-
-  // more articles link
-  $('.posts-more a').click(function(e) {
-    e.preventDefault();
-    apply_post_limits(false);
-    apply_hash_filter();
-    return false;
-  });
-
-}
-
-</script>
-
-
-
-<div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
-<div class="posts-list">
-<h1 class="posts-list-caption" data-caption=""></h1>
-<a href="posts/2023-08-14-soft-cosine-measure/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["math","linear-algebra","soft-cosine","time-complexity"]}</script>
-<div class="metadata">
-<div class="publishedDate">Aug. 14, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">Wilson Yip</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/2023-08-14-soft-cosine-measure/img/preview.png"/>
-</div>
-<div class="description">
-<h2>Mathematical reasoning behind soft cosine measure and reduce complexity from O(N²) to O(N)</h2>
+<div class="d-title">
+<h1>Mathematical reasoning behind soft cosine measure and reduce complexity from O(N²) to O(N)</h1>
+<!--radix_placeholder_categories-->
 <div class="dt-tags">
 <div class="dt-tag">math</div>
 <div class="dt-tag">linear-algebra</div>
 <div class="dt-tag">soft-cosine</div>
 <div class="dt-tag">time-complexity</div>
 </div>
-<p>Mathmatical proofs of validity of soft cosine measure and reduce complexity from O(N²) to O(N) in deployment.</p>
-</div>
-</a>
-<a href="posts/2023-08-10-writing-airflow-dags/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["python","airflow"]}</script>
-<div class="metadata">
-<div class="publishedDate">Aug. 10, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">Wilson Yip</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/2023-08-10-writing-airflow-dags/img/preview.png"/>
-</div>
-<div class="description">
-<h2>Writing Airflow DAGs</h2>
-<div class="dt-tags">
-<div class="dt-tag">python</div>
-<div class="dt-tag">airflow</div>
-</div>
-<p>Introduction to how to write a DAG on Airflow. Including writing custom operators, XComs, branching operators, triggers and variables.</p>
-</div>
-</a>
-<a href="posts/2023-08-09-sample-youtube-channels-id-with-async-functions/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["python","async","web-scraping"]}</script>
-<div class="metadata">
-<div class="publishedDate">Aug. 9, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">Wilson Yip</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/2023-08-09-sample-youtube-channels-id-with-async-functions/img/preview.png"/>
-</div>
-<div class="description">
-<h2>Sampling YouTube Channels' Id with Async Functions</h2>
-<div class="dt-tags">
-<div class="dt-tag">python</div>
-<div class="dt-tag">async</div>
-<div class="dt-tag">web-scraping</div>
-</div>
-<p>A quick way to collect YouTube channels' id from YouTube home page asynchronously.</p>
-</div>
-</a>
-<a href="posts/2023-08-08-recursive-programming-querying-nested-json-in-python/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["python","recursive-programming"]}</script>
-<div class="metadata">
-<div class="publishedDate">Aug. 8, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">Wilson Yip</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/2023-08-08-recursive-programming-querying-nested-json-in-python/img/preview.png"/>
-</div>
-<div class="description">
-<h2>Recursive Programming - Querying nested JSON in Python</h2>
-<div class="dt-tags">
-<div class="dt-tag">python</div>
-<div class="dt-tag">recursive-programming</div>
-</div>
-<p>Querying nested JSON in Python with recursive programming.</p>
-</div>
-</a>
-<a href="posts/2023-08-05-introduction-to-docker-with-airflow-and-postgres-stack/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["docker","airflow","postgres"]}</script>
-<div class="metadata">
-<div class="publishedDate">Aug. 5, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">Wilson Yip</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/2023-08-05-introduction-to-docker-with-airflow-and-postgres-stack/img/preview.png"/>
-</div>
-<div class="description">
-<h2>Introduction to Docker with Airflow and Postgres stack</h2>
-<div class="dt-tags">
-<div class="dt-tag">docker</div>
-<div class="dt-tag">airflow</div>
-<div class="dt-tag">postgres</div>
-</div>
-<p>Deploying Docker stacks of Airflow and Postgres database with docker-compose.</p>
-</div>
-</a>
-<a href="posts/2023-08-03-github-actions-with-example/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["continuous-delivery","cicd","github-actions","github","linkedin-api","oauth2"]}</script>
-<div class="metadata">
-<div class="publishedDate">Aug. 3, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">Wilson Yip</div>
-</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2023-08-03-github-actions-with-example/img/github-actions.png"/>
-</div>
-<div class="description">
-<h2>Github Actions with Example</h2>
-<div class="dt-tags">
-<div class="dt-tag">continuous-delivery</div>
-<div class="dt-tag">cicd</div>
-<div class="dt-tag">github-actions</div>
-<div class="dt-tag">github</div>
-<div class="dt-tag">linkedin-api</div>
-<div class="dt-tag">oauth2</div>
-</div>
-<p>An introduction to Github Actions with an example to write a post whenever a new blog post is merged to the main branch.</p>
-</div>
-</a>
-<a href="posts/2023-07-29-rust-gapi-oauth2/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["rust","oauth2","google-oauth"]}</script>
-<div class="metadata">
-<div class="publishedDate">July 29, 2023</div>
-<div class="dt-authors">
-<div class="dt-author">Wilson Yip</div>
-</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2023-07-29-rust-gapi-oauth2/img/auth_client_id.png"/>
-</div>
-<div class="description">
-<h2>Google OAuth2 Implementation on Rust Reqwest</h2>
-<div class="dt-tags">
-<div class="dt-tag">rust</div>
-<div class="dt-tag">oauth2</div>
-<div class="dt-tag">google-oauth</div>
-</div>
-<p>An implementation of Google OAuth2 procedures on Rust reqwest for Server-side Web Apps and Service Accounts.</p>
-</div>
-</a>
-</div>
-<div class="posts-sidebar">
-<div class="sidebar-section categories">
-<h3>Categories</h3>
-<ul>
-<li>
-<a href="#category:articles">articles</a>
-<span class="category-count">(7)</span>
-</li>
-<li>
-<a href="#category:airflow">airflow</a>
-<span class="category-count">(2)</span>
-</li>
-<li>
-<a href="#category:async">async</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:cicd">cicd</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:continuous-delivery">continuous-delivery</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:docker">docker</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:github">github</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:github-actions">github-actions</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:google-oauth">google-oauth</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:linear-algebra">linear-algebra</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:linkedin-api">linkedin-api</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:math">math</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:oauth2">oauth2</a>
-<span class="category-count">(2)</span>
-</li>
-<li>
-<a href="#category:postgres">postgres</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:python">python</a>
-<span class="category-count">(3)</span>
-</li>
-<li>
-<a href="#category:recursive-programming">recursive-programming</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:rust">rust</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:soft-cosine">soft-cosine</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:time-complexity">time-complexity</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:web-scraping">web-scraping</a>
-<span class="category-count">(1)</span>
-</li>
-</ul>
-</div>
-</div>
-<div class="posts-more">
-<a href="#">More articles &raquo;</a>
-</div>
-</div>
-<!--/radix_placeholder_article_listing-->
-
-<div class="d-title">
-<h1>index.knit</h1>
-<!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-
+<p><p>Mathmatical proofs of validity of soft cosine measure and reduce complexity from O(N²) to O(N) in deployment.</p></p>
 </div>
 
+<div class="d-byline">
+  Wilson Yip  
+  
+<br/>2023-08-14
+</div>
 
 <div class="d-article">
-<div class="index-title" style="">
-<h1>
-Math, Data, Infra
-</h1>
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#properties-of-positive-definite-semidefinite-matrix" id="toc-properties-of-positive-definite-semidefinite-matrix">Properties of Positive Definite [Semidefinite] Matrix</a></li>
+<li><a href="#soft-cosine-similarity" id="toc-soft-cosine-similarity">Soft Cosine Similarity</a></li>
+</ul>
+</nav>
 </div>
-<p><img src="img/banner.png" /></p>
+<div id="new-command" style="height:0px">
+<p><span class="math display">\[
+\newcommand\norm[1]{\lVert#1\rVert}
+\newcommand\fnorm[1]{\left\lVert#1\right\rVert}
+\newcommand\inner[2]{\left\langle#1,#2\right\rangle}
+\newcommand\rank{\text{rank}}
+\newcommand\diag{\text{diag}}
+\]</span></p>
+</div>
+<h1 id="introduction">Introduction</h1>
+<p>Soft cosine measure is widely used in text mining to retrieve the move relevant documents. It is a modification to the well known cosine similarity score, where the similarity between two vectors <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> is given by</p>
+<p><span class="math display">\[
+\text{cosine-score} = \frac{\mathbf{x}^T \mathbf{y}}{\sqrt{\mathbf{x}^T \mathbf{x}} \cdot \sqrt{\mathbf{y}^T \mathbf{y}}}.
+\]</span></p>
+<p>Such calculation assumes every dimension is completely independent of each other. In reality, this may not be the case. In text mining, words like <code>money</code> and <code>wealth</code> are very closely related but this relationship cannot be captured in the generic cosine similarity score.</p>
+<p>In 2014, the soft cosine measure was introduced in <a href="https://www.scielo.org.mx/pdf/cys/v18n3/v18n3a7.pdf">this paper</a>. It adjusts the cosine similarity score by putting a similarity matrix between the dot product.</p>
+<p><span class="math display">\[
+\text{soft-cosine} =  \frac{\mathbf{a}^T S\, \mathbf{b}}{\sqrt{\mathbf{a}^T S \, \mathbf{a}} \cdot \sqrt{\mathbf{b}^T S \, \mathbf{b}}}.
+\]</span></p>
+<p>This article will dive deep into the mathematical ground to understand this calculation.</p>
+<h1 id="properties-of-positive-definite-semidefinite-matrix">Properties of Positive Definite [Semidefinite] Matrix</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="definition">
+<p><span id="def:inner-product" class="definition"><strong>Definition 1  (Inner Product) </strong></span>Let <span class="math inline">\(\mathsf{V}\)</span> be a vector space over <span class="math inline">\(\mathbb{R}\)</span>. An <strong>inner product</strong> on <span class="math inline">\(\mathsf{V}\)</span> is a function <span class="math inline">\(\langle \cdot \; , \; \cdot \rangle : \mathsf{V} \times \mathsf{V} \rightarrow \mathbb{R}\)</span> such that for all <span class="math inline">\(\mathbf{x}, \mathbf{y}, \mathbf{z} \in \mathsf{V}\)</span> and all <span class="math inline">\(c \in \mathbb{R}\)</span>, the following conditions hold:</p>
+<ol type="a">
+<li>
+<span class="math inline">\(\langle \mathbf{x} + \mathbf{z}, \mathbf{y} \rangle = \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{z}, \mathbf{y} \rangle\)</span>.
+</li>
+<li>
+<span class="math inline">\(\langle c \mathbf{x}, \mathbf{y} \rangle = c \langle \mathbf{x}, \mathbf{y} \rangle\)</span>.
+</li>
+<li>
+<span class="math inline">\(\langle \mathbf{x}, \mathbf{y} \rangle = \langle \mathbf{y}, \mathbf{x} \rangle\)</span>.
+</li>
+<li>
+<span class="math inline">\(\langle \mathbf{x}, \mathbf{x} \rangle &gt; 0\)</span> if <span class="math inline">\(\mathbf{x} \neq \mathbf{0}\)</span>.
+</li>
+</ol>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="definition">
+<p><span id="def:norm" class="definition"><strong>Definition 2  (Norm) </strong></span>Let <span class="math inline">\(\mathsf{V}\)</span> be an inner product space. For <span class="math inline">\(\mathbf{x} \in \mathsf{V}\)</span>, define the <strong>norm</strong> or <strong>length</strong> of <span class="math inline">\(\mathbf{x}\)</span> by <span class="math inline">\(\norm{\mathbf{x}} = \sqrt{\inner{\mathbf{x}}{\mathbf{x}}}\)</span>.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="definition">
+<p><span id="def:conjugate-transpose" class="definition"><strong>Definition 3  (Transpose) </strong></span>Let <span class="math inline">\(A \in \mathsf{M}_{m \times n}(\mathbb{R})\)</span>. Define the <strong>transpose</strong> of <span class="math inline">\(A\)</span> to be <span class="math inline">\(A^T \in \mathsf{M}_{n \times n}(\mathbb{R})\)</span> such that <span class="math inline">\((A^T)_{ij} = A_{ji}\)</span> for all <span class="math inline">\(i, j\)</span>.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="definition">
+<p><span id="def:symmetric" class="definition"><strong>Definition 4  (Symmetric) </strong></span>Let <span class="math inline">\(A \in \mathsf{M}_n(\mathbb{R})\)</span>. A is <strong>symmetric</strong> if <span class="math inline">\(A = A^T\)</span>.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="definition">
+<p><span id="def:orthogonal" class="definition"><strong>Definition 5  (Orthogonal) </strong></span>Let <span class="math inline">\(\mathsf{V}\)</span> be in inner product space. Vectors <span class="math inline">\(\mathbf{x}, \mathbf{y} \in \mathsf{V}\)</span> are <strong>orthogonal (perpendicular)</strong> if <span class="math inline">\(\langle \mathbf{x}, \mathbf{y} \rangle = 0\)</span>. A subset <span class="math inline">\(S\)</span> of <span class="math inline">\(\mathsf{V}\)</span> is <strong>orthogonal</strong> if any two distinct vectors in <span class="math inline">\(S\)</span> are orthogonal. A vector <span class="math inline">\(\mathbf{x} \in \mathsf{V}\)</span> is a unit vector if <span class="math inline">\(\lVert \mathbf{x} \rVert = 1\)</span>. Finally, a subset <span class="math inline">\(S\)</span> of <span class="math inline">\(\mathsf{V}\)</span> is orthonormal if <span class="math inline">\(S\)</span> is orthogonal and consists entirely of unit vectors.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="definition">
+<p><span id="def:orthogonal-matrix" class="definition"><strong>Definition 6  (Orthogonal Matrix) </strong></span>Let <span class="math inline">\(A \in \mathsf{M}_n(\mathbb{R})\)</span>. <span class="math inline">\(A\)</span> is called an <strong>orthogonal matrix</strong> if <span class="math inline">\(A^TA = AA^T = I\)</span>.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="theorem">
+<p><span id="thm:symmetric-matrix-orthogonally-equivalent" class="theorem"><strong>Theorem 1  </strong></span>Let <span class="math inline">\(A \in \mathsf{M}_n(\mathbb{R})\)</span>. Then <span class="math inline">\(A\)</span> is symmetric if and only if <span class="math inline">\(A = Q^TDQ\)</span>, where <span class="math inline">\(D\)</span> is a diagonal matrix consists of eigenvalues of <span class="math inline">\(A\)</span> and <span class="math inline">\(Q\)</span> is an orthogonal matrix whose columns consists of eigenvectors of <span class="math inline">\(A\)</span>.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="theorem">
+<p><span id="thm:symmetric-eigenvectors-span" class="theorem"><strong>Theorem 2  </strong></span>Let <span class="math inline">\(A \in \mathsf{M}_n(\mathbb{R})\)</span>. <span class="math inline">\(A\)</span> is symmetric if and only if for all <span class="math inline">\(\mathbf{x} \in \mathbb{R}^n\)</span>
+<span class="math display">\[\mathbf{x} = \sum_{i = 1}^n a_i \mathbf{v}_i,\]</span>
+where <span class="math inline">\(\mathbf{v}_i\)</span>’s are the orthonormal eigenvectors of <span class="math inline">\(A\)</span> and <span class="math inline">\(a_i \in \mathbb{R}\)</span> for <span class="math inline">\(i = 1, 2, \dots, n\)</span>.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="definition">
+<p><span id="def:positive-definite" class="definition"><strong>Definition 7  (Positive Definite) </strong></span>Let <span class="math inline">\(A \in \mathsf{M}_n(\mathbb{R})\)</span>. <span class="math inline">\(A\)</span> is called <strong>positive definite</strong> [<strong>positive semidefinite</strong>] if <span class="math inline">\(A\)</span> is symmetric and <span class="math inline">\(\mathbf{x}^T A \mathbf{x} &gt; 0\)</span> <span class="math inline">\(\left[ \mathbf{x}^T A \mathbf{x} \geq 0 \right]\)</span> for all <span class="math inline">\(\mathbf{0} \neq \mathbf{x} \in \mathbb{R}^n\)</span>.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="theorem">
+<p><span id="thm:positive-matrix-positive-eigenvalues" class="theorem"><strong>Theorem 3  </strong></span>Let <span class="math inline">\(A \in \mathsf{M}_n(\mathbb{R})\)</span>. Then <span class="math inline">\(A\)</span> is positive definite [semidefinite] if and only if all its eigenvalues are positive [nonnegative].</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="proof">
+<p><span id="unlabeled-div-1" class="proof"><em>Proof</em>. </span>Since <span class="math inline">\(A\)</span> is symmetric, by Theorem <a href="#thm:symmetric-eigenvectors-span">2</a>, we know that for all <span class="math inline">\(\mathbf{x} \in \mathbb{R}^n\)</span>,</p>
+<p><span class="math display">\[\mathbf{x} = \sum_{i = 1}^n a_i \mathbf{v}_i,\]</span></p>
+<p>where <span class="math inline">\(\mathbf{v}_i\)</span>’s are the orthonormal eigenvectors of <span class="math inline">\(A\)</span> and <span class="math inline">\(a_i \in \mathbb{R}\)</span> for <span class="math inline">\(i = 1, 2, \dots, n\)</span>. Then</p>
+<p><span class="math display">\[A\mathbf{x} = \sum_{i = 1}^n a_i A\mathbf{v}_i = \sum_{i = 1}^n a_i \lambda_i \mathbf{v}_i.\]</span></p>
+<p>Hence</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbf{x}^T A \mathbf{x} &amp;= \left( \sum_{i = 1}^n a_i \mathbf{v}_i \right) \left( \sum_{j = 1}^n a_j \lambda_j \mathbf{v}_j \right) \\[5pt]
+&amp;= \sum_{i = 1}^n \sum_{j = 1}^n a_i a_j \lambda_j \mathbf{v}_i \mathbf{v}_j \\[5pt]
+&amp;= \sum_{i = 1}^n a_i^2 \lambda_i.
+\end{align*}
+\]</span></p>
+<p>Hence, the result holds.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="theorem">
+<p><span id="thm:unique-square-root" class="theorem"><strong>Theorem 4  </strong></span>Let <span class="math inline">\(A \in \mathsf{M}_n(\mathbb{R})\)</span>. if <span class="math inline">\(A\)</span> is positive definite [semidefinite], there exists an unique positive definite [semidefinite] matrix <span class="math inline">\(B \in \mathsf{M}_n(\mathbb{R})\)</span> such that <span class="math inline">\(A = B^T B\)</span>.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="proof">
+<p><span id="unlabeled-div-2" class="proof"><em>Proof</em>. </span>Suppose <span class="math inline">\(A\)</span> is positive definite [semidefinite]. By Theorem <a href="#thm:symmetric-matrix-orthogonally-equivalent">1</a>, we know that</p>
+<p><span class="math display">\[A = Q^TDQ,\]</span></p>
+<p>where <span class="math inline">\(Q\)</span> consists of orthogonal eigenvectors of <span class="math inline">\(A\)</span> and <span class="math inline">\(D = \diag(\lambda_1, \lambda_2, \dots, \lambda_n)\)</span> are the eigenvalues of <span class="math inline">\(A\)</span> and hence are all positive [nonnegative] by Theorem <a href="#thm:positive-matrix-positive-eigenvalues">3</a>.</p>
+<p>Define the matrix</p>
+<p><span class="math display">\[B = Q^T D^{1/2} Q,\]</span></p>
+<p>where <span class="math inline">\(D^{1/2} = \diag(\sqrt{\lambda_1}, \sqrt{\lambda_2}, \dots, \sqrt{\lambda_n})\)</span>. Since <span class="math inline">\(\sqrt{\lambda_i} &gt; 0\)</span> <span class="math inline">\(\left[\sqrt{\lambda_i} \geq 0\right]\)</span> for <span class="math inline">\(i = 1, 2, \dots, n\)</span>, we know that <span class="math inline">\(B\)</span> is also positive definite [semidefinite]. Also,</p>
+<p><span class="math display">\[B^2 = Q^T D^{1/2} Q Q^T D^{1/2} Q = Q^T D^{1/2} D^{1/2} Q = Q^T D Q = A.\]</span></p>
+<p>For the uniqueness part, suppose <span class="math inline">\(C\)</span> is another positive definite [semidefinite] roots of <span class="math inline">\(A\)</span>. Let</p>
+<p><span class="math display">\[C = P^T H P,\]</span></p>
+<p>where <span class="math inline">\(H = \diag(\mu_1, \mu_2, \dots, \mu-n)\)</span> and <span class="math inline">\(P\)</span> is orthogonal. Since <span class="math inline">\(C^2 = P^T H^2 P = A\)</span>, WLOG, we may assume <span class="math inline">\(\mu_i^2 = \lambda_i\)</span> for <span class="math inline">\(i = 1, 2, \dots, n\)</span>. Thus, we have</p>
+<p><span class="math display">\[C = P^T D^{1/2} P.\]</span></p>
+<p>And since <span class="math inline">\(B^2 = A = C^2\)</span>, we have</p>
+<p><span class="math display">\[
+\begin{align*}
+(Q^T D^{1/2} Q)^2 &amp;= (P^T D^{1/2} P)^2 \\[5pt]
+Q^T D Q &amp;= P^T D P \\[5pt]
+(P Q^T) D &amp;= D (P Q^T).
+\end{align*}
+\]</span></p>
+<p>Let <span class="math inline">\(W = PQ^T\)</span>,</p>
+<p><span class="math display">\[
+D = \begin{pmatrix}
+\lambda_{1} I_{k_1} &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \lambda_{2} I_{k_2} &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \lambda_{r} I_{k_r} \end{pmatrix}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+W = \begin{pmatrix}
+W_{11} &amp; W_{12} &amp; \cdots &amp; W_{1,k_r} \\
+W_{21} &amp; W_{22} &amp; \cdots &amp; W_{2,k_r} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+W_{k_1,1} &amp; W_{k_2,2} &amp; \cdots &amp; W_{k_r,k_r}
+\end{pmatrix}
+\]</span></p>
+<p>Since <span class="math inline">\(WD = DW\)</span>, we know that <span class="math inline">\(W_{ij} = O\)</span> for <span class="math inline">\(i \neq j\)</span>. Now consider</p>
+<p><span class="math display">\[
+\begin{align*}
+WD^{1/2} &amp;= \diag(W_{11}, \dots, W_{k_r, k_r}) \cdot \diag(\sqrt{\lambda_{k_1}}I_{k_1}, \dots, \sqrt{\lambda_{k_r}}I_{k_r}) \\[5pt]
+&amp;= \diag(\sqrt{\lambda_{k_1}}W_{11}, \dots, \sqrt{\lambda_{k_r}}W_{k_r, k_r}) \\[5pt]
+&amp;= \diag(\sqrt{\lambda_{k_1}}I_{k_1}, \dots, \sqrt{\lambda_{k_r}}I_{k_r}) \cdot \diag(W_{11}, \dots, W_{k_r, k_r}) \\[5pt]
+&amp;= D^{1/2}W.
+\end{align*}
+\]</span></p>
+<p>Hence,</p>
+<p><span class="math display">\[
+\begin{align*}
+PQ^TD^{1/2} &amp;= D^{1/2} PQ^T \\[5pt]
+Q^T D^{1/2} Q &amp;= P^T D^{1/2} P \\[5pt]
+B &amp;= C,
+\end{align*}
+\]</span></p>
+<p>which shows the uniqueness of <span class="math inline">\(B\)</span>.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="theorem">
+<p><span id="thm:positive-definite-inner-product" class="theorem"><strong>Theorem 5  </strong></span>If <span class="math inline">\(A \in \mathsf{M}_n(\mathbb{R})\)</span> is positive definite, then <span class="math inline">\(\mathbf{x}^T A \mathbf{y}\)</span> defines an inner product for all <span class="math inline">\(\mathbf{x}, \mathbf{y} \in \mathbb{R}^n\)</span>.</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="proof">
+<p><span id="unlabeled-div-3" class="proof"><em>Proof</em>. </span>We just need to confirm the 4 conditions listed in Definition <a href="#def:inner-product">1</a>. For all <span class="math inline">\(\mathbf{x}, \mathbf{y} \in \mathbb{R}^n\)</span>, let <span class="math inline">\(\inner{\mathbf{x}}{\mathbf{y}} = \mathbf{x}^T A \mathbf{y}\)</span>. Then</p>
+<p><span class="math display">\[
+\begin{align*}
+\inner{\mathbf{x}}{\mathbf{y}} &amp;= (\inner{\mathbf{x}}{\mathbf{y}})^T \\[5pt]
+&amp;= (\mathbf{x}^T A \mathbf{y})^T \\[5pt]
+&amp;= \mathbf{y}^T A \mathbf{x} \qquad  \text{($A$ is symmetric)} \\[5pt]
+&amp;= \inner{\mathbf{y}}{\mathbf{x}}.
+\end{align*}
+\]</span></p>
+<p>The other three conditions are trivial.</p>
+</div>
+</div>
+<h1 id="soft-cosine-similarity">Soft Cosine Similarity</h1>
+<p>Recall that Cosine Similarity between two vectors <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> is given by</p>
+<p><span class="math display">\[
+\begin{align*}
+\text{cosine}(\mathbf{x}, \mathbf{y}) &amp;= \frac{\mathbf{x}^T \mathbf{y}}{\sqrt{\mathbf{x}^T \mathbf{x}} \cdot \sqrt{\mathbf{y}^T \mathbf{y}}} \\[5pt]
+&amp;= \left( \frac{\mathbf{x}}{\sqrt{\mathbf{x}^T \mathbf{x}}} \right)^T \left( \frac{\mathbf{y}}{\sqrt{\mathbf{y}^T \mathbf{y}}} \right) \\[5pt]
+&amp;= \hat{\mathbf{x}}^T \hat{\mathbf{y}} \\[5pt]
+&amp;= \sum_{i = 1}^n \hat{x}_i \hat{y}_i
+\end{align*}
+\]</span></p>
+<p>where <span class="math inline">\(n\)</span> is the dimension of the vectors and <span class="math inline">\(\hat{\mathbf{x}}\)</span> is the unit vector of <span class="math inline">\(\mathbf{x}\)</span>. The time and space complexity of the calculation is <span class="math inline">\(O(n)\)</span>.</p>
+<p>The problem of the generic cosine similarity score is that it assumes all the dimension are completely independent to each other. In mathematical terms, they are mutually orthogonal. The soft-cosine measure introduced in <a href="https://www.scielo.org.mx/pdf/cys/v18n3/v18n3a7.pdf">this paper</a> solve this problem by introducing a correlation matrix to the middle of the dot product when calculating the cosine score. Below shows the matrix form of the calculation.</p>
+<p><span class="math display">\[
+\text{soft-cosine} =  \frac{\mathbf{a}^T S\, \mathbf{b}}{\sqrt{\mathbf{a}^T S \, \mathbf{a}} \cdot \sqrt{\mathbf{b}^T S \, \mathbf{b}}}
+\]</span></p>
+<p>If we replace <span class="math inline">\(S\)</span> by <span class="math inline">\(I\)</span> (the identity matrix), it reduces to the generic cosine score immediately. Theorem <a href="#thm:positive-definite-inner-product">5</a> also shows that this calculation is indeed another inner product. This means it is another valid way to measure the distance between two vectors. For instance, by Definition <a href="#def:norm">2</a>, the distance between <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> with respect to the correlation matrix <span class="math inline">\(S\)</span> is given by</p>
+<p><span class="math display">\[
+\begin{align*}
+\norm{\mathbf{a} - \mathbf{b}}_S &amp;= \sqrt{(\mathbf{a} - \mathbf{b})^T S (\mathbf{a} - \mathbf{b})}.
+\end{align*}
+\]</span></p>
+<p>Besides, by Theorem <a href="#thm:unique-square-root">4</a>, there exists a unique positive definite matrix <span class="math inline">\(S^{1/2}\)</span> such that <span class="math inline">\(S = S^{1/2} S^{1/2}\)</span>. With some manipulation, the soft cosine measure between <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> with respect to the correlation matrix <span class="math inline">\(S\)</span> can reduce to a simple dot product between the unit vectors <span class="math inline">\(\hat{\alpha}\)</span> and <span class="math inline">\(\hat{\beta}\)</span>, where <span class="math inline">\(\alpha = S^{1/2} \mathbf{a}\)</span> and <span class="math inline">\(\beta = S^{1/2} \mathbf{b}\)</span>.</p>
+<p><span class="math display">\[
+\begin{align*}
+\text{soft-cosine} &amp;=  \frac{\mathbf{a}^T S\, \mathbf{b}}{\sqrt{\mathbf{a}^T S \, \mathbf{a}} \cdot \sqrt{\mathbf{b}^T S \, \mathbf{b}}}\\[5pt]
+&amp;= \frac{(S^{1/2}\mathbf{a})^T \cdot (S^{1/2}\mathbf{b})}{\sqrt{(S^{1/2}\mathbf{a})^T(S^{1/2}\mathbf{a})} \cdot \sqrt{(S^{1/2}\mathbf{b})^T(S^{1/2}\mathbf{b})}} \\[5pt]
+&amp;= \frac{\alpha^T \cdot \beta}{\sqrt{\alpha^T \cdot \alpha} \cdot \sqrt{\beta^T \cdot \beta}}\\[5pt]
+&amp;= \hat{\alpha} \cdot \hat{\beta}.
+\end{align*}
+\]</span></p>
+<p>This can significantly reduce the time and space complexity from <span class="math inline">\(O(n^2)\)</span> to <span class="math inline">\(O(n)\)</span> if we store the transformed vectors in database and perform the soft cosine measure by calculating the dot product when needed.</p>
+<script>
+var defs = document.querySelectorAll(".definition p:nth-child(1)");
+var thms = document.querySelectorAll(".theorem p:nth-child(1)");
+var proofs = document.querySelectorAll(".proof p:nth-child(1)");
+var lemmas = document.querySelectorAll(".lemma p:nth-child(1)");
+var corollaries = document.querySelectorAll(".corollary p:nth-child(1)");
+
+
+
+function thmModify(blocks) {
+  for (let i = 0; i < blocks.length; i++) {
+    var first_span = blocks[i].querySelector("span")
+    first_span.innerHTML = first_span.innerHTML + "<br>"
+  }
+}
+
+thmModify(defs)
+thmModify(thms)
+thmModify(proofs)
+thmModify(lemmas)
+thmModify(corollaries)
+
+var proofs = document.querySelectorAll(".proof");
+for (let i = 0; i < proofs.length; i++) {
+  proofs[i].innerHTML += `<p style="text-align: right;">▢</p>`
+}
+</script>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
@@ -2645,6 +1789,15 @@ Math, Data, Infra
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
@@ -2652,13 +1805,7 @@ Math, Data, Infra
 <div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
-<div class="distill-site-nav distill-site-footer">
-<script id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-</script>
-</div>
 <!--/radix_placeholder_navigation_after_body-->
-
 
 </body>
 
