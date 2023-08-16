@@ -20,10 +20,13 @@ categories:
 preview_url: img/preview.png
 favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
 abstract: |
-  
+  This article provides a brief introduction to use YouTube Data API to retrive
+  information about channels, playlists, and videos. It also covers the use of 
+  etag and the if-none-match http header. 
 ---
 
 # Introduction
+
 
 This article will showcase what information we can obtain from YouTube Data API. 
 To use the API, one will need to create a Google Cloud Project and create a
@@ -36,7 +39,9 @@ we have sample a few hundreds of `channel_id` from the main page of YouTube.
 This article will start from these `channel_id` and retrieve their videos' 
 information. 
 
-This article will also talk about the `etag`
+This article will also talk about the `etag` and the `if-none-match` http 
+header. One can utilise this header to save time and bandwidth by caching 
+previous response. 
 
 ```{r, echo=F}
 knitr::include_graphics("img/preview.png")
@@ -124,12 +129,13 @@ parts = [
 ]
 ```
 
-Now we are ready to make the request.
+Now we are ready to make the request. Notice that you can only request for 50
+channels' information in 1 request. 
 
 ```{python, eval=F}
 params = {
     "part": ",".join(parts),
-    "id": ",".join(channel_ids)
+    "id": ",".join(channel_ids) # Can put 50 channel ids in 1 request
 }
 
 response = requests.get(
@@ -337,9 +343,192 @@ one single playlist if you are using API key.
 
 ## List Videos
 
+Now we have a list of videos published by the channel `UUU0zC0L4o0qOos83NLhK5ug`. 
+
+```{python, eval=F}
+video_ids = [x["snippet"]["resourceId"]["videoId"] for x in playlist_items]
+
+video_ids[:10]
+
+# [
+#     'E0UpJfBz_a0', 'knkv4Habj9s', 'D6aecAswvyE', 'uGdDiiro8yg', 'pwNqOkkdry4', 
+#     'ylp36nsXpfE', 'VtOY_2-YBSM', '27VRjJfW3A8', '3BGQGzpeOkU', '8qaV3s8kzcU'
+# ]
+```
+
+We can use the **List Videos** method to extract information about the videos
+(`likeCount`, `viewCount`, `commentCount`, `title`, `description`, etc.). Like 
+the *List Channels* method, you can only request for 50 videos in 1 request. 
+The function below handles this issue. 
+
+```{python, eval=F}
+from math import ceil
+
+def fetch_videos(video_ids):
+    n = 50
+    batches = ceil(len(video_ids) / n)
+    ids = [
+        video_ids[(n * i):(n * (i + 1))] for i in range(batches)
+    ]
+
+    parts = [
+        "contentDetails", "id", "liveStreamingDetails",
+        "localizations", "player", "recordingDetails",
+        "snippet", "statistics", "status", "topicDetails"
+    ]
+
+    items = []
+    for id in ids:
+        params = {
+            "part": ",".join(parts),
+            "id": ",".join(id)
+        }
+        response = requests.get(
+            url="https://www.googleapis.com/youtube/v3/videos",
+            params=params,
+            headers=headers
+        )
+        items += response.json()["items"]
+    
+    return items
+```
+
+Now we are ready for the API request. 
+
+```{python, eval=F}
+videos = fetch_videos(video_ids)
+
+videos[:2]
+
+# [
+#     {
+#         "kind": "youtube#video",
+#         "etag": "h7TfUpEP8ts-XNzYvActIph1mg4",
+#         "id": "E0UpJfBz_a0",
+#         "snippet": {
+#             "publishedAt": "2023-08-14T19:00:05Z",
+#             "channelId": "UCU0zC0L4o0qOos83NLhK5ug",
+#             "title": "Unforgettable Comedy Duo: Funniest Dog and Human Video Ever! \ud83d\ude31",
+#             "description": "Unforgettable Comedy Duo: Funniest Dog and Human Video Ever! \ud83d\ude31\nGet ready to experience the unbreakable bond between humans and their furry best friends, as their mischievous antics and genuine love bring out the purest emotions. Don't miss these videos that will brighten your day!\n----------------------------------------------------------------------------\nBest of the WEEK! Funniest Cats And Dogs Videos \ud83d\ude02\nhttps://www.youtube.com/watch?v=knkv4Habj9s&list=PLDae3oPkWscWqZZtu8gqj20Ug9ijrr7Ae&index=1&t=2s&pp=iAQB \n----------------------------------------------------------------------------\n\n#dogs #pets #animal #dog #dogandhuman #animal2023",
+#             "thumbnails": {...},
+#             "channelTitle": "Ginger Cat",
+#             "tags": [...],
+#             "categoryId": "24",
+#             "liveBroadcastContent": "none",
+#             "defaultLanguage": "en",
+#             "localized": {...},
+#             "defaultAudioLanguage": "en"
+#         },
+#         "contentDetails": {
+#             "duration": "PT8M56S",
+#             "dimension": "2d",
+#             "definition": "hd",
+#             "caption": "false",
+#             "licensedContent": true,
+#             "contentRating": {},
+#             "projection": "rectangular"
+#         },
+#         "status": {
+#             "uploadStatus": "processed",
+#             "privacyStatus": "public",
+#             "license": "youtube",
+#             "embeddable": true,
+#             "publicStatsViewable": true,
+#             "madeForKids": false
+#         },
+#         "statistics": {
+#             "viewCount": "34275",
+#             "likeCount": "749",
+#             "favoriteCount": "0",
+#             "commentCount": "28"
+#         },
+#         "player": {...},
+#         "topicDetails": {...},
+#         "recordingDetails": {},
+#         "localizations": {...}
+#     },
+#     {
+#         "kind": "youtube#video",
+#         "etag": "hFSA6Fj9y8Hx-zAKzavsM9vR8Kk",
+#         "id": "knkv4Habj9s",
+#         "snippet": {
+#             "publishedAt": "2023-08-12T19:00:16Z",
+#             "channelId": "UCU0zC0L4o0qOos83NLhK5ug",
+#             "title": "Best of the WEEK! Funniest Cats And Dogs Videos \ud83d\ude02",
+#             "description": "Best of the WEEK!  Funniest Cats And Dogs Videos \ud83d\ude02\nBeing an animal lover, these were cute!\n----------------------------------------------------------------------------\nDogs can talk, dogs can understand. Who knew?\ud83d\ude31 \nhttps://www.youtube.com/watch?v=D6aecAswvyE&list=PLDae3oPkWscWqZZtu8gqj20Ug9ijrr7Ae&index=1&pp=iAQB  \n----------------------------------------------------------------------------\n\n#dogs #pets #animal #dog #animal #animal2023",
+#             "thumbnails": {...},
+#             "channelTitle": "Ginger Cat",
+#             "tags": [...],
+#             "categoryId": "24",
+#             "liveBroadcastContent": "none",
+#             "defaultLanguage": "en",
+#             "localized": {...},
+#             "defaultAudioLanguage": "en"
+#         },
+#         "contentDetails": {
+#             "duration": "PT10M19S",
+#             "dimension": "2d",
+#             "definition": "hd",
+#             "caption": "false",
+#             "licensedContent": true,
+#             "contentRating": {},
+#             "projection": "rectangular"
+#         },
+#         "status": {
+#             "uploadStatus": "processed",
+#             "privacyStatus": "public",
+#             "license": "youtube",
+#             "embeddable": true,
+#             "publicStatsViewable": true,
+#             "madeForKids": false
+#         },
+#         "statistics": {
+#             "viewCount": "37920",
+#             "likeCount": "588",
+#             "favoriteCount": "0",
+#             "commentCount": "25"
+#         },
+#         "player": {...},
+#         "topicDetails": {...},
+#         "recordingDetails": {},
+#         "localizations": {...}
+#     }
+# ]
+```
+
 ## Etag
 
+Every time you request a resource from these methods, an `etag` will be attached
+within the response. One of the main use of this tag is to keep track of the 
+resource. If the resource has not changed since your last request, the `etag` 
+will stay the same. 
 
+One can pass the `etag` along with the request in the `if-none-match` header 
+and if the resource's `etag` match with the one you provided, the server will 
+return HTTP status 304, indicates that you can use the previous response. 
+Otherwise, it will return the updated resources. 
+
+```{python, eval=F}
+channel_id = "UCSXwxpWZQ7XZ1WL3wqevChA"
+
+response = requests.get(
+    url="https://www.googleapis.com/youtube/v3/channels",
+    params={"id":channel_id},
+    headers=headers
+)
+
+headers["if-none-match"] = response.json()["etag"]
+
+response = requests.get(
+    url="https://www.googleapis.com/youtube/v3/channels",
+    params={"id":channel_id},
+    headers=headers
+)
+
+response.status_code
+
+# 304
+```
 
 
 

@@ -37,7 +37,12 @@ $$
 $$
 </div>
 
+
+
+
 # Introduction
+
+
 
 Soft cosine measure is widely used in text mining to retrieve the move relevant documents. It is a modification to the well known cosine similarity score, where the similarity between two vectors $\mathbf{x}$ and $\mathbf{y}$ is given by 
 
