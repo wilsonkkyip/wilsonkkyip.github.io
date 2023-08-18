@@ -18,7 +18,6 @@ Contact info
 <a href="https://www.linkedin.com/in/wilson-yip-a6b148215/">
 <span>wilsonyip@elitemail.org</span>
 </a><br>
-<i class="fa fa-phone"></i> +44 (0) 7895 616 568<br>
 <i class="fa fa-github"></i> https://github.com/wilsonkkyip/<br>
 <i class="fa-solid fa-globe"></i> https://wilsonkkyip.github.io/
 
