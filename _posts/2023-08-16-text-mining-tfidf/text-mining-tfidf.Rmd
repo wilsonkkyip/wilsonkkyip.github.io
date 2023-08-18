@@ -1,0 +1,578 @@
+---
+title: "Text Mining - Identifying Similar YouTube Videos"
+description: |
+  Introduction to text mining with word2vec and tf-idf along with an example
+  to match YouTube videos based on input query.
+author:
+  - name: Wilson Yip
+date: 2023-08-16
+preview: img/preview.png
+output:
+  bookdown::html_document2:
+    base_format: distill::distill_article
+    toc: true
+    self_contained: false
+tags: [text-mining, word2vec, cbow, skip-gram, tf-idf, soft-cosine, gensim]
+categories:
+  - text-mining
+  - vord2vec
+  - cbow
+  - skip-gram
+  - tf-idf
+  - soft-cosine
+  - gensim
+preview_url: img/preview.png
+favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+abstract: |
+  Introduction to text mining with word2vec and tf-idf. Along with soft cosine
+  similarity, a model is generated to query best matching YouTube videos from 
+  some string inputs. 
+---
+
+# Introduction
+
+In [previous article](../2023-08-15-youtube-data-api-v3/), we have collected 
+more than 400,000 rows of video data from YouTube API. We have also introduced 
+how soft cosine similarity score works in matching between vectors 
+(see [here](../2023-08-14-soft-cosine-measure/)). In this article, we will first 
+introduction some text mining technique including **word2vec** and **tf-idf**. 
+At last, we will show an example on how to generate a matching model using the 
+soft cosine similarity score to find the best matching videos from some string 
+queries. Below shows an example on using the model.
+
+```{python, eval=F}
+q = "ukraine war, conflict, clash, confrontation, russia"
+result = match_videos(q)
+result
+
+#                       channel_id     video_id                                  title     score
+# 225877  UCfdNM3NAhaBOXCafH7krzrA  6Awx8MvT7qk     What Will Ukraine Do After The ...  0.613843
+# 253822  UCeY0bbntWzzVIaj2z3QigXg  qtA-zamctYA              One year of #Russia's ...  0.613843
+# 266182  UCeY0bbntWzzVIaj2z3QigXg  kV90vvVmAfY  What Is The Background To Conflic ...  0.603664
+# 225744  UCfdNM3NAhaBOXCafH7krzrA  WXzdTxYrOSo  What Russia Will Do After the War ...  0.600225
+# 89191   UCef1-8eOpJgud7szVPlZQAQ  HAb1pFRsh-4  Russia Vs Ukraine War Update LIVE ...  0.585112
+# 225448  UCfdNM3NAhaBOXCafH7krzrA  TXTS2R04Uu8            How Putin Almost Won th ...  0.576693
+# 105578  UCef1-8eOpJgud7szVPlZQAQ  Hb-MjE8DtQ4  Russia Ukraine War | Russia Attac ...  0.575848
+# 97898   UCef1-8eOpJgud7szVPlZQAQ  1E7vTp7tezg  Russia Ukraine War | Russian Parl ...  0.569067
+# 95272   UCef1-8eOpJgud7szVPlZQAQ  N5fJwSp7N6Y  Russia Ukraine War | Wagner Will  ...  0.557974
+# 225341  UCfdNM3NAhaBOXCafH7krzrA  GVLGPXuWoGs  Russia's Invasion of Ukraine is a ...  0.556573
+```
+
+
+# Preprocessing
+
+Before analysing textual data, a series of preprocessing stages are required to
+convert the text into a more structured format. These stages include sentence
+segmentation, word tokenisation, lowercasing, stop word removal, stemming or 
+lemmatisation, etc. 
+
+## Segmentation and Tokenisation
+
+Segmentation is a process to break up the text into corresponding sentences, 
+while tokenisation is a process to further break up the sentences into words. 
+
+## Stop words and Punctuation
+
+Stop words are words that do no have much meaning in a sentence, but are 
+commonly used. For example, in English, "the", "a", "and", etc. We will remove
+these words along with punctuations.
+
+## Stemming
+
+Stemming is a technique used to truncate a word into its word stem. Its 
+algorithm is based on the commonly used prefixes and suffixes to cut off the 
+beginning or the end of the word. Below shows an example for stemming. 
+
+```{python, eval=F}
+from gensim.parsing.porter import PorterStemmer
+p = PorterStemmer()
+
+example_words = ["writter", "writting", "written", "wrote", "writtings"]
+[p.stem(x) for x in example_words]
+
+# ['writter', 'writ', 'written', 'wrote', 'writ']
+```
+
+## Lemmatisation
+
+Lemmatisation is another method to root a word. It does not simply truncate a 
+word like stemming. It involves standardising all inflections of a given word 
+into it's base dictionary form. Below shows the same example as above but using
+lemmatisation. 
+
+```{python, eval=F}
+from nltk.stem import WordNetLemmatizer
+wnl = WordNetLemmatizer()
+
+example_words = ["writter", "writting", "written", "wrote", "writtings"]
+[wnl.lemmatize(x, pos="v") for x in example_words]
+
+# ['writter', 'writting', 'write', 'write', 'writtings']
+```
+
+
+# word2vec
+
+Since computers use (binary) numbers for processing, it will be very desiring
+if we can convert words into numbers. Word embedding is an approach with which
+we can represent a word, and hence a document, in a real valued vector. 
+
+Word2Vec is a method to construct these embedding vectors. There are two similar
+models: Continuous Bag Of Words (CBOW) and Skip-gram. Both models origin from 
+the same idea. We first assign a number for the *window size* ($\omega$) and our 
+goal is to learn the meaning of a word from the previous $\omega$ words and the
+coming $\omega$ words. 
+
+Suppose we want to learn the embeddings of the following words:
+
+> a quantitative methodological approach to understanding meaning in observed language
+
+We first assign a number, say 2, as the window size. Then for learning the word 
+`methodological`, we will look at the 2 words before and after it. In this case,
+they are [a, quantitative, approach, to]. We call the word `methodological`
+target word and the 4 surrounding words context words.
+
+The CBOW model aims to train a neural network with 1 hidden layer to take the 4
+context words as input and predict the target word. Along the process, the 
+hidden layer is expected to contains the embedded information of the target 
+word. The goal of this model is to extract the hidden layer as the embedding
+vectors of words. 
+
+The skip-gram model uses similar approach to find the embedding vectors. Yet, 
+instead of predicting the target word by the context words, the skip-gram model
+use the target word to maximise the optimisation to find the context words. 
+
+```{r, echo=FALSE, engine='tikz', out.width='100%', fig.align = 'center', fig.ext=if (knitr::is_latex_output()) 'pdf' else 'png', fig.cap='CBOW and skip-gram models', engine.opts = list(template = "../../tikz/tikz2pdf.tex"), cache = TRUE}
+\tikzmath{
+  \embedh0 = -4;
+  \embedh1 = 4;
+  \embedw = 0.6;
+  \cbowex = 3.7;
+  \skipgramex = 17.7;
+  \skipgramnx = 22;
+}
+
+\begin{tikzpicture}[>=stealth, scale=0.4]
+
+% Layer tag
+\foreach \x\y in {0/Input, 1/Projection, 2/Output} {
+  \node at (\x*4, 9) {\scriptsize\sffamily \y};
+  \node at (\x*4 + 14, 9) {\scriptsize\sffamily \y};
+}
+
+% Weight matrix W tags
+\node at (2.3, 5.9) {$W$};
+\node at (4, -5) {$\mathbf{e}_t$};
+
+\node at (16, 0.7) {$W$};
+\node at (18, -5) {$\mathbf{e}_t$};
+
+% Context word nodes
+\foreach \x/\y in {1/-7, 2/-4, 3/-2, 4/2, 5/4, 6/7} {
+  \node[circle, fill=white, draw=black, minimum size=10pt] (c\x) at (0, \y) {};
+  \node[circle, fill=white, draw=black, minimum size=10pt] (s\x) at (\skipgramnx, \y) {};
+}
+
+% Context node tags
+\foreach \x/\y in {1/\string+\omega, 2/\string+2, 3/\string+1, 4/\string-1, 5/\string-2, 6/\string-\omega} {
+  \node[left=0.4] at (c\x) {$\mathbf{p}_{t \y}$};
+  \node[right=0.3] at (s\x) {$\mathbf{p}_{t \y}$};
+}
+
+% Vertical ... signs
+\node at (0, 5.7) {$\vdots$};
+\node at (0, -5.3) {$\vdots$};
+\node at (\skipgramnx, 5.7) {$\vdots$};
+\node at (\skipgramnx, -5.3) {$\vdots$};
+
+% Target word nodes
+\node[circle, fill=white, draw=black, minimum size=10pt] (cbowt) at (8, 0) {};
+\node[circle, fill=white, draw=black, minimum size=10pt] (skipgramt) at (14, 0) {};
+\node[below=0.3] at (cbowt) {$\mathbf{p}_t$};
+\node[below=0.3] at (skipgramt) {$\mathbf{p}_t$};
+
+% Embedding vectors
+\draw (\cbowex, \embedh0) -- 
+      (\cbowex + \embedw, \embedh0) -- 
+      (\cbowex + \embedw, \embedh1) -- 
+      (\cbowex, \embedh1) -- 
+      (\cbowex, \embedh0);
+
+\draw (\skipgramex, \embedh0) -- 
+      (\skipgramex + \embedw, \embedh0) -- 
+      (\skipgramex + \embedw, \embedh1) -- 
+      (\skipgramex, \embedh1) -- 
+      (\skipgramex, \embedh0);
+
+%\draw[draw=black] (11.1,5.5) rectangle ++(0.3,0.3);
+%\node[circle, draw=black, minimum size=2pt] () at (4, 2) {};
+%\node[draw,thick,minimum width=2,minimum height=2] (rect) at (4,2) {};
+
+% Arrows embedding vectors to context nodes
+\foreach \i in {1,...,6} {
+  \draw[->] (c\i) -- (\cbowex, {\embedh0 + ((\embedh1 - \embedh0) / 6) * (\i - 1) + ((\embedh1 - \embedh0) / 12) });
+  \draw[->] (\skipgramex + \embedw, {\embedh0 + ((\embedh1 - \embedh0) / 6) * (\i - 1) + ((\embedh1 - \embedh0) / 12) }) -- (s\i);
+}
+
+% Arrows embedding vectors to target nodes
+\draw[->] (\cbowex + \embedw, 0) -- (cbowt);
+\draw[->] (skipgramt) -- (\skipgramex, 0);
+
+% Model labels
+\node at (4, -9) {\sffamily CBOW};
+\node at (18, -9) {\sffamily Skip-gram};
+
+\end{tikzpicture}
+```
+
+## CBOW
+
+Let $D$ (dictionary) be the set of all available vocabularies with cardinality 
+$|D| = d$, $\mathbf{p}_t \in D$ be a word in the dictionary encoded using
+1-of-$D$ coding. Also let $s$ be the number of dimensions for the word 
+embeddings. 
+
+Suppose we want to find out the word embeddings for $\mathbf{p}_t$. The CBOW 
+model takes words surrounding $\mathbf{p}_t$ with a window of size $\omega$ and 
+train a neural network with one hidden layer and an output layer. The output 
+layer is the vector of $\mathbf{p}_t$, meaning the neural network aims to 
+predict the word $\mathbf{p}_t$ from its surrounding words 
+$\mathbf{p}_{t - \omega}, \dots, \mathbf{p}_{t - 1}, \mathbf{p}_{t + 1}, \dots, \mathbf{p}_{t + \omega}$. 
+Then the hidden layers must contain some meaningful information about the word
+$\mathbf{p}_t$ in the form of vector. We take this hidden layer as the word
+embedding vector $\mathbf{e}_t$ of $\mathbf{p}_t$. Hence, the hidden layer is an 
+$s$-dimensional vector.
+
+Notice that the weight matrix $W$ between the input layer is an $s \times d$ 
+matrix and
+
+$$\mathbf{e}_t = \frac{1}{2\omega} \sum_{i = 1}^\omega W(\mathbf{p}_{t - i} + \mathbf{p}_{t _ i}),$$
+
+which is the average value of the projected vectors from the surrounding words.
+
+Finally, when the model is trained. the word embedding vector $\mathbf{e}_j$ for 
+$\mathbf{p}_j$ is given by
+
+$$\mathbf{e}_j = W\mathbf{p}_j,$$
+
+or the $j$-th column of $W$ since $\mathbf{p}_j$'s entries are all $0$ except
+$1$ at the $j$-th entry.
+
+## Skip-gram
+
+The skip-gram model is similar to the CBOW model, but instead of predicting the
+target word $\mathbf{p}_t$, it takes the target word to predict the context
+words $\mathbf{p}_{t - \omega}, \dots, \mathbf{p}_{t - 1}, \mathbf{p}_{t + 1}, \dots \mathbf{p}_{t + \omega}$. 
+The first weight matrix $W$ is an $s \times d$ matrix transforming the target
+word $\mathbf{p}_t$ to the embedding vector $\mathbf{e}_j$. The second weight
+matrix $W'$ is a $d \times s$ matrix transforming the embedding vector to one
+of the context word $\mathbf{p}_{t + i}$, where $i \in {-\omega, \dots, -1, 1, \dots, \omega}$. 
+All context words within the window share the same weight matrix $W'$, meaning
+that the model is required to through $2 \omega$ times for each target word. 
+
+When the training is over, the word embedding vector for each words are given by
+
+$$\mathbf{e}_j = W\mathbf{p}_j,$$
+
+or the $j$-th column of the weight matrix $W$. 
+
+# TF-IDF
+
+Term Frequency–Inverse Document Frequency (TF-IDF) is used to measure the 
+importance of a token (or word) to the document it belongs relative to the 
+importance of the same token to the whole collection of corpus. 
+
+In general, the value is the product of two terms: 
+
+- Term frequency $\text{tf}(t, d)$: a measure of importance of the term to the document.
+- Inverse document frequency $\text{idf}(t, D)$: a measure of importance of the term to the corpus.
+
+That is,
+
+$$\text{tfidf}(t, d, D) = \text{tf}(t, d) \cdot \text{idf}(t, D),$$
+
+where $t$ is a particular token (or word or term), $d$ is a document and 
+$D$ is the collection of corpus. 
+
+There are different ways to calculate $\text{tf}(t, d)$ and $\text{idf}(t, D)$. 
+Below shows some variants of $\text{tf}(t, d)$ and $\text{idf}(t, D)$. 
+
+<style>
+#tfidf-tables table {
+    border-color: rgba(0,0,0,0);
+}
+
+#tfidf-tables table {
+    width: 100%;
+}
+
+#tfidf-tables table tr th {
+    text-align: center;
+}
+
+#tfidf-tables table th:nth-child(odd) {
+    border-bottom: solid 0px;
+}
+
+#tfidf-tables table td:nth-child(3n+1) {
+    border-bottom: solid 0px;
+}
+
+#tfidf-tables table td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#tfidf-tables table tr:last-child td {
+    border-bottom: 1px solid rgba(0,0,0,0.2)
+}
+
+#tfidf-tables table tr:last-child td:nth-child(3n+1) {
+    border-bottom: 1px solid rgba(0,0,0,0)
+}
+</style>
+
+<div id="tfidf-tables">
+<table>
+<tr>
+<th style="width=2%;"></th>
+<th colspan=2>$\text{tf}$ variants</th>
+<th style="width=2%;"></th>
+<th colspan=2>$\text{idf}$ variants</th>
+<th style="width=2%;"></th>
+</tr>
+
+<tr>
+<td></td>
+<td>raw count</td>
+<td>$f_{t, d}$</td>
+<td></td>
+<td>inverse document frequency</td>
+<td>$\log_b \dfrac{N}{n_t}$</td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td>term frequency</td>
+<td>$f_{t, d}\left/ \sum\limits_{t' \in d} f_{t', d} \right.$</td>
+<td></td>
+<td>inverse document frequency smooth</td>
+<td>$\log_b \left( \dfrac{N}{1 + n_t} \right) + 1$</td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td>log normalisation</td>
+<td>$\log_b(1 + f_{t, d})$</td>
+<td></td>
+<td>probabilistic inverse document frequency</td>
+<td>$\log_b \dfrac{N - n_t}{n_t}$</td>
+<td></td>
+</tr>
+</table>
+</div>
+
+where $f_{t, d}$ is the frequency of token $t$ in document $d$, $b$ is the base
+number for logarithm, $N = |D|$ is the total number of documents, and 
+$n_t = |\{d \in D | t \in d\}|$ is the number of documents contain token $t$. 
+
+# Soft Cosine Similarity
+
+In [previous article](../2023-08-14-soft-cosine-measure/), we have discussed the 
+soft cosine similarity. It modified the generic cosine similarity by putting a
+correlation matrix between the dot product to define a new inner product and
+hence a new metric for measuring the difference or similarity between two 
+vectors. Such calculation no longer assume each dimension is completely 
+independent to each other but having some correlation. 
+
+For any two $n$-dimensional vectors $\mathbf{a}, \mathbf{b} \in \mathbb{R}^n$, 
+the soft cosine similarity between these two vectors with respect to the 
+correlation matrix $S$ is given by
+
+$$
+\text{soft-cosine} =  \frac{\mathbf{a}^T S\, \mathbf{b}}{\sqrt{\mathbf{a}^T S \, \mathbf{a}} \cdot \sqrt{\mathbf{b}^T S \, \mathbf{b}}}.
+$$
+
+# Matching YouTube Videos
+
+In this section, we will first preprocess the text from the title and 
+description of the videos. Then we will train a word2vec word embeddings from 
+this corpus. With these word embeddings, we can calculate the similarity 
+matrix between each pair of words. After that, we will calculate the importance
+of each word in a document using the tfidf scores. With any two word importance
+vectors along with the words similarity matrix, we can calculate the soft 
+cosine similarity between these two vectors. 
+
+## Dataset
+
+In [previous article](../2023-08-15-youtube-data-api-v3/), we have shown how to
+download data of YouTube videos. In this article, we will make use of the data
+collected from this method to match similar videos based on their titles. 
+
+We have downloaded more than 400,000 videos' data from the API. We first have a
+look on the dataset.
+
+```{python, eval=F}
+import pandas as pd 
+
+df = pd.read_csv("./data.csv")
+df
+
+#                       channel_id     video_id                                              title
+# 0       UCSZbXT5TLLW_i-5W8FZpFsg  DFZnYR-5vnk  HIGHLIGHTS: Colorado Rapids vs. Seattle Sounde...
+# 1       UC9k-yiEpRHMNVOnOi_aQK8w  tilUNQJ5_WE  True Story Behind Festival Featured in 'Midsom...
+# 2       UCSHLoG-bXj1aVA2T5y8t84A  _zZdcckm1vk             Ankahee - Official Full Song - Lootera
+# 3       UCvQECJukTDE2i6aCoMnS-Vg  jn70KsBit3c    Sylvester James Gates, Jr.: Scientific Literacy
+# 4       UC8-Th83bH_thdKZDJCrn88g  7f_0UpRijm0  Queen Latifah's Dad Is One Tough Dude (Late Ni...
+# ...                          ...          ...                                                ...
+# 457036  UCQD3awTLw9i8Xzh85FKsuJA  mCWQ90YdtLo             Random 'Dead by Daylight' Bullshittery
+# 457037  UCeY0bbntWzzVIaj2z3QigXg  zCNZgK7OXPY  Wisconsin Senate Debate: Johnson, Barnes Are A...
+# 457038  UCvQECJukTDE2i6aCoMnS-Vg  J-jhR84F_9o      Mohammad's Message Dalia Mogahed  | Big Think
+# 457039  UC9k-yiEpRHMNVOnOi_aQK8w  mj1Qs4z_AzA         Farm Boy Has Trouble Closing Gates #shorts
+# 457040  UCwiTOchWeKjrJZw7S1H__1g  nojaKlA7MoU  Johnnie's Iconic Italian Beef Is A Delicious M...
+```
+
+## Preprocessing
+
+```{python, eval=F}
+import re
+from nltk.corpus import stopwords
+from urllib.request import urlopen
+from gensim.parsing.porter import PorterStemmer
+
+stop_words = stopwords.words('english')
+stopwords_url = "https://raw.githubusercontent.com/Alir3z4/stop-words/master/english.txt"
+full_stopwords = urlopen(stopwords_url).read().decode("utf-8").split()
+
+stop_words = stop_words + full_stopwords
+stop_words = list(set([x.replace("'", "") for x in stop_words] + stop_words))
+
+p = PorterStemmer()
+def remove_stopwords(x):
+    x = p.stem_sentence(x)
+    return " ".join([w for w in x.lower().split() if w not in stop_words])
+
+df["title_processed"] = df["title"].apply(remove_stopwords)
+df["title_processed"] = df["title_processed"]\
+    .str.replace("[^\\w\\s]", "", regex=True)\
+        .str.replace('\\s+', ' ', regex=True)\
+        .apply(lambda x: x.split())
+
+df["description_processed"] = df["description"].apply(remove_stopwords)
+df["description_processed"] = df["description_processed"]\
+    .str.replace("[^\\w\\s]", "", regex=True)\
+        .str.replace('\\s+', ' ', regex=True)\
+        .apply(lambda x: x.split())
+
+df[["title_processed", "description_processed"]]
+
+#                                           title_processed                              description_processed
+# 0       [highlights, colorado, rapid, vs, seattl, soun...  [colorado, rapid, continu, hot, streak, thirds...
+# 1          [true, stori, festiv, featur, midsommar, film]  [film, scari, twist, swedish, tradition, midso...
+# 2                         [ankahe, offici, song, lootera]  [here, romant, track, ankahee, upcom, movi, lo...
+# 3          [sylvest, jame, gates, jr, scientif, literaci]  [watch, video, think, httpsbigthinknewvideo, e...
+# 4       [queen, latifah, dad, tough, dude, late, night...  [queen, latifah, jimmi, live, ha, hurt, winter...
+# ...                                                   ...                                                ...
+# 457036             [random, dead, daylight, bullshitteri]  [random, moment, bullshit, fuck, clan, stream,...
+# 457037  [wisconsin, senat, debate, johnson, barn, oppo...  [conclus, wisconsin, us, senat, debate, ron, j...
+# 457038                   [mohammad, messag, dalia, mogah]  [mohammad, messag, video, daily, httpsbigthink...
+# 457039        [farm, boi, ha, troubl, close, gate, short]  [5yearold, boi, kentucki, troubl, close, gate,...
+# 457040  [johnnie, icon, italian, beef, delici, mess, b...  [ubiquit, italian, beef, sandwich, chicago, it...
+```
+
+## word2vec Model Training
+
+```{python, eval=F}
+from gensim.models import Word2Vec
+
+documents = list(df["title_processed"])
+model_documents = documents + list(df["description_processed"])
+model_documents = pd.Series([" ".join(x) for x in model_documents])
+model_documents = model_documents.drop_duplicates().apply(lambda x: x.split())
+model_documents = list(model_documents)
+
+model = Word2Vec(
+    sentences=model_documents,
+    vector_size=200,
+    window=5,
+    min_count=3,
+    workers=4,
+    epochs=3
+)
+
+# Or we can simply download some pretrained models
+# import gensim.downloader as api
+# model = api.load('word2vec-google-news-300')
+
+model.save("./youtube.model")
+model = Word2Vec.load("youtube.model")
+```
+
+## TF-IDF Calculation
+
+```{python, eval=F}
+from gensim.models import TfidfModel
+from gensim.corpora import Dictionary
+
+dictionary = Dictionary(documents)
+df["bows"] = [dictionary.doc2bow(x) for x in documents]
+tfidf = TfidfModel(list(df["bows"]))
+```
+
+## Similarity Matrix
+Correlation matrix from word2vec model ordered by tfidf index
+
+```{python, eval=F}
+from gensim.similarities import SparseTermSimilarityMatrix, WordEmbeddingSimilarityIndex
+
+termsim_index = WordEmbeddingSimilarityIndex(model.wv)
+termsim_matrix = SparseTermSimilarityMatrix(termsim_index, dictionary, tfidf)
+```
+
+## Matching Videos
+
+```{python, eval=F}
+def process_q(q: str):
+    processed_q = remove_stopwords(q)
+    processed_q = re.sub("[^\\w\\s]", "", processed_q)
+    processed_q = re.sub("\\s+", " ", processed_q).split()
+    return processed_q
+
+def match_videos(q):
+    q_list = process_q(q)
+    q_bow = dictionary.doc2bow(q_list)
+
+    result = pd.Series([termsim_matrix.inner_product(
+        tfidf[q_bow],
+        tfidf[x], 
+        normalized=(True, True)
+    ) for x in df["bows"]])
+
+    result_top50 = result.sort_values(ascending=False)[:50].copy()
+    idx = result_top50.index
+
+    output = df.iloc[df.index[idx],:].copy()
+    output["score"] = result_top50
+
+    return output[["channel_id", "video_id", "title", "score"]]
+
+q = "ukraine war, conflict, clash, confrontation, russia"
+result = match_videos(q)
+result
+
+#                       channel_id     video_id                                              title     score
+# 225877  UCfdNM3NAhaBOXCafH7krzrA  6Awx8MvT7qk     What Will Ukraine Do After The War With Russia  0.613843
+# 253822  UCeY0bbntWzzVIaj2z3QigXg  qtA-zamctYA              One year of #Russia's war in #Ukraine  0.613843
+# 266182  UCeY0bbntWzzVIaj2z3QigXg  kV90vvVmAfY  What Is The Background To Conflict Between Rus...  0.603664
+# 225744  UCfdNM3NAhaBOXCafH7krzrA  WXzdTxYrOSo  What Russia Will Do After the War in Ukraine E...  0.600225
+# 89191   UCef1-8eOpJgud7szVPlZQAQ  HAb1pFRsh-4  Russia Vs Ukraine War Update LIVE | Is Russia ...  0.585112
+# 225448  UCfdNM3NAhaBOXCafH7krzrA  TXTS2R04Uu8            How Putin Almost Won the War in Ukraine  0.576693
+# 105578  UCef1-8eOpJgud7szVPlZQAQ  Hb-MjE8DtQ4  Russia Ukraine War | Russia Attacks Ukraine Ye...  0.575848
+# 97898   UCef1-8eOpJgud7szVPlZQAQ  1E7vTp7tezg  Russia Ukraine War | Russian Parliament Backs ...  0.569067
+# 95272   UCef1-8eOpJgud7szVPlZQAQ  N5fJwSp7N6Y  Russia Ukraine War | Wagner Will Not Fight In ...  0.557974
+# 225341  UCfdNM3NAhaBOXCafH7krzrA  GVLGPXuWoGs  Russia's Invasion of Ukraine is a Disaster for...  0.556573
+```
+
+
