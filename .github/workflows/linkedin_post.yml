@@ -9,6 +9,7 @@ on:
 jobs:
   on-success:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Chekcout
@@ -16,6 +17,9 @@ jobs:
       
       - name: Install python dependencies
         run: pip install pyyaml
+      
+      - name: Wait for some seconds
+        run: sleep 30
       
       - name: Create Linkedin Post
         run: python ./tools/cd/linkedin_post.py
@@ -29,5 +33,6 @@ jobs:
           LINKEDIN_POSTS_LOG_RANGE: ${{ secrets.LINKEDIN_POSTS_LOG_RANGE }}
   on-failure:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps: 
       - run: echo "Fail to write LinkedIn Post."
