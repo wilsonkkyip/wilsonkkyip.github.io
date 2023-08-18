@@ -14,6 +14,9 @@ def build_post_body(
     media_description, 
     article_url
 ):
+    preview_url = f"{article_url}/img/preview.png".replace(
+        "//img/", "/img/"
+    )
     body = {
         "author": f"urn:li:person:{user_id}",
         "lifecycleState": "PUBLISHED",
@@ -35,7 +38,7 @@ def build_post_body(
                         },
                         "thumbnails": [
                             {
-                                "url": f"{article_url}/img/preview.png"
+                                "url": preview_url
                             }
                         ]
                     }
