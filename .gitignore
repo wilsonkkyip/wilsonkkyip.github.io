@@ -10,6 +10,7 @@ ehthumbs.db
 .Rproj.user
 *.Rproj
 .envrc
+.RData
 
 *.Rhistory
 *_cache/
