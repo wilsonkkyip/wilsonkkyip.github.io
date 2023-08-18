@@ -8,26 +8,25 @@ on:
 
 jobs:
   on-success:
-    deploy:
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Chekcout
-          uses: actions/checkout@v3
-        
-        - name: Install python dependencies
-          run: pip install pyyaml
-        
-        - name: Create Linkedin Post
-          run: python ./tools/cd/linkedin_post.py
-          env: 
-            LINKEDIN_USER_ID: ${{ secrets.LINKEDIN_USER_ID }}
-            LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
-            GCP_CLIENT_EMAIL: ${{ secrets.GCP_CLIENT_EMAIL }}
-            GCP_PRIVATE_KEY_ID: ${{ secrets.GCP_PRIVATE_KEY_ID }}
-            GCP_PRIVATE_KEY: ${{ secrets.GCP_PRIVATE_KEY }}
-            LINKEDIN_POSTS_LOG_SSID: ${{ secrets.LINKEDIN_POSTS_LOG_SSID }}
-            LINKEDIN_POSTS_LOG_RANGE: ${{ secrets.LINKEDIN_POSTS_LOG_RANGE }}
+    steps:
+      - name: Chekcout
+        uses: actions/checkout@v3
+      
+      - name: Install python dependencies
+        run: pip install pyyaml
+      
+      - name: Create Linkedin Post
+        run: python ./tools/cd/linkedin_post.py
+        env: 
+          LINKEDIN_USER_ID: ${{ secrets.LINKEDIN_USER_ID }}
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+          GCP_CLIENT_EMAIL: ${{ secrets.GCP_CLIENT_EMAIL }}
+          GCP_PRIVATE_KEY_ID: ${{ secrets.GCP_PRIVATE_KEY_ID }}
+          GCP_PRIVATE_KEY: ${{ secrets.GCP_PRIVATE_KEY }}
+          LINKEDIN_POSTS_LOG_SSID: ${{ secrets.LINKEDIN_POSTS_LOG_SSID }}
+          LINKEDIN_POSTS_LOG_RANGE: ${{ secrets.LINKEDIN_POSTS_LOG_RANGE }}
   on-failure:
     runs-on: ubuntu-latest
     steps: 
