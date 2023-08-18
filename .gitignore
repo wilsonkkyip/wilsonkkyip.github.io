@@ -11,6 +11,7 @@ ehthumbs.db
 *.Rproj
 .envrc
 .RData
+.vscode
 
 *.Rhistory
 *_cache/
