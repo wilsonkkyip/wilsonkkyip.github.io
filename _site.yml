@@ -11,6 +11,8 @@ navbar:
   right:
     - text: "About"
       href: about.html
+    - text: "Resume"
+      href: ./resume
     - icon: fab fa-github-alt fa-1x
       href: https://github.com/wilsonkkyip
     - icon: fab fa-brands fa-linkedin fa-1x
