@@ -1,0 +1,80 @@
+---
+title: "倉頡字典"
+---
+
+<div class="content">
+<div class="form-group">
+<label for="inchar">輸入符號</label>
+<input type="text" class="form-control" id="inchar" placeholder="查詢字">
+<button role="button" class="btn btn-primary" onclick="main()">查詢</button>
+</div>
+
+<div class="outchar">
+
+</div>
+</div>
+
+<script src="cangjie/main.js"></script>
+<script>
+var ascii2char = {
+    "a": "日",
+    "b": "月",
+    "c": "金",
+    "d": "木",
+    "e": "水",
+    "f": "火",
+    "g": "土",
+    "h": "竹",
+    "i": "戈",
+    "j": "十",
+    "k": "大",
+    "l": "中",
+    "m": "一",
+    "n": "弓",
+    "o": "人",
+    "p": "心",
+    "q": "手",
+    "r": "口",
+    "s": "尸",
+    "t": "廿",
+    "u": "山",
+    "v": "女",
+    "w": "田",
+    "x": "難",
+    "y": "卜",
+    "z": "重"
+}
+function removeOutchars() {
+    var outcharDiv = document.querySelector(".outchar");
+    outcharDiv.innerHTML = "";
+}
+function getStrokes(x) {
+    return data[x]
+}
+function appendOutchar(x) {
+    var outcharDiv = document.querySelector(".outchar");
+    var strokes = getStrokes(x).split("").map(y => ascii2char[y.toLowerCase()]).join("");
+    outcharDiv.innerHTML += `<div class="charResponse"><span class="char">${x}</span>：<span class="strokes">${strokes}</span></div>`;
+}
+function main() {
+    var inchars = document.getElementById("inchar").value.split("");
+    removeOutchars();
+    if (inchars.length > 0) {
+        for (let i = 0; i < inchars.length; i++) {
+            try {
+                appendOutchar(inchars[i]);
+            } catch (e) {}
+        }
+    }
+}
+
+document.getElementById("inchar").addEventListener("keyup", (h=>{
+    !function(h) {
+        if (("Enter" === h.code) || ("NumpadEnter" == h.code)) {
+            let h = document.getElementById("inchar").value;
+            main();
+        }
+    }(h)
+}
+))
+</script>

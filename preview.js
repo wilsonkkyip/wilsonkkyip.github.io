@@ -57,8 +57,8 @@ if (cond == null) {
     var sigmaN = 0.09;
     var l = 1;
     var predN = 5;
-    var m = 11;
-    var r = 13
+    var m = plotWidth / 2;
+    var r = m * 1.2;
     
     var boxPlotRatio = boxWidth / plotWidth;
     

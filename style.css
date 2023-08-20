@@ -32,6 +32,10 @@ body {
   padding-bottom: 1rem; 
 }
 
+d-article {
+  min-height: 100vh;
+}
+
 
 d-article h1 {
   /* font-family: 'Open Sans Condensed', Roboto, Helvetica, Arial, sans; */
@@ -134,3 +138,45 @@ svg.banner {
 }
 
 
+.form-group input {
+  height: 20px;
+  width: 100%;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+
+/* CSS */
+.form-group button {
+  background-color: rgba(51, 51, 51, 0.05);
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 10px 10px 10px 0px;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.charResponse {
+  margin: 10px;
+}
+.charResponse .char{
+  font-weight: bold;
+  font-size: 30px;
+}
