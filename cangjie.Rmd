@@ -1,5 +1,10 @@
 ---
 title: "倉頡字典"
+output:
+  distill::distill_article:
+    includes: 
+      in_header: cangjie/header.html
+    self_contained: false
 ---
 
 <div class="content">
