@@ -220,11 +220,6 @@ if (cond == null) {
                 .style("fill", dotColor)
     
     document.querySelector(".r2d3").setAttribute("style", "height: 0; margin: 0")
-    try {
-        document.querySelector(".l-screen").setAttribute("style", "text-align: center")
-    } catch(err) {
-        
-    }
     
 }
 

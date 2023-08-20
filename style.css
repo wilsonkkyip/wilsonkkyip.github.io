@@ -107,3 +107,20 @@ d-article li {
     margin-left: 0;
     padding-left: 0;
 }
+
+.l-screen {
+  text-align: center; 
+  height=10000px;
+}
+
+div.banner {
+  height:300px;
+}
+
+svg.banner {
+  position: absolute;
+  left: 50%;
+  margin-left: -550px;
+  width:1100px;
+  height:300px;
+}
