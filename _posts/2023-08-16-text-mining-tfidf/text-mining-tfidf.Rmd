@@ -9,6 +9,8 @@ date: 2023-08-16
 preview: img/preview.png
 output:
   bookdown::html_document2:
+    includes: 
+      in_header: ../../_header.html
     base_format: distill::distill_article
     toc: true
     self_contained: false
@@ -22,7 +24,6 @@ categories:
   - soft-cosine
   - gensim
 preview_url: img/preview.png
-favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
 abstract: |
   Introduction to text mining with word2vec and tf-idf. Along with soft cosine
   similarity, a model is generated to query best matching YouTube videos from 

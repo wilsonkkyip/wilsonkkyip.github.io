@@ -92,7 +92,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <meta property="description" itemprop="description" content="An introduction to Github Actions with an example to write a post whenever a new blog post is merged to the main branch."/>
 
-<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"/>
+<link rel="icon" type="image/vnd.microsoft.icon" href="../../favicons/favicon.ico"/>
 
 <!--  https://schema.org/Article -->
 <meta property="article:published" itemprop="datePublished" content="2023-08-03"/>
@@ -103,7 +103,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="og:title" content="Wilson Yip&#39;s Blog: Github Actions with Example"/>
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="An introduction to Github Actions with an example to write a post whenever a new blog post is merged to the main branch."/>
-<meta property="og:image" content="https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"/>
+<meta property="og:image" content="img/github-actions.png"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Wilson Yip&#39;s Blog"/>
 
@@ -111,13 +111,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="twitter:card" content="summary_large_image"/>
 <meta property="twitter:title" content="Wilson Yip&#39;s Blog: Github Actions with Example"/>
 <meta property="twitter:description" content="An introduction to Github Actions with an example to write a post whenever a new blog post is merged to the main branch."/>
-<meta property="twitter:image" content="https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"/>
+<meta property="twitter:image" content="img/github-actions.png"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output","tags","categories","preview_url","favicon","abstract"]}},"value":[{"type":"character","attributes":{},"value":["Github Actions with Example"]},{"type":"character","attributes":{},"value":["An introduction to Github Actions with an example to write a post whenever a new blog post is merged to the main branch."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Wilson Yip"]}]}]},{"type":"character","attributes":{},"value":["2023-08-03"]},{"type":"character","attributes":{},"value":["img/github-actions.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["continuous-delivery","cicd","github-actions","github","linkedin-api","oauth2"]},{"type":"character","attributes":{},"value":["continuous-delivery","cicd","github-actions","github","linkedin-api","oauth2"]},{"type":"character","attributes":{},"value":["https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"]},{"type":"character","attributes":{},"value":["https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"]},{"type":"character","attributes":{},"value":["Github Actions with example - Writing a new LinkedIn post whenever a new blog post is found in a Github repository.\n\nGithub Actions is very useful for continuous integration and delivery (CI/CD). This article introduces the basic of Github Actions to automate different tasks with triggers. It also shows the implementation of how to write a LinkedIn post whenever a new blog post is merge to a Github repository. "]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output","tags","categories","preview_url","abstract"]}},"value":[{"type":"character","attributes":{},"value":["Github Actions with Example"]},{"type":"character","attributes":{},"value":["An introduction to Github Actions with an example to write a post whenever a new blog post is merged to the main branch."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Wilson Yip"]}]}]},{"type":"character","attributes":{},"value":["2023-08-03"]},{"type":"character","attributes":{},"value":["img/github-actions.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["includes","toc","self_contained"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["in_header"]}},"value":[{"type":"character","attributes":{},"value":["../../_header.html"]}]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["continuous-delivery","cicd","github-actions","github","linkedin-api","oauth2"]},{"type":"character","attributes":{},"value":["continuous-delivery","cicd","github-actions","github","linkedin-api","oauth2"]},{"type":"character","attributes":{},"value":["img/github-actions.png"]},{"type":"character","attributes":{},"value":["Github Actions with example - Writing a new LinkedIn post whenever a new blog post is found in a Github repository.\n\nGithub Actions is very useful for continuous integration and delivery (CI/CD). This article introduces the basic of Github Actions to automate different tasks with triggers. It also shows the implementation of how to write a LinkedIn post whenever a new blog post is merge to a Github repository. "]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2085,7 +2085,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.23/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.24/header-attrs.js"></script>
   <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2214,11 +2214,6 @@ d-article li {
     padding-left: 0;
 }
 
-.l-screen {
-  text-align: center; 
-  height=10000px;
-}
-
 div.banner {
   height:300px;
 }
@@ -2229,9 +2224,37 @@ svg.banner {
   margin-left: -550px;
   width:1100px;
   height:300px;
+  transition: 0.6s;
 }
+
+@media (max-width: 1000px) {
+  svg.banner {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 480px) {
+  svg.banner {
+    transform: scale(0.5);
+  }
+}
+
+
+
 </style>
 <!--/radix_placeholder_site_in_header-->
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-57.png" sizes="57x57">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-76.png" sizes="76x76">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-96.png" sizes="96x96">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-128.png" sizes="128x128">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-192.png" sizes="192x192">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-228.png" sizes="228x228">
+  <link rel="shortcut icon" href="https://wilsonkkyip.github.io/favicons/favicon-196.png" sizes="196x196">
+  <link rel="apply-touch-icon" href="https://wilsonkkyip.github.io/favicons/favicon-120.png" sizes="120x120">
+  <link rel="apply-touch-icon" href="https://wilsonkkyip.github.io/favicons/favicon-152.png" sizes="152x152">
+  <link rel="apply-touch-icon" href="https://wilsonkkyip.github.io/favicons/favicon-180.png" sizes="180x180">
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
 </head>
@@ -2703,26 +2726,35 @@ svg.banner {
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> completed</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">deploy</span><span class="kw">:</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">on-success</span><span class="kw">:</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Chekcout</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install python dependencies</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> pip install pyyaml</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Create Linkedin Post</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> python ./tools/cd/linkedin_post.py</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">LINKEDIN_USER_ID</span><span class="kw">:</span><span class="at"> ${{ secrets.LINKEDIN_USER_ID }}</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">LINKEDIN_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.LINKEDIN_TOKEN }}</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">GCP_CLIENT_EMAIL</span><span class="kw">:</span><span class="at"> ${{ secrets.GCP_CLIENT_EMAIL }}</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">GCP_PRIVATE_KEY_ID</span><span class="kw">:</span><span class="at"> ${{ secrets.GCP_PRIVATE_KEY_ID }}</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">GCP_PRIVATE_KEY</span><span class="kw">:</span><span class="at"> ${{ secrets.GCP_PRIVATE_KEY }}</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">LINKEDIN_POSTS_LOG_SSID</span><span class="kw">:</span><span class="at"> ${{ secrets.LINKEDIN_POSTS_LOG_SSID }}</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">LINKEDIN_POSTS_LOG_RANGE</span><span class="kw">:</span><span class="at"> ${{ secrets.LINKEDIN_POSTS_LOG_RANGE }}</span></span></code></pre></div>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">if</span><span class="kw">:</span><span class="at"> ${{ github.event.workflow_run.conclusion == &#39;success&#39; }}</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Chekcout</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install python dependencies</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> pip install pyyaml</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wait for some seconds</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> sleep 30</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Create Linkedin Post</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> python ./tools/cd/linkedin_post.py</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">LINKEDIN_USER_ID</span><span class="kw">:</span><span class="at"> ${{ secrets.LINKEDIN_USER_ID }}</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">LINKEDIN_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.LINKEDIN_TOKEN }}</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">GCP_CLIENT_EMAIL</span><span class="kw">:</span><span class="at"> ${{ secrets.GCP_CLIENT_EMAIL }}</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">GCP_PRIVATE_KEY_ID</span><span class="kw">:</span><span class="at"> ${{ secrets.GCP_PRIVATE_KEY_ID }}</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">GCP_PRIVATE_KEY</span><span class="kw">:</span><span class="at"> ${{ secrets.GCP_PRIVATE_KEY }}</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">LINKEDIN_POSTS_LOG_SSID</span><span class="kw">:</span><span class="at"> ${{ secrets.LINKEDIN_POSTS_LOG_SSID }}</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">LINKEDIN_POSTS_LOG_RANGE</span><span class="kw">:</span><span class="at"> ${{ secrets.LINKEDIN_POSTS_LOG_RANGE }}</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">on-failure</span><span class="kw">:</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">if</span><span class="kw">:</span><span class="at"> ${{ github.event.workflow_run.conclusion == &#39;failure&#39; }}</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> echo &quot;Fail to write LinkedIn Post.&quot;</span></span></code></pre></div>
 </div>
 <h3 id="the-python-script">The Python Script</h3>
 <div class="layout-chunk" data-layout="l-body">
@@ -2742,183 +2774,186 @@ svg.banner {
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    media_description, </span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    article_url</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> {</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;author&quot;</span>: <span class="ss">f&quot;urn:li:person:</span><span class="sc">{</span>user_id<span class="sc">}</span><span class="ss">&quot;</span>,</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;lifecycleState&quot;</span>: <span class="st">&quot;PUBLISHED&quot;</span>,</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;specificContent&quot;</span>: {</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;com.linkedin.ugc.ShareContent&quot;</span>: {</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;shareCommentary&quot;</span>: {</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;text&quot;</span>: post_content</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>                },</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;shareMediaCategory&quot;</span>: <span class="st">&quot;ARTICLE&quot;</span>,</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;media&quot;</span>: [</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>                    {</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;status&quot;</span>: <span class="st">&quot;READY&quot;</span>,</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;description&quot;</span>: {</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;text&quot;</span>: media_description</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>                        },</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;originalUrl&quot;</span>: article_url,</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;title&quot;</span>: {</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;text&quot;</span>: media_title</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>                        },</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;thumbnails&quot;</span>: [</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>                            {</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;url&quot;</span>: <span class="ss">f&quot;</span><span class="sc">{</span>article_url<span class="sc">}</span><span class="ss">/img/preview.png&quot;</span></span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>                            }</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>                        ]</span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>                    }</span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>                ]</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;visibility&quot;</span>: {</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;com.linkedin.ugc.MemberNetworkVisibility&quot;</span>: <span class="st">&quot;PUBLIC&quot;</span></span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> body</span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_latest_missing_post(page_posts, linkedin_posts):</span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    page_post_paths <span class="op">=</span> [x.get(<span class="st">&quot;path&quot;</span>) <span class="cf">for</span> x <span class="kw">in</span> page_posts]</span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>    linkedin_post_paths <span class="op">=</span> [x.get(<span class="st">&quot;path&quot;</span>) <span class="cf">for</span> x <span class="kw">in</span> linkedin_posts]</span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>    missing_idx <span class="op">=</span> [</span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>        i <span class="cf">for</span> i, x <span class="kw">in</span> <span class="bu">enumerate</span>(page_post_paths) <span class="cf">if</span> x <span class="kw">not</span> <span class="kw">in</span> linkedin_post_paths</span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> missing_idx:</span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>        missing_paths <span class="op">=</span> [page_post_paths[i] <span class="cf">for</span> i <span class="kw">in</span> missing_idx]</span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>        missing_post_dates <span class="op">=</span> [page_posts[i].get(<span class="st">&quot;date&quot;</span>) <span class="cf">for</span> i <span class="kw">in</span> missing_idx]</span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>        latest_missing_post <span class="op">=</span> missing_paths[missing_post_dates.index(<span class="bu">max</span>(missing_post_dates))]</span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>        latest_missing_post <span class="op">=</span> page_posts[page_post_paths.index(latest_missing_post)]</span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>        latest_missing_post <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> latest_missing_post</span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_rmd_yml(path):</span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(path, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> f:</span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>        rmd_yml <span class="op">=</span> f.readlines()</span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>    yml_idx <span class="op">=</span> [i <span class="cf">for</span> i, x <span class="kw">in</span> <span class="bu">enumerate</span>(rmd_yml) <span class="cf">if</span> x <span class="op">==</span> <span class="st">&quot;---</span><span class="ch">\n</span><span class="st">&quot;</span>]</span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> yaml.safe_load(<span class="st">&quot;&quot;</span>.join(rmd_yml[(yml_idx[<span class="dv">0</span>]<span class="op">+</span><span class="dv">1</span>):(yml_idx[<span class="dv">1</span>])]))</span>
-<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> auth_gapi_token(client_email, private_key_id, private_key):</span>
-<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>    payload: <span class="bu">dict</span> <span class="op">=</span> {</span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;iss&quot;</span>: client_email,</span>
-<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;scope&quot;</span>: <span class="st">&quot;https://www.googleapis.com/auth/drive&quot;</span>,</span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;aud&quot;</span>: <span class="st">&quot;https://oauth2.googleapis.com/token&quot;</span>,</span>
-<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;iat&quot;</span>: <span class="bu">int</span>(time()),</span>
-<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;exp&quot;</span>: <span class="bu">int</span>(time() <span class="op">+</span> <span class="dv">3599</span>)</span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>    headers: <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span>] <span class="op">=</span> {<span class="st">&#39;kid&#39;</span>: private_key_id}</span>
-<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>    signed_jwt: <span class="bu">bytes</span> <span class="op">=</span> jwt.encode(</span>
-<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>        payload<span class="op">=</span>payload,</span>
-<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>        key<span class="op">=</span>private_key.replace(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">n&quot;</span>, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>),</span>
-<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>        algorithm<span class="op">=</span><span class="st">&quot;RS256&quot;</span>,</span>
-<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>        headers<span class="op">=</span>headers</span>
-<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>    body: <span class="bu">dict</span> <span class="op">=</span> {</span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;grant_type&quot;</span>: <span class="st">&quot;urn:ietf:params:oauth:grant-type:jwt-bearer&quot;</span>,</span>
-<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;assertion&quot;</span>: signed_jwt</span>
-<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a>    response: requests.Response <span class="op">=</span> requests.request(</span>
-<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;POST&quot;</span>, <span class="st">&quot;https://oauth2.googleapis.com/token&quot;</span>, json<span class="op">=</span>body</span>
-<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>    response.raise_for_status()</span>
-<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> response.json()</span>
-<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> content.get(<span class="st">&#39;access_token&#39;</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    preview_url <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span>article_url<span class="sc">}</span><span class="ss">/img/preview.png&quot;</span>.replace(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;//img/&quot;</span>, <span class="st">&quot;/img/&quot;</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> {</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;author&quot;</span>: <span class="ss">f&quot;urn:li:person:</span><span class="sc">{</span>user_id<span class="sc">}</span><span class="ss">&quot;</span>,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;lifecycleState&quot;</span>: <span class="st">&quot;PUBLISHED&quot;</span>,</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;specificContent&quot;</span>: {</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;com.linkedin.ugc.ShareContent&quot;</span>: {</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;shareCommentary&quot;</span>: {</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;text&quot;</span>: post_content</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>                },</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;shareMediaCategory&quot;</span>: <span class="st">&quot;ARTICLE&quot;</span>,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;media&quot;</span>: [</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>                    {</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;status&quot;</span>: <span class="st">&quot;READY&quot;</span>,</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;description&quot;</span>: {</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;text&quot;</span>: media_description</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>                        },</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;originalUrl&quot;</span>: article_url,</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;title&quot;</span>: {</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;text&quot;</span>: media_title</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>                        },</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;thumbnails&quot;</span>: [</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>                            {</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;url&quot;</span>: preview_url</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>                            }</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>                        ]</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>                ]</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;visibility&quot;</span>: {</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;com.linkedin.ugc.MemberNetworkVisibility&quot;</span>: <span class="st">&quot;PUBLIC&quot;</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> body</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_latest_missing_post(page_posts, linkedin_posts):</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>    page_post_paths <span class="op">=</span> [x.get(<span class="st">&quot;path&quot;</span>) <span class="cf">for</span> x <span class="kw">in</span> page_posts]</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>    linkedin_post_paths <span class="op">=</span> [x.get(<span class="st">&quot;path&quot;</span>) <span class="cf">for</span> x <span class="kw">in</span> linkedin_posts]</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>    missing_idx <span class="op">=</span> [</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>        i <span class="cf">for</span> i, x <span class="kw">in</span> <span class="bu">enumerate</span>(page_post_paths) <span class="cf">if</span> x <span class="kw">not</span> <span class="kw">in</span> linkedin_post_paths</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> missing_idx:</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>        missing_paths <span class="op">=</span> [page_post_paths[i] <span class="cf">for</span> i <span class="kw">in</span> missing_idx]</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>        missing_post_dates <span class="op">=</span> [page_posts[i].get(<span class="st">&quot;date&quot;</span>) <span class="cf">for</span> i <span class="kw">in</span> missing_idx]</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>        latest_missing_post <span class="op">=</span> missing_paths[missing_post_dates.index(<span class="bu">max</span>(missing_post_dates))]</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>        latest_missing_post <span class="op">=</span> page_posts[page_post_paths.index(latest_missing_post)]</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>        latest_missing_post <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> latest_missing_post</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_rmd_yml(path):</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(path, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>        rmd_yml <span class="op">=</span> f.readlines()</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>    yml_idx <span class="op">=</span> [i <span class="cf">for</span> i, x <span class="kw">in</span> <span class="bu">enumerate</span>(rmd_yml) <span class="cf">if</span> x <span class="op">==</span> <span class="st">&quot;---</span><span class="ch">\n</span><span class="st">&quot;</span>]</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> yaml.safe_load(<span class="st">&quot;&quot;</span>.join(rmd_yml[(yml_idx[<span class="dv">0</span>]<span class="op">+</span><span class="dv">1</span>):(yml_idx[<span class="dv">1</span>])]))</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> auth_gapi_token(client_email, private_key_id, private_key):</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>    payload: <span class="bu">dict</span> <span class="op">=</span> {</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;iss&quot;</span>: client_email,</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;scope&quot;</span>: <span class="st">&quot;https://www.googleapis.com/auth/drive&quot;</span>,</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;aud&quot;</span>: <span class="st">&quot;https://oauth2.googleapis.com/token&quot;</span>,</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;iat&quot;</span>: <span class="bu">int</span>(time()),</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;exp&quot;</span>: <span class="bu">int</span>(time() <span class="op">+</span> <span class="dv">3599</span>)</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>    headers: <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span>] <span class="op">=</span> {<span class="st">&#39;kid&#39;</span>: private_key_id}</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>    signed_jwt: <span class="bu">bytes</span> <span class="op">=</span> jwt.encode(</span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>        payload<span class="op">=</span>payload,</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>        key<span class="op">=</span>private_key.replace(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">n&quot;</span>, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>),</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>        algorithm<span class="op">=</span><span class="st">&quot;RS256&quot;</span>,</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>        headers<span class="op">=</span>headers</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>    body: <span class="bu">dict</span> <span class="op">=</span> {</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;grant_type&quot;</span>: <span class="st">&quot;urn:ietf:params:oauth:grant-type:jwt-bearer&quot;</span>,</span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;assertion&quot;</span>: signed_jwt</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>    response: requests.Response <span class="op">=</span> requests.request(</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;POST&quot;</span>, <span class="st">&quot;https://oauth2.googleapis.com/token&quot;</span>, json<span class="op">=</span>body</span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>    response.raise_for_status()</span>
 <span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_gsheet(ssid, ranges, token):</span>
-<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f&quot;https://sheets.googleapis.com/v4/spreadsheets/</span><span class="sc">{</span>ssid<span class="sc">}</span><span class="ss">/values/</span><span class="sc">{</span>ranges<span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {</span>
-<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Authorization&quot;</span>: <span class="ss">f&quot;Bearer </span><span class="sc">{</span>token<span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
-<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a>    response.raise_for_status()</span>
-<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response.json()</span>
-<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> append_gsheet(ssid, ranges, data, token):</span>
-<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f&quot;https://sheets.googleapis.com/v4/spreadsheets/</span><span class="sc">{</span>ssid<span class="sc">}</span><span class="ss">/values/</span><span class="sc">{</span>ranges<span class="sc">}</span><span class="ss">:append&quot;</span></span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> response.json()</span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> content.get(<span class="st">&#39;access_token&#39;</span>)</span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_gsheet(ssid, ranges, token):</span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f&quot;https://sheets.googleapis.com/v4/spreadsheets/</span><span class="sc">{</span>ssid<span class="sc">}</span><span class="ss">/values/</span><span class="sc">{</span>ranges<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {</span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Authorization&quot;</span>: <span class="ss">f&quot;Bearer </span><span class="sc">{</span>token<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>    response.raise_for_status()</span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response.json()</span>
 <span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> {</span>
-<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;range&quot;</span>: ranges,</span>
-<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;majorDimension&quot;</span>: <span class="st">&quot;ROWS&quot;</span>,</span>
-<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;values&quot;</span>: data</span>
-<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {</span>
-<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Authorization&quot;</span>: <span class="ss">f&quot;Bearer </span><span class="sc">{</span>token<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> append_gsheet(ssid, ranges, data, token):</span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f&quot;https://sheets.googleapis.com/v4/spreadsheets/</span><span class="sc">{</span>ssid<span class="sc">}</span><span class="ss">/values/</span><span class="sc">{</span>ranges<span class="sc">}</span><span class="ss">:append&quot;</span></span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> {</span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;range&quot;</span>: ranges,</span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;majorDimension&quot;</span>: <span class="st">&quot;ROWS&quot;</span>,</span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;values&quot;</span>: data</span>
 <span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.post(url, params<span class="op">=</span>{<span class="st">&quot;valueInputOption&quot;</span>: <span class="st">&quot;RAW&quot;</span>}, headers<span class="op">=</span>headers, json<span class="op">=</span>body)</span>
-<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a>    response.raise_for_status()</span>
-<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_linkedin_post(post):</span>
-<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>    linkedin_user_id <span class="op">=</span> os.getenv(<span class="st">&quot;LINKEDIN_USER_ID&quot;</span>)</span>
-<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>    linkedin_token <span class="op">=</span> os.getenv(<span class="st">&quot;LINKEDIN_TOKEN&quot;</span>)</span>
-<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>    linkedin_post_endpoint <span class="op">=</span> <span class="st">&quot;https://api.linkedin.com/v2/ugcPosts&quot;</span></span>
-<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>    rmd_file <span class="op">=</span> os.listdir(<span class="ss">f&quot;./_</span><span class="sc">{</span>post[<span class="st">&#39;path&#39;</span>]<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a>    rmd_file <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(<span class="kw">lambda</span> x: <span class="st">&quot;.rmd&quot;</span> <span class="kw">in</span> x.lower(), rmd_file))[<span class="dv">0</span>]</span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {</span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Authorization&quot;</span>: <span class="ss">f&quot;Bearer </span><span class="sc">{</span>token<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.post(url, params<span class="op">=</span>{<span class="st">&quot;valueInputOption&quot;</span>: <span class="st">&quot;RAW&quot;</span>}, headers<span class="op">=</span>headers, json<span class="op">=</span>body)</span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>    response.raise_for_status()</span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_linkedin_post(post):</span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a>    linkedin_user_id <span class="op">=</span> os.getenv(<span class="st">&quot;LINKEDIN_USER_ID&quot;</span>)</span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>    linkedin_token <span class="op">=</span> os.getenv(<span class="st">&quot;LINKEDIN_TOKEN&quot;</span>)</span>
+<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a>    linkedin_post_endpoint <span class="op">=</span> <span class="st">&quot;https://api.linkedin.com/v2/ugcPosts&quot;</span></span>
 <span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a>    rmd_yml <span class="op">=</span> read_rmd_yml(<span class="ss">f&quot;./_</span><span class="sc">{</span>post[<span class="st">&#39;path&#39;</span>]<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>rmd_file<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a>    post_note <span class="op">=</span> <span class="st">&quot;The post was created by Github Actions.</span><span class="ch">\n</span><span class="st">https://github.com/wilsonkkyip/wilsonkkyip.github.io&quot;</span></span>
-<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a>    abstract <span class="op">=</span> rmd_yml[<span class="st">&quot;abstract&quot;</span>] <span class="op">+</span> <span class="ss">f&quot;</span><span class="ch">\n\n</span><span class="sc">{</span>post_note<span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> build_post_body(</span>
-<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a>        user_id<span class="op">=</span>linkedin_user_id,</span>
-<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a>        post_content<span class="op">=</span>abstract,</span>
-<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a>        media_title<span class="op">=</span>rmd_yml[<span class="st">&quot;title&quot;</span>],</span>
-<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a>        media_description<span class="op">=</span>rmd_yml[<span class="st">&quot;description&quot;</span>],</span>
-<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a>        article_url<span class="op">=</span><span class="ss">f&quot;https://wilsonkkyip.github.io/</span><span class="sc">{</span>post[<span class="st">&#39;path&#39;</span>]<span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {</span>
-<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;X-Restli-Protocol-Version&quot;</span>: <span class="st">&quot;2.0.0&quot;</span>,</span>
-<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Authorization&quot;</span>: <span class="st">&quot;Bearer &quot;</span> <span class="op">+</span> linkedin_token </span>
-<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.post(</span>
-<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a>        url<span class="op">=</span>linkedin_post_endpoint, </span>
-<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a>        json<span class="op">=</span>body, </span>
-<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a>        headers<span class="op">=</span>headers</span>
-<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a>    response.raise_for_status()</span>
-<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> response.json()</span>
-<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> content</span>
-<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a>    rmd_file <span class="op">=</span> os.listdir(<span class="ss">f&quot;./_</span><span class="sc">{</span>post[<span class="st">&#39;path&#39;</span>]<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a>    rmd_file <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(<span class="kw">lambda</span> x: <span class="st">&quot;.rmd&quot;</span> <span class="kw">in</span> x.lower(), rmd_file))[<span class="dv">0</span>]</span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a>    rmd_yml <span class="op">=</span> read_rmd_yml(<span class="ss">f&quot;./_</span><span class="sc">{</span>post[<span class="st">&#39;path&#39;</span>]<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>rmd_file<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a>    post_note <span class="op">=</span> <span class="st">&quot;The post was created by Github Actions.</span><span class="ch">\n</span><span class="st">https://github.com/wilsonkkyip/wilsonkkyip.github.io&quot;</span></span>
+<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a>    abstract <span class="op">=</span> rmd_yml[<span class="st">&quot;abstract&quot;</span>] <span class="op">+</span> <span class="ss">f&quot;</span><span class="ch">\n\n</span><span class="sc">{</span>post_note<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> build_post_body(</span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a>        user_id<span class="op">=</span>linkedin_user_id,</span>
+<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a>        post_content<span class="op">=</span>abstract,</span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a>        media_title<span class="op">=</span>rmd_yml[<span class="st">&quot;title&quot;</span>],</span>
+<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a>        media_description<span class="op">=</span>rmd_yml[<span class="st">&quot;description&quot;</span>],</span>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a>        article_url<span class="op">=</span><span class="ss">f&quot;https://wilsonkkyip.github.io/</span><span class="sc">{</span>post[<span class="st">&#39;path&#39;</span>]<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {</span>
+<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;X-Restli-Protocol-Version&quot;</span>: <span class="st">&quot;2.0.0&quot;</span>,</span>
+<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Authorization&quot;</span>: <span class="st">&quot;Bearer &quot;</span> <span class="op">+</span> linkedin_token </span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.post(</span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a>        url<span class="op">=</span>linkedin_post_endpoint, </span>
+<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a>        json<span class="op">=</span>body, </span>
+<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a>        headers<span class="op">=</span>headers</span>
+<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a>    response.raise_for_status()</span>
+<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> response.json()</span>
 <span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
-<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a>    gcp_client_email <span class="op">=</span> os.getenv(<span class="st">&quot;GCP_CLIENT_EMAIL&quot;</span>)</span>
-<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a>    gcp_private_key_id <span class="op">=</span> os.getenv(<span class="st">&quot;GCP_PRIVATE_KEY_ID&quot;</span>)</span>
-<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a>    gcp_private_key <span class="op">=</span> os.getenv(<span class="st">&quot;GCP_PRIVATE_KEY&quot;</span>)</span>
-<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a>    log_ssid <span class="op">=</span> os.getenv(<span class="st">&quot;LINKEDIN_POSTS_LOG_SSID&quot;</span>)</span>
-<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a>    log_range <span class="op">=</span> os.getenv(<span class="st">&quot;LINKEDIN_POSTS_LOG_RANGE&quot;</span>)</span>
+<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> content</span>
+<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a>    gcp_client_email <span class="op">=</span> os.getenv(<span class="st">&quot;GCP_CLIENT_EMAIL&quot;</span>)</span>
+<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a>    gcp_private_key_id <span class="op">=</span> os.getenv(<span class="st">&quot;GCP_PRIVATE_KEY_ID&quot;</span>)</span>
+<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a>    gcp_private_key <span class="op">=</span> os.getenv(<span class="st">&quot;GCP_PRIVATE_KEY&quot;</span>)</span>
 <span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a>    gcp_token <span class="op">=</span> auth_gapi_token(</span>
-<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a>        gcp_client_email, gcp_private_key_id, gcp_private_key</span>
-<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a>    logs <span class="op">=</span> read_gsheet(log_ssid, log_range, gcp_token)</span>
-<span id="cb9-178"><a href="#cb9-178" aria-hidden="true" tabindex="-1"></a>    linkedin_posts <span class="op">=</span> [</span>
-<span id="cb9-179"><a href="#cb9-179" aria-hidden="true" tabindex="-1"></a>        {logs[<span class="st">&quot;values&quot;</span>][<span class="dv">0</span>][<span class="dv">0</span>]: x[<span class="dv">0</span>], logs[<span class="st">&quot;values&quot;</span>][<span class="dv">0</span>][<span class="dv">1</span>]: x[<span class="dv">1</span>]} <span class="cf">for</span> x <span class="kw">in</span> logs[<span class="st">&quot;values&quot;</span>][<span class="dv">1</span>:]</span>
-<span id="cb9-180"><a href="#cb9-180" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb9-181"><a href="#cb9-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-182"><a href="#cb9-182" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;./posts/posts.json&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb9-183"><a href="#cb9-183" aria-hidden="true" tabindex="-1"></a>        page_posts <span class="op">=</span> json.loads(<span class="bu">file</span>.read())</span>
+<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a>    log_ssid <span class="op">=</span> os.getenv(<span class="st">&quot;LINKEDIN_POSTS_LOG_SSID&quot;</span>)</span>
+<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a>    log_range <span class="op">=</span> os.getenv(<span class="st">&quot;LINKEDIN_POSTS_LOG_RANGE&quot;</span>)</span>
+<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a>    gcp_token <span class="op">=</span> auth_gapi_token(</span>
+<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a>        gcp_client_email, gcp_private_key_id, gcp_private_key</span>
+<span id="cb9-178"><a href="#cb9-178" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-179"><a href="#cb9-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-180"><a href="#cb9-180" aria-hidden="true" tabindex="-1"></a>    logs <span class="op">=</span> read_gsheet(log_ssid, log_range, gcp_token)</span>
+<span id="cb9-181"><a href="#cb9-181" aria-hidden="true" tabindex="-1"></a>    linkedin_posts <span class="op">=</span> [</span>
+<span id="cb9-182"><a href="#cb9-182" aria-hidden="true" tabindex="-1"></a>        {logs[<span class="st">&quot;values&quot;</span>][<span class="dv">0</span>][<span class="dv">0</span>]: x[<span class="dv">0</span>], logs[<span class="st">&quot;values&quot;</span>][<span class="dv">0</span>][<span class="dv">1</span>]: x[<span class="dv">1</span>]} <span class="cf">for</span> x <span class="kw">in</span> logs[<span class="st">&quot;values&quot;</span>][<span class="dv">1</span>:]</span>
+<span id="cb9-183"><a href="#cb9-183" aria-hidden="true" tabindex="-1"></a>    ]</span>
 <span id="cb9-184"><a href="#cb9-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-185"><a href="#cb9-185" aria-hidden="true" tabindex="-1"></a>    missing_post <span class="op">=</span> find_latest_missing_post(page_posts, linkedin_posts)</span>
-<span id="cb9-186"><a href="#cb9-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-187"><a href="#cb9-187" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> missing_post:</span>
-<span id="cb9-188"><a href="#cb9-188" aria-hidden="true" tabindex="-1"></a>        response <span class="op">=</span> create_linkedin_post(missing_post)</span>
-<span id="cb9-189"><a href="#cb9-189" aria-hidden="true" tabindex="-1"></a>        appending_data <span class="op">=</span> [[missing_post[<span class="st">&quot;path&quot;</span>], response.get(<span class="st">&quot;id&quot;</span>)]]</span>
-<span id="cb9-190"><a href="#cb9-190" aria-hidden="true" tabindex="-1"></a>        append_gsheet(log_ssid, log_range, appending_data, gcp_token)</span>
-<span id="cb9-191"><a href="#cb9-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-192"><a href="#cb9-192" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>: </span>
-<span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div>
+<span id="cb9-185"><a href="#cb9-185" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;./posts/posts.json&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb9-186"><a href="#cb9-186" aria-hidden="true" tabindex="-1"></a>        page_posts <span class="op">=</span> json.loads(<span class="bu">file</span>.read())</span>
+<span id="cb9-187"><a href="#cb9-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-188"><a href="#cb9-188" aria-hidden="true" tabindex="-1"></a>    missing_post <span class="op">=</span> find_latest_missing_post(page_posts, linkedin_posts)</span>
+<span id="cb9-189"><a href="#cb9-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-190"><a href="#cb9-190" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> missing_post:</span>
+<span id="cb9-191"><a href="#cb9-191" aria-hidden="true" tabindex="-1"></a>        response <span class="op">=</span> create_linkedin_post(missing_post)</span>
+<span id="cb9-192"><a href="#cb9-192" aria-hidden="true" tabindex="-1"></a>        appending_data <span class="op">=</span> [[missing_post[<span class="st">&quot;path&quot;</span>], response.get(<span class="st">&quot;id&quot;</span>)]]</span>
+<span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a>        append_gsheet(log_ssid, log_range, appending_data, gcp_token)</span>
+<span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>: </span>
+<span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div>
 </div>
 <script type="text/javascript">
     document.querySelectorAll('.lightgallery').forEach(x => lightGallery(x)); 
@@ -2937,8 +2972,14 @@ svg.banner {
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
-<!--radix_placeholder_navigation_after_body-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!--radix_placeholder_navigation_after_body--><html><body>
+<div class="distill-site-nav distill-site-footer">
+
+</div>
 <!--/radix_placeholder_navigation_after_body-->
+</body></html>
+
 
 </body>
 

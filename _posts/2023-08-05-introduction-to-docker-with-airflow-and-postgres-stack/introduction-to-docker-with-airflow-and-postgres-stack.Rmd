@@ -8,6 +8,8 @@ date: 2023-08-05
 preview: img/preview.png
 output:
   distill::distill_article:
+    includes: 
+      in_header: ../../_header.html
     toc: true
     self_contained: false
 tags: [docker, airflow, postgres]
@@ -15,8 +17,7 @@ categories:
   - docker
   - airflow
   - postgres
-preview_url: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
-favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+preview_url: img/preview.png
 abstract: |
   I have set up a Docker containers stack with Apache Airflow and Postgres. The article below gives a brief introduction to Docker and records the workflow as an example implementation. 
 ---

@@ -161,7 +161,6 @@ if (cond == null) {
     
     var svg = d3.select(".l-screen")
         .append("svg")
-            .style("text-align", "center")
             .attr("class", "banner")
             .attr("width", boxWidth)
             .attr("height", boxHeight)

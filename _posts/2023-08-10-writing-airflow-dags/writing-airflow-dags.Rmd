@@ -8,6 +8,8 @@ date: 2023-08-10
 preview: img/preview.png
 output:
   distill::distill_article:
+    includes: 
+      in_header: ../../_header.html
     toc: true
     self_contained: false
 tags: [python, airflow]
@@ -15,7 +17,6 @@ categories:
   - python
   - airflow
 preview_url: img/preview.png
-favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
 abstract: |
   This article gives an introduction on how to write a DAG on Airflow. Including writing custom operators, using XComs to comunicate with different tasks, using branching operators, triggers and variables. 
 ---

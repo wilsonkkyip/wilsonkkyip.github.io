@@ -108,11 +108,6 @@ d-article li {
     padding-left: 0;
 }
 
-.l-screen {
-  text-align: center; 
-  height=10000px;
-}
-
 div.banner {
   height:300px;
 }
@@ -123,4 +118,19 @@ svg.banner {
   margin-left: -550px;
   width:1100px;
   height:300px;
+  transition: 0.6s;
 }
+
+@media (max-width: 1000px) {
+  svg.banner {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 480px) {
+  svg.banner {
+    transform: scale(0.5);
+  }
+}
+
+

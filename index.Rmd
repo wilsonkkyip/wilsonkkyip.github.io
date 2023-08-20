@@ -2,13 +2,14 @@
 title: ""
 output:
   distill::distill_article:
+    includes: 
+      in_header: _header.html
     self_contained: false
     anchor_sections: FALSE
 site: distill::distill_website
 css: [styles.css]
 listing: posts
 preview_url: img/wy_logo.png
-favicon: img/wy_logo.png
 ---
 
 ```{r setup, include=FALSE}
@@ -43,3 +44,4 @@ r2d3(d3_version = 5, script = "preview.js")
 ```
 
 </div>
+

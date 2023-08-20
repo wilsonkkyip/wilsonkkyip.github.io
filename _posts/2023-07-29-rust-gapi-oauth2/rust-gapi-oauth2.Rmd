@@ -8,6 +8,8 @@ date: 2023-07-29
 preview: img/auth_client_id.png
 output:
   distill::distill_article:
+    includes: 
+      in_header: ../../_header.html
     toc: true
     self_contained: false
 tags: [rust, oauth2, google-oauth]
@@ -15,8 +17,7 @@ categories:
   - rust
   - oauth2
   - google-oauth
-preview_url: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
-favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+preview_url: img/auth_client_id.png
 abstract: It comes to me on many occasions that Google APIs are required to complete my tasks. The widely adopted OAuth2 is governing the authentication and authorisation process. This article summarises my knowledge on the OAuth2 implemented by Google APIs. As I am learning Rust recently, the examples in this article were written in Rust. 
 ---
 
@@ -234,7 +235,7 @@ knitr::include_graphics("img/auth_client_id.png")
 
 Among the JSON obtained from [this section](#create-oauth-client-id-for-users), we create the following struct for the key-value pairs. 
 
-```{rust struct-client-secret}
+```{rust struct-client-secret, eval=F, engine="/Users/wilson/.cargo/bin/rustc"}
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ClientSecret {
     pub client_id: String,
@@ -249,7 +250,7 @@ pub struct ClientSecret {
 
 Then we implement a method to the above struct to build the `url` for step 1.
 
-```{rust fn-auth-url}
+```{rust fn-auth-url, eval=F, engine="/Users/wilson/.cargo/bin/rustc"}
 pub fn auth_url(&self, scope: &str) -> String {
     let params: HashMap<_,_> = HashMap::from([
         ("response_type", "code"),
@@ -271,7 +272,7 @@ pub fn auth_url(&self, scope: &str) -> String {
 
 Now we need to print out the above `url` and set up a http server to listen from Google's response with the authorisation `code` to finish step 3. 
 
-```{rust fn-auth-code}
+```{rust fn-auth-code, eval=F, engine="/Users/wilson/.cargo/bin/rustc"}
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AuthCode {
     pub code: String,
@@ -310,7 +311,7 @@ pub fn auth_code(&self, scope: &str, port: u32) -> Result<AuthCode, std::io::Err
 
 For step 4, the following function will prepare a `POST` request to Google to exchange the authorisation `code` for the `access_token` (and `refresh_token`).
 
-```{rust fn-auth-token}
+```{rust fn-auth-token, eval=F, engine="/Users/wilson/.cargo/bin/rustc"}
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ClientSecretTokenResponse {
     pub access_token: String,
@@ -346,7 +347,7 @@ pub async fn auth_token(&self, code: &str) -> Result<ClientSecretTokenResponse, 
 
 When we obtained the `refresh_token` from the above, we can further request a new `access_token` when the previous one is expired. To do do, we first define a struct and implement an `auth` function to it. 
 
-```{rust refresh-token-fn-auth}
+```{rust refresh-token-fn-auth, eval=F, engine="/Users/wilson/.cargo/bin/rustc"}
 pub const OAUTH_TOKEN_URL: &str = "https://oauth2.googleapis.com/token";
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -399,7 +400,7 @@ knitr::include_graphics("img/auth_service_acc.png")
 
 Below shows the implementation.
 
-```{rust service-acc-fn-auth}
+```{rust service-acc-fn-auth, eval=F, engine="/Users/wilson/.cargo/bin/rustc"}
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ServiceSecret {
     pub client_email: String,
@@ -521,7 +522,7 @@ cargo run consent /path/to/client_secret.json 'https://www.googleapis.com/auth/d
 
 It can also be used as crate. After constructing the `UserSecret` or `ServiceSecret`, simply use the corresponding `auth` method to return the `access_token`. 
 
-```{rust example-test}
+```{rust example-test, eval=F, engine="/Users/wilson/.cargo/bin/rustc"}
 use crate::auth_users::UserSecret;
 use crate::auth_service::ServiceSecret;
 

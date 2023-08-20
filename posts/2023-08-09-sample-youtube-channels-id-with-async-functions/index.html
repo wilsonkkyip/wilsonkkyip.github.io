@@ -92,7 +92,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <meta property="description" itemprop="description" content="A quick way to collect YouTube channels&#39; id from YouTube home page asynchronously."/>
 
-<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"/>
+<link rel="icon" type="image/vnd.microsoft.icon" href="../../favicons/favicon.ico"/>
 
 <!--  https://schema.org/Article -->
 <meta property="article:published" itemprop="datePublished" content="2023-08-09"/>
@@ -103,7 +103,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="og:title" content="Wilson Yip&#39;s Blog: Sampling YouTube Channels&#39; Id with Async Functions"/>
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="A quick way to collect YouTube channels&#39; id from YouTube home page asynchronously."/>
-<meta property="og:image" content="https://wilsonkkyip.github.io/posts/2023-08-09-sample-youtube-channels-id-with-async-functions/img/preview.png"/>
+<meta property="og:image" content="img/preview.png"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Wilson Yip&#39;s Blog"/>
 
@@ -111,18 +111,18 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="twitter:card" content="summary_large_image"/>
 <meta property="twitter:title" content="Wilson Yip&#39;s Blog: Sampling YouTube Channels&#39; Id with Async Functions"/>
 <meta property="twitter:description" content="A quick way to collect YouTube channels&#39; id from YouTube home page asynchronously."/>
-<meta property="twitter:image" content="https://wilsonkkyip.github.io/posts/2023-08-09-sample-youtube-channels-id-with-async-functions/img/preview.png"/>
+<meta property="twitter:image" content="img/preview.png"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output","tags","categories","preview_url","favicon","abstract"]}},"value":[{"type":"character","attributes":{},"value":["Sampling YouTube Channels' Id with Async Functions"]},{"type":"character","attributes":{},"value":["A quick way to collect YouTube channels' id from YouTube home page asynchronously."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Wilson Yip"]}]}]},{"type":"character","attributes":{},"value":["2023-08-09"]},{"type":"character","attributes":{},"value":["img/preview.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["python","async","web-scraping"]},{"type":"character","attributes":{},"value":["python","async","web-scraping"]},{"type":"character","attributes":{},"value":["https://wilsonkkyip.github.io/posts/2023-08-09-sample-youtube-channels-id-with-async-functions/img/preview.png"]},{"type":"character","attributes":{},"value":["https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png"]},{"type":"character","attributes":{},"value":["The first step of studying YouTube is to have loads of channel_ids and video_ids. This article introduces how to sample some channel_ids from YouTube home page with async functions. We can then obtain video_ids from these channels. "]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output","tags","categories","preview_url","abstract"]}},"value":[{"type":"character","attributes":{},"value":["Sampling YouTube Channels' Id with Async Functions"]},{"type":"character","attributes":{},"value":["A quick way to collect YouTube channels' id from YouTube home page asynchronously."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Wilson Yip"]}]}]},{"type":"character","attributes":{},"value":["2023-08-09"]},{"type":"character","attributes":{},"value":["img/preview.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["includes","toc","self_contained"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["in_header"]}},"value":[{"type":"character","attributes":{},"value":["../../_header.html"]}]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["python","async","web-scraping"]},{"type":"character","attributes":{},"value":["python","async","web-scraping"]},{"type":"character","attributes":{},"value":["img/preview.png"]},{"type":"character","attributes":{},"value":["The first step of studying YouTube is to have loads of channel_ids and video_ids. This article introduces how to sample some channel_ids from YouTube home page with async functions. We can then obtain video_ids from these channels. "]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["img/preview.png","sample-youtube-channels-id-with-async-functions_files/anchor-4.2.2/anchor.min.js","sample-youtube-channels-id-with-async-functions_files/bowser-1.9.3/bowser.min.js","sample-youtube-channels-id-with-async-functions_files/distill-2.2.21/template.v2.js","sample-youtube-channels-id-with-async-functions_files/header-attrs-2.23/header-attrs.js","sample-youtube-channels-id-with-async-functions_files/jquery-3.6.0/jquery-3.6.0.js","sample-youtube-channels-id-with-async-functions_files/jquery-3.6.0/jquery-3.6.0.min.js","sample-youtube-channels-id-with-async-functions_files/jquery-3.6.0/jquery-3.6.0.min.map","sample-youtube-channels-id-with-async-functions_files/popper-2.6.0/popper.min.js","sample-youtube-channels-id-with-async-functions_files/tippy-6.2.7/tippy-bundle.umd.min.js","sample-youtube-channels-id-with-async-functions_files/tippy-6.2.7/tippy-light-border.css","sample-youtube-channels-id-with-async-functions_files/tippy-6.2.7/tippy.css","sample-youtube-channels-id-with-async-functions_files/tippy-6.2.7/tippy.umd.min.js","sample-youtube-channels-id-with-async-functions_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["img/preview.png","sample-youtube-channels-id-with-async-functions_files/anchor-4.2.2/anchor.min.js","sample-youtube-channels-id-with-async-functions_files/bowser-1.9.3/bowser.min.js","sample-youtube-channels-id-with-async-functions_files/distill-2.2.21/template.v2.js","sample-youtube-channels-id-with-async-functions_files/header-attrs-2.23/header-attrs.js","sample-youtube-channels-id-with-async-functions_files/header-attrs-2.24/header-attrs.js","sample-youtube-channels-id-with-async-functions_files/jquery-3.6.0/jquery-3.6.0.js","sample-youtube-channels-id-with-async-functions_files/jquery-3.6.0/jquery-3.6.0.min.js","sample-youtube-channels-id-with-async-functions_files/jquery-3.6.0/jquery-3.6.0.min.map","sample-youtube-channels-id-with-async-functions_files/popper-2.6.0/popper.min.js","sample-youtube-channels-id-with-async-functions_files/tippy-6.2.7/tippy-bundle.umd.min.js","sample-youtube-channels-id-with-async-functions_files/tippy-6.2.7/tippy-light-border.css","sample-youtube-channels-id-with-async-functions_files/tippy-6.2.7/tippy.css","sample-youtube-channels-id-with-async-functions_files/tippy-6.2.7/tippy.umd.min.js","sample-youtube-channels-id-with-async-functions_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2085,7 +2085,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.23/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.24/header-attrs.js"></script>
   <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2214,11 +2214,6 @@ d-article li {
     padding-left: 0;
 }
 
-.l-screen {
-  text-align: center; 
-  height=10000px;
-}
-
 div.banner {
   height:300px;
 }
@@ -2229,9 +2224,37 @@ svg.banner {
   margin-left: -550px;
   width:1100px;
   height:300px;
+  transition: 0.6s;
 }
+
+@media (max-width: 1000px) {
+  svg.banner {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 480px) {
+  svg.banner {
+    transform: scale(0.5);
+  }
+}
+
+
+
 </style>
 <!--/radix_placeholder_site_in_header-->
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-57.png" sizes="57x57">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-76.png" sizes="76x76">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-96.png" sizes="96x96">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-128.png" sizes="128x128">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-192.png" sizes="192x192">
+  <link rel="icon" href="https://wilsonkkyip.github.io/favicons/favicon-228.png" sizes="228x228">
+  <link rel="shortcut icon" href="https://wilsonkkyip.github.io/favicons/favicon-196.png" sizes="196x196">
+  <link rel="apply-touch-icon" href="https://wilsonkkyip.github.io/favicons/favicon-120.png" sizes="120x120">
+  <link rel="apply-touch-icon" href="https://wilsonkkyip.github.io/favicons/favicon-152.png" sizes="152x152">
+  <link rel="apply-touch-icon" href="https://wilsonkkyip.github.io/favicons/favicon-180.png" sizes="180x180">
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
 </head>
@@ -2510,8 +2533,14 @@ svg.banner {
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
-<!--radix_placeholder_navigation_after_body-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!--radix_placeholder_navigation_after_body--><html><body>
+<div class="distill-site-nav distill-site-footer">
+
+</div>
 <!--/radix_placeholder_navigation_after_body-->
+</body></html>
+
 
 </body>
 

@@ -9,6 +9,8 @@ preview: img/preview.png
 output:
   bookdown::html_document2:
     base_format: distill::distill_article
+    includes: 
+      in_header: ../../_header.html
     toc: true
     self_contained: false
 tags: [google-api, youtube-api, etag, if-none-match]
@@ -18,7 +20,6 @@ categories:
   - etag
   - if-none-match
 preview_url: img/preview.png
-favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
 abstract: |
   This article provides a brief introduction to use YouTube Data API to retrive
   information about channels, playlists, and videos. It also covers the use of 

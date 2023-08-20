@@ -8,6 +8,8 @@ date: 2023-08-09
 preview: img/preview.png
 output:
   distill::distill_article:
+    includes: 
+      in_header: ../../_header.html
     toc: true
     self_contained: false
 tags: [python, async, web-scraping]
@@ -15,8 +17,7 @@ categories:
   - python
   - async
   - web-scraping
-preview_url: https://wilsonkkyip.github.io/posts/2023-08-09-sample-youtube-channels-id-with-async-functions/img/preview.png
-favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
+preview_url: img/preview.png
 abstract: |
   The first step of studying YouTube is to have loads of channel_ids and video_ids. This article introduces how to sample some channel_ids from YouTube home page with async functions. We can then obtain video_ids from these channels. 
 ---

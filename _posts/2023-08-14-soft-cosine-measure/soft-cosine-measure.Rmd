@@ -8,6 +8,8 @@ date: 2023-08-14
 preview: img/preview.png
 output:
   bookdown::html_document2:
+    includes: 
+      in_header: ../../_header.html
     base_format: distill::distill_article
     toc: true
     self_contained: false
@@ -18,7 +20,6 @@ categories:
   - soft-cosine
   - time-complexity
 preview_url: img/preview.png
-favicon: https://raw.githubusercontent.com/wilsonkkyip/wilsonkkyip.github.io/main/img/wy_logo.png
 abstract: |
   Soft cosine similarity is widely adapted in text mining to model the similarity between documents more realisticly. This article dives deep into the mathmatical reasoning behind the method and provide a method to reduce complexity from O(N²) to O(N) in Deployment.
 ---
