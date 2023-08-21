@@ -1,6 +1,16 @@
 library(magick)
 
-img <- image_read_svg("cangjie/img/icon-bg.svg")
+# corner radius for the 512x512 icon = 80 (iTunesArtwork)
+# corner radius for the 1024x1024 icon = 180 (iTunesArtwork Retina)
+# corner radius for the 57x57 icon = 9 (iPhone/iPod Touch)
+# corner radius for the 114x114 icon = 18 (iPhone/iPod Touch Retina)
+# corner radius for the 72x72 icon = 11 (iPad)
+# corner radius for the 144x144 icon = 23 (iPad Retina)
+
+fname <- "favicons/favicon.svg"
+bname <- tools::file_path_sans_ext(basename(fname))
+dname <- dirname(fname)
+img <- image_read_svg(fname)
 
 conf <- '{
   "generic": [
@@ -10,7 +20,8 @@ conf <- '{
     {"size": "96"},
     {"size": "128"},
     {"size": "192"},
-    {"size": "228"}
+    {"size": "228"},
+    {"size": "512"}
   ],
   "android": [
     {"size": 196}
@@ -27,10 +38,11 @@ conf_list <- jsonlite::fromJSON(conf, simplifyVector = F)
 for (k in names(conf_list)) {
   for (i in c(1:length(conf_list[[k]]))) {
     tmp <- image_scale(img, conf_list[[k]][[i]]$size)
-    image_write(tmp, sprintf("cangjie/img/icon-%s.png", conf_list[[k]][[i]]$size))
+    image_write(tmp, sprintf("%s/%s-%s.png", dname, bname, conf_list[[k]][[i]]$size))
   }
 }
 
+tag_str <- '<link rel="%1$s" href="https://wilsonkkyip.github.io/%2$s/%3$s-%4$s.png" sizes="%4$sx%4$s">\n'
 for (k in names(conf_list)) {
   if (k == "generic") {
     rel <- "icon"
@@ -42,7 +54,7 @@ for (k in names(conf_list)) {
     stop("invalue `key`")
   }
   for (i in c(1:length(conf_list[[k]]))) {
-    tmp <- sprintf('<link rel="%1$s" href="https://wilsonkkyip.github.io/cangjie/img/icon-%2$s.png" sizes="%2$sx%2$s">\n', rel, conf_list[[k]][[i]]$size)
+    tmp <- sprintf(tag_str, rel, dname, bname, conf_list[[k]][[i]]$size)
     cat(tmp)
   }
 }

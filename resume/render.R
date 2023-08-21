@@ -8,10 +8,10 @@ resume_yaml_idx <- which(resume_yaml == "---")
 resume_yaml <- resume_yaml[c((resume_yaml_idx[1] + 1):(resume_yaml_idx[2] - 1))]
 resume_yaml <- yaml::yaml.load(resume_yaml)
 
-if (!is.null(resume_yaml$export_frame)) {
+if (!is.null(resume_yaml$export_fname)) {
     rmarkdown::render(
         input=resume_fname,
-        output_file=resume_yaml$export_frame,
+        output_file=resume_yaml$export_fname,
         output_dir=sprintf("%s/outputs", args[1])
     )
 }
