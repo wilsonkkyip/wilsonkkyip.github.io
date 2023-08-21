@@ -8,10 +8,9 @@ author:
 date: 2023-08-16
 preview: img/preview.png
 output:
-  bookdown::html_document2:
+  distill::distill_article:
     includes: 
       in_header: ../../_header.html
-    base_format: distill::distill_article
     toc: true
     self_contained: false
 tags: [text-mining, word2vec, cbow, skip-gram, tf-idf, soft-cosine, gensim]
