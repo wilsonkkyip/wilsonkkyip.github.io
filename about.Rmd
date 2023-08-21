@@ -51,7 +51,7 @@ where $K$ is the correlation matrix of the features in both $\mathbf{x}$ and $\m
   </span>
   <span class="sr-only">GitHub</span>
 </a>
-<a style='color: #3a3a9f' href="https://www.linkedin.com/in/wilson-yip-a6b148215/" title="LinkedIn" class = 'social-icon'><span class="fa-stack fa-lg" aria-hidden="true">
+<a style='color: #3a3a9f' href="https://www.linkedin.com/in/wilsonkkyip/" title="LinkedIn" class = 'social-icon'><span class="fa-stack fa-lg" aria-hidden="true">
   <i class="fa fa-circle fa-stack-2x"></i>
   <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
 </span>

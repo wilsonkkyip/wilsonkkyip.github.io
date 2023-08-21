@@ -15,7 +15,7 @@ Aside
 Contact info
 ------------------------------------
 <i class="fab fa-linkedin-in"></i>
-<a href="https://www.linkedin.com/in/wilson-yip-a6b148215/">
+<a href="https://www.linkedin.com/in/wilsonkkyip/">
 <span>wilsonyip@elitemail.org</span>
 </a><br>
 <i class="fa fa-github"></i> https://github.com/wilsonkkyip/<br>
