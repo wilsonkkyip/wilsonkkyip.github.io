@@ -5,6 +5,7 @@ output:
     includes: 
       in_header: cangjie/header.html
     self_contained: false
+favicon: cangjie/img/icon.ico
 ---
 
 <div class="content">
