@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "Wilson Yip"
 output:
   distill::distill_article:
     includes: 
