@@ -6,7 +6,7 @@
 }
 
 .distill-site-nav a:hover {
-  color: #dedcd9;
+  opacity: 0.8;
 }
 
 body {
