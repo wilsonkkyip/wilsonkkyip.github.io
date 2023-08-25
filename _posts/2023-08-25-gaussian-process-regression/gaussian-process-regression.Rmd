@@ -1,0 +1,349 @@
+---
+title: "Gaussian Process Regression"
+description: |
+  
+author:
+  - name: Wilson Yip
+date: 2023-08-22
+preview: img/preview.png
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+bibliography: ../../citation.bib
+notice: |
+  @Rasmussen_Williams_2006 @BISHOP_2006
+draft: true
+tags: [gaussian-process-regression, multivariate-normal, plotly]
+categories:
+  - gaussian-process-regression
+  - multivariate-normal
+  - plotly
+preview_url: img/preview.png
+abstract: |
+  
+---
+
+<!-- https://distill.pub/2019/visual-exploration-gaussian-processes/ -->
+<!-- https://arxiv.org/pdf/2009.10862.pdf -->
+<!-- https://math.stackexchange.com/questions/1890853/help-in-understanding-derivation-of-posterior-in-gaussian-process -->
+<!-- https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf page93 -->
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjs@11.9.1/lib/browser/math.min.js"></script>
+
+<div id="new-command" style="height:0px">
+$$
+\newcommand\cov{\text{Cov}}
+\newcommand\norm[1]{\lVert#1\rVert}
+$$
+</div>
+
+# Multivariate Normal Distribution
+
+## Definition and Properties
+
+Let $\mathbf{X} = (X_1, X_2, \dots, X_n)^T \sim \mathcal{N}(\mathbf{\mathbf{\mu}}, \mathbf{\Sigma})$, 
+where $\mathbf{\mathbf{\mu}}$ is the mean of $\mathbf{X}$ and $\mathbf{\Sigma}$ is the correlation
+matrix of $\mathbf{X}$ such that
+
+$$
+\mathbf{\mathbf{\mu}} = \begin{pmatrix}\mathbf{\mu}_1 \\ \mathbf{\mu}_2 \\ \vdots \\ \mathbf{\mu}_n \end{pmatrix}
+$$
+
+and
+
+$$
+\newcommand\cov{\text{Cov}}
+\begin{align*}
+\mathbf{\Sigma} &= \mathbb{E}\left[ \left( \mathbf{X} - \mathbf{\mathbf{\mu}} \right) \left( \mathbf{X} - \mathbf{\mathbf{\mu}} \right)^T \right] \\[5pt]
+&= \begin{pmatrix} 
+\cov(X_1, X_1) & \cov(X_1, X_2) & \cdots & \cov(X_1, X_n) \\
+\cov(X_2, X_1) & \cov(X_2, X_2) & \cdots & \cov(X_2, X_n) \\
+\vdots & \vdots & \ddots & \vdots \\
+\cov(X_n, X_1) & \cov(X_n, X_2) & \cdots & \cov(X_n, X_n)
+\end{pmatrix}.
+\end{align*}
+$$
+
+The density function of $\mathbf{X}$ is given by
+
+$$f(\mathbf{x}) = \frac{1}{(2 \pi)^{n/2} \det{(\mathbf{\Sigma})^{1/2}}} \exp\left( -\frac{1}{2} (\mathbf{x} - \mathbf{\mathbf{\mu}})^T \mathbf{\Sigma}^{-1} (\mathbf{x} - \mathbf{\mathbf{\mu}}) \right). \tag{1}\label{eq:1}$$
+
+
+
+Let $\mathbf{Z} = (\mathbf{X}, \mathbf{Y})^T$. Then $\mathbf{Z}$ has a normal
+distribution with 
+
+
+
+$$
+Z = \begin{pmatrix}
+\mathbf{X} \\ \mathbf{Y}
+\end{pmatrix} \sim 
+\mathcal{N} \left(
+\begin{pmatrix}
+\mathbf{\mathbf{\mu}}_\mathbf{X} \\ \mathbf{\mathbf{\mu}}_\mathbf{Y}
+\end{pmatrix}, 
+\begin{pmatrix}
+\mathbf{\Sigma}_{\mathbf{X}\mathbf{X}} & \mathbf{\Sigma}_{\mathbf{X}\mathbf{Y}} \\
+\mathbf{\Sigma}_{\mathbf{Y}\mathbf{X}} & \mathbf{\Sigma}_{\mathbf{Y}\mathbf{Y}}
+\end{pmatrix}
+\right)
+$$
+
+if and only if $\mathbf{X} \sim \mathcal{N}(\mathbf{\mathbf{\mu}_\mathbf{X}}, \mathbf{\Sigma}_\mathbf{X})$ 
+and $\mathbf{Y} \sim \mathcal{N}(\mathbf{\mathbf{\mu}_\mathbf{Y}}, \mathbf{\Sigma}_\mathbf{Y})$,
+with $\mathbf{\Sigma}_{\mathbf{Y}\mathbf{X}} = \mathbf{\Sigma}_{\mathbf{X}\mathbf{Y}}^T$. Also, 
+
+$$\mathbf{Y} | \mathbf{X} \sim \mathcal{N} \left( \mathbf{\mathbf{\mu}}_{\mathbf{Y}} + 
+\mathbf{\Sigma}_{\mathbf{Y}\mathbf{X}} \mathbf{\Sigma}_{\mathbf{X}\mathbf{X}}^{-1} (\mathbf{X} - 
+\mathbf{\mathbf{\mu}}_{\mathbf{X}}), \; \mathbf{\Sigma}_{\mathbf{Y}\mathbf{Y}} - 
+\mathbf{\Sigma}_{\mathbf{Y}\mathbf{X}} \mathbf{\Sigma}_{\mathbf{X}\mathbf{X}}^{-1} 
+\mathbf{\Sigma}_{\mathbf{X}\mathbf{Y}} \right)$$
+
+# Gaussian Process Regression
+
+Gaussian Process Regression (GPR) is a non-parametric, Bayesian approach for inference.
+Unlike GLMs, where we explicitly want to fit a specific line (say $y = mx + c$)
+to a set of data, GPR replies on similarity matrix (or kernel) within and 
+between training ($X$) and testing ($X_*$) inputs along with the training outputs
+($\mathbf{y}$) to infer the testing outputs ($\mathbf{y}_*$). 
+
+Let $X$ and $\mathbf{y} = \mathbf{f}(X)$ be some observable points from a function
+$f$. Our goal is to obtain some predicted $\mathbf{f}_* = \mathbf{f}(X_*)$ from 
+some testing points $X_*$. 
+
+We assume that for each training input $\mathbf{x}$, the observed $y$ is given by
+
+$$y = f(\mathbf{x}) + \varepsilon,$$
+
+where $\varepsilon \sim \mathcal{N}(0, \sigma_n^2)$. 
+
+```{js}
+function dist(x) {
+    var output = math.zeros(x.length, x.length);
+    for (let i = 0; i < x.length; i++) {
+        for (let j = 0; j < x.length; j++) {
+            if (i == j) {
+                continue;
+            } else if (i < j) {
+                output.set([i,j], math.abs(x[i] - x[j]))
+            } else {
+                output.set([i,j], output.valueOf()[j][i])
+            }
+        }
+    }
+    return output
+}
+```
+
+<script>
+console.log(dist([1,3,6,0]))
+</script>
+
+# Proofs
+
+## Bayes Theorem for Gaussian Variables
+
+Let $\mathbf{X} \sim \mathcal{N}(\mathbf{\mu}, \mathbf{\Sigma})$ and
+$\mathbf{Y} | \mathbf{X} \sim \mathcal{N}(A \mathbf{X} + \mathbf{b}, \mathbf{\Lambda})$.
+We aim to find the distribution for $\mathbf{Y}$. Consider
+
+$$
+\begin{align*}
+f_{\mathbf{Y}}(\mathbf{y}) &= \int f_{\mathbf{Y} | \mathbf{X}} (\mathbf{y} | \mathbf{x}) \cdot f_{\mathbf{X}} (\mathbf{x})\, d\mathbf{x} \\[5pt]
+&\propto \int \exp \left( -\frac{1}{2} \left[(\mathbf{y} - A \mathbf{x} - \mathbf{b})^T \mathbf{\mathbf{\Lambda}}^{-1} (\mathbf{y} - A \mathbf{x} - \mathbf{b}) + (\mathbf{x} - \mathbf{\mu})^T \mathbf{\Sigma}^{-1} (\mathbf{x} - \mathbf{\mu}) \right] \right) \, d\mathbf{x}
+\end{align*}
+$$
+
+which is also the pdf of $\mathbf{Z} = (\mathbf{X}, \mathbf{Y})^T$. Notice that
+the sum of two positive definite quadratic form is also a positive definite
+quadratic form. Hence $\mathbf{Z}$ is Gaussian distributed, which makes $\mathbf{Y}$
+is also Gaussian distributed. To identify the correlation matrix of $\mathbf{Z}$, 
+consider the second order terms, 
+
+$$
+\begin{align*}
+& \mathbf{y}^T \mathbf{\Lambda}^{-1} \mathbf{y} - 2\mathbf{x}^T A^T \mathbf{\Lambda}^{-1} \mathbf{y} + \mathbf{x}^T A^T \mathbf{\Lambda}^{-1} A \mathbf{x} + \mathbf{x}^T \mathbf{\Sigma}^{-1} \mathbf{x} \\[5pt]
+& \quad = \mathbf{y}^T \mathbf{\Lambda}^{-1} \mathbf{y} - 2\mathbf{x}^T A^T \mathbf{\Lambda}^{-1} \mathbf{y} + \mathbf{x}^T (A^T \mathbf{\Lambda}^{-1} A + \mathbf{\Sigma}^{-1}) \mathbf{x} \\[5pt]
+& \quad = \begin{pmatrix} \mathbf{x} \\ \mathbf{y} \end{pmatrix}^T
+    \begin{pmatrix} \mathbf{\Sigma}^{-1} + A^T \mathbf{\Lambda}^{-1} A & - A^T \mathbf{\Lambda}^{-1} \\ - \mathbf{\Lambda}^{-1} A & \mathbf{\Lambda}^{-1} \end{pmatrix}
+    \begin{pmatrix} \mathbf{x} \\ \mathbf{y} \end{pmatrix} \\[5pt] 
+& \quad = \mathbf{z}^T R \mathbf{z},
+\end{align*}
+$$
+
+where
+
+$$
+R = \begin{pmatrix} \mathbf{\Sigma}^{-1} + A^T \mathbf{\Lambda}^{-1} A & - A^T \mathbf{\Lambda}^{-1} \\ - \mathbf{\Lambda}^{-1} A & \mathbf{\Lambda}^{-1} \end{pmatrix}
+\qquad \text{and} \qquad
+R^{-1} = \begin{pmatrix} \mathbf{\Sigma} & \mathbf{\Sigma} A^T \\ A \mathbf{\Sigma} & \mathbf{\Lambda} + A \mathbf{\Sigma} A^T \end{pmatrix}.
+$$
+
+From $\eqref{eq:1}$, we know that $R^{-1}$ is the covarriance matrix for $\mathbf{z}$. 
+We now consider the linear terms to find the mean of $\mathbf{z}$. 
+
+$$
+- \mathbf{y}^T \mathbf{\Lambda}^{-1} \mathbf{b} + \mathbf{x}^T A^T \mathbf{\Lambda}^{-1}  \mathbf{b} - \mathbf{x}^T \mathbf{\Sigma}^{-1} \mathbf{\mu}
+= - \begin{pmatrix} \mathbf{x} \\ \mathbf{y} \end{pmatrix}^T \begin{pmatrix} \mathbf{\Sigma}^{-1} \mathbf{\mu} - A^T \mathbf{\Lambda}^{-1} \mathbf{b} \\ \mathbf{\Lambda}^{-1} \mathbf{b} \end{pmatrix}.
+$$
+
+By $\eqref{eq:1}$ again, we know that
+
+$$
+-\mathbf{z}^T \Sigma_{\mathbf{z}}^{-1} \mathbf{\mu}_\mathbf{z} = 
+- \begin{pmatrix} \mathbf{x} \\ \mathbf{y} \end{pmatrix}^T \begin{pmatrix} \mathbf{\Sigma}^{-1} \mathbf{\mu} - A^T \mathbf{\Lambda}^{-1} \mathbf{b} \\ \mathbf{\Lambda}^{-1} \mathbf{b} \end{pmatrix}.
+$$
+
+Thus 
+
+$$
+\begin{align*}
+\mathbf{\mu}_\mathbf{z} &= R^{-1} \begin{pmatrix} \mathbf{\Sigma}^{-1} \mathbf{\mu} - A^T \mathbf{\Lambda}^{-1} \mathbf{b} \\ \mathbf{\Lambda}^{-1} \mathbf{b} \end{pmatrix} 
+= \begin{pmatrix} \mathbf{\mu} \\ A \mathbf{\mu} + \mathbf{b} \end{pmatrix} \\[5pt]
+\mathbf{\Sigma}_{\mathbf{z}} &= \begin{pmatrix} \mathbf{\Sigma} & \mathbf{\Sigma} A^T \\ A \mathbf{\Sigma} & \mathbf{\Lambda} + A \mathbf{\Sigma} A^T \end{pmatrix},
+\end{align*}
+$$
+
+and 
+
+$$
+\begin{align*}
+\mathbf{\mu}_\mathbf{y} &=  A \mathbf{\mu} + \mathbf{b} \\[5pt]
+\mathbf{\Sigma}_{\mathbf{y}} &= \mathbf{\Lambda} + A \mathbf{\Sigma}A^T.
+\end{align*}
+$$
+
+
+
+# Gaussian Process Regression
+
+Let $X_{train}$ and $\mathbf{y}_{train}$ be the observed points from an 
+underlying function $f$ such that 
+
+$$\mathbf{y} = \mathbf{f}(X) + \varepsilon,$$
+
+where $\varepsilon \sim \mathcal{N}(0, \sigma_n^2 I)$. We are interested in 
+estimating the underlying function $f$. Consider 
+
+$$
+\newcommand\norm[1]{\lVert#1\rVert}
+\begin{align*}
+p(\mathbf{y} | X) &= \prod_{i = 1}^n p(y_i | \mathbf{x}_i) \\[5pt]
+&= \prod_{i = 1}^n p(\varepsilon_i) \\[5pt]
+&= \prod_{i = 1}^n \frac{1}{\sqrt{2\pi \sigma_n^2}} \exp \left( -\frac{(y_i - f(\mathbf{x}_i))^2}{2\sigma_n^2} \right) \\[5pt]
+&= \frac{1}{(2\pi\sigma_n^2)^{n/2}} \exp \left( - \frac{\norm{\mathbf{y} - \mathbf{f}(X)}^2}{2\sigma_n^2} \right).
+\end{align*}
+$$
+
+That is, $\mathbf{y} | X \sim \mathcal{N}(\mathbf{f}(X), \sigma_n^2I)$. Now let $f(\mathbf{x}) = \phi(\mathbf{x})^T \mathbf{w}$, where $\phi$ is some
+polinomial projection and $\mathbf{w}$ are some weights. Then the previous 
+result becomes
+
+$$\mathbf{y} | X, \mathbf{w} \sim \mathcal{N}(\Phi(X)^T \mathbf{w}, \sigma_n^2 I).$$
+
+Now, we are interested in finding
+
+$$
+\text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{marginal likelihood}} 
+\qquad \text{or} \qquad 
+p(\mathbf{w} | X, \mathbf{y}) = \frac{p(\mathbf{y} | X, \mathbf{w}) \cdot p(\mathbf{w})}{p(\mathbf{y} | X)},
+$$
+
+where the marginal likelihood is a normalisation constant that is independent of
+the weights and is given by
+
+$$p(\mathbf{y} | X) = \int p(\mathbf{y} | X, \mathbf{w}) p(\mathbf{w})\, d\mathbf{w}.$$
+
+Assuming the prior distribution $\mathbf{w} \sim \mathcal{N}(0, \mathbf{\Sigma}_p)$, we have
+
+$$
+\begin{align*}
+p(\mathbf{w} | X, \mathbf{y}) &\propto \exp\left( -\frac{1}{2\sigma_n^2} (\mathbf{y} - \Phi_X^T \mathbf{w})^T (\mathbf{y} - \Phi_X^T \mathbf{w}) \right)
+  \cdot \exp \left( -\frac{1}{2} \mathbf{w}^T \mathbf{\Sigma}_p \mathbf{w} \right) \\[5pt]
+&\propto \exp \left( -\frac{1}{2\sigma_n^{2}} \left( \mathbf{y}^T \mathbf{y} - \mathbf{w}^T\Phi_X \mathbf{y} - \mathbf{y}^T \Phi_X^T \mathbf{w} + \mathbf{w}^T \Phi_X \Phi_X^T \mathbf{w} + \sigma_p^2 \mathbf{w}^T \mathbf{\Sigma}_p \mathbf{w} \right) \right) \\[5pt]
+&\propto \exp \left( -\frac{1}{2} \left[ \mathbf{w}^T \left(\frac{1}{\sigma_n^2} \Phi_X \Phi_X^T + \mathbf{\Sigma}_p \right) \mathbf{w} - \sigma_n^{-2} \mathbf{w}^T\Phi_X \mathbf{y} - \sigma_n^{-2} \mathbf{y}^T \Phi_X^T \mathbf{w} \right] \right) \qquad (\mathbf{y}^T \mathbf{y} \text{ is a constant}) \\[5pt]
+&\propto \exp \left( -\frac{1}{2} \left( \mathbf{w}^T A \mathbf{w} - \sigma_n^{-2} (A^{1/2} \mathbf{w})^T (A^{-1/2} \Phi_X \mathbf{y}) \right. \right. \\
+  &\qquad  - \left.\left. \sigma_n^{-2} (A^{-1/2} \Phi_X \mathbf{y})^T (A^{1/2} \mathbf{w}) + \sigma_n^{-4} (A^{-1/2} \Phi_X \mathbf{y})^T(A^{-1/2} \Phi_X \mathbf{y}) \right) \right) \\[5pt]
+&\propto \exp\left( -\frac{1}{2} (\mathbf{w} - \mathbf{\bar{w}})^T A (\mathbf{w} - \mathbf{\bar{w}}) \right),
+\end{align*}
+$$
+
+where $A = \sigma_n^{-2} \Phi_X \Phi_X^T + \mathbf{\Sigma}_p^{-1}$ and  $\mathbf{\bar{w}} = \sigma_n^{-2} A^{-1} \Phi_X \mathbf{y}$. Hence
+
+$$\mathbf{w} | X, \mathbf{y} \sim \mathcal{N} (\mathbf{\bar{w}}, A^{-1}).$$
+
+Now, let $\mathbf{f}_* = f(\Phi_{X_*})$, where $X_*$ are some testing inputs. We have
+
+$$
+\begin{align*}
+p(\mathbf{f}_* | \Phi_{X_*}, X, \mathbf{y}) &= \int p(\mathbf{f}_* | \Phi_{X_*}, \mathbf{w}) p(\mathbf{w} | X, \mathbf{y}) \, d\mathbf{w}.
+\end{align*}
+$$
+
+From the [above session](#gaussian-process-regression), we know that
+
+$$\mathbf{f}_* | X_*, X, \mathbf{y} \sim \mathcal{N}(\sigma_n^{-2} \Phi_{X_*}^T  A^{-1} \Phi_X \mathbf{y}, \Phi_{X_*}^T A^{-1} \Phi_{X_*}).$$
+
+We omitted the $\sigma_n^2 I$ in the covarrance as it is very small and simplify 
+the upcoming calculations. Now let $K = \Phi_X^T \mathbf{\Sigma}_P \Phi_X$ and 
+notice that
+
+$$
+\begin{align*}
+\sigma_n^{-2} \Phi_X (K + \sigma_n^{2}I) &= \sigma_n^{-2} \Phi_X (\Phi_X^T \mathbf{\Sigma}_P \Phi_X + \sigma_n^{2}I) \\[5pt]
+&= A\mathbf{\Sigma}_P \Phi_X \\[5pt]
+\sigma_n^{-2} A^{-1} \Phi_X  (K + \sigma_n^2I) &= \mathbf{\Sigma}_P \Phi_X \\[5pt]
+\sigma_n^{-2} A^{-1} \Phi_X &= \mathbf{\Sigma}_P \Phi_X (K + \sigma_n^2 I). \tag{2}\label{eq:2}
+\end{align*}
+$$
+
+Also, with the fact that
+
+$$
+(Z + UWV^T)^{-1} = Z^{-1} - Z^{-1} U(W^{-1} + V^T Z^{-1} U)^{-1} V^T Z^{-1},
+$$
+
+for any matrix $Z, U, W, V$ with suitable sizes, we know that
+
+$$
+A^{-1} = (\mathbf{\Sigma}_p^{-1} + \Phi_X(\sigma_n^{-2}I)\Phi_X^T)^{-1} = \mathbf{\Sigma}_p - \mathbf{\Sigma}_p \Phi_X(\sigma_n^2 I + \Phi_X^T \mathbf{\Sigma}_p \Phi_X)^{-1} \Phi_X^T \mathbf{\Sigma}_p. \tag{3}\label{eq:3}
+$$
+
+Hence, combining $\eqref{eq:2}$ and $\eqref{eq:3}$, we have
+
+$$
+\begin{align*}
+\mathbf{f}_* | X_*, X, \mathbf{y} &\sim \mathcal{N}( \Phi_{X_*}^T  \mathbf{\Sigma}_P \Phi (\Phi_X^T \mathbf{\Sigma}_P \Phi_X + \sigma_n^2 I) \mathbf{y}, \\
+& \qquad \quad \Phi_{X_*}^T \mathbf{\Sigma}_p \Phi_{X_*} - \Phi_{X_*}^T \mathbf{\Sigma}_p \Phi_X(\sigma_n^2 I + \Phi_X^T \mathbf{\Sigma}_p \Phi_X)^{-1} \Phi_X^T \mathbf{\Sigma}_p \Phi_{X_*}).
+\end{align*}
+$$
+
+We shall define the *kernel* $k: \mathbb{R}^p \times \mathbb{R}^p \rightarrow \mathbb{R}$
+such that $k(\mathbf{x}, \mathbf{y}) = \Phi(\mathbf{x})^T \mathbf{\Sigma}_p \Phi(\mathbf{y})$. 
+With these settings, we can write
+
+$$
+\begin{pmatrix}
+\mathbf{y} \\ \mathbf{f}_*
+\end{pmatrix} \sim \mathcal{N} \left(
+\begin{pmatrix} \mathbf{\mu}_\mathbf{y} \\ \mathbf{\mu}_{\mathbf{f}_*} \end{pmatrix},
+\begin{pmatrix}
+k(X, X) + \sigma_n^2I & k(X, X_*) \\ k(X_*, X) & k(X_*, X_*)
+\end{pmatrix}
+\right).
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
