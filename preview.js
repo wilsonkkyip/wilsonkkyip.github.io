@@ -220,7 +220,7 @@ function A(x, m, r) {
     return (m - math.abs(x)) / r
 }
 
-export function main() {
+function main() {
     var oriSvg = document.querySelector(".l-screen svg");
     if (oriSvg != null) {
         oriSvg.remove();
@@ -253,7 +253,7 @@ export function main() {
 
     var svg = d3.select(".l-screen")
         .append("svg")
-            .attr("onclick", "main")
+            .attr("onclick", "main()")
             .attr("class", "banner")
             .attr("width", boxWidth)
             .attr("height", boxHeight)
@@ -314,3 +314,5 @@ export function main() {
     
     document.querySelector(".r2d3").setAttribute("style", "height: 0; margin: 0");
 }
+
+main();
