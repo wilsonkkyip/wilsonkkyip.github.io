@@ -116,7 +116,7 @@ div.banner {
   height:300px;
 }
 
-svg.banner {
+.banner svg {
   position: absolute;
   left: 50%;
   margin-left: -550px;
@@ -126,13 +126,13 @@ svg.banner {
 }
 
 @media (max-width: 1000px) {
-  svg.banner {
+  .banner svg {
     transform: scale(0.8);
   }
 }
 
 @media (max-width: 480px) {
-  svg.banner {
+  .banner svg {
     transform: scale(0.5);
   }
 }

@@ -10,43 +10,17 @@ output:
 site: distill::distill_website
 css: [styles.css]
 listing: posts
-preview_url: favicons/favicon-512.png
+preview_url: img/gpr-banner.png
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  echo = FALSE,
-  dev.args = list(bg = 'transparent'),
-  # dev='svglite',
-  # fig.align='center',
-  #out.width='75%', fig.asp=.75,
-  cache.rebuild = F,
-  cache = F
-)
-```
-
-
 
 <div class='index-title' style="">
 <h1>
 Math, Data, Infra
 </h1>
 </div>
-
-
 <script src="https://d3js.org/d3.v6.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjs@11.9.1/lib/browser/math.min.js"></script>
-<script src="preview.js"></script>
 <div class="banner">
-
-```{r, echo=FALSE, layout="l-screen", fig.height=1}
-library(r2d3)
-r2d3(d3_version = 5, script = "preview.js")
-```
-
-<script>
-main();
-</script>
-
 </div>
+<script src="preview.js"></script>
 
