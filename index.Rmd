@@ -10,7 +10,7 @@ output:
 site: distill::distill_website
 css: [styles.css]
 listing: posts
-preview_url: img/gpr-banner.png
+preview_url: img/preview.png
 ---
 
 <div class='index-title' style="">
