@@ -1,7 +1,7 @@
 ---
 title_head: "Wilson Yip"
 title: ""
-description: "My personal blog"
+description: "My personal blog on Mathematics and Data Science"
 output:
   distill::distill_article:
     includes: 
