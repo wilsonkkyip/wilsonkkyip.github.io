@@ -1,28 +1,32 @@
 ---
-title: "Gaussian Process Regression: From Proof to Implementation"
+title: "Gaussian Process Regression: From Derivation to Visualisation with D3JS"
 description: |
-  
+  The article will introduce a non-parametric, Bayesian regression method - 
+  Gaussian process regression, from derive to visualise with D3JS. 
 author:
   - name: Wilson Yip
-date: 2023-08-22
+date: 2023-08-25
 preview: img/preview.png
 output:
   distill::distill_article:
     toc: true
     self_contained: false
-    code_folding: hide
+    code_folding: show
 bibliography: ../../citation.bib
 notice: |
   @Rasmussen_Williams_2006 @BISHOP_2006
 draft: true
-tags: [gaussian-process-regression, multivariate-normal, d3js]
+tags: [gaussian-process, multivariate-normal, bayesian-method, d3js]
 categories:
-  - gaussian-process-regression
+  - gaussian-process
   - multivariate-normal
+  - bayesian-method
   - d3js
 preview_url: img/preview.png
 abstract: |
-  
+  Gaussian process is a non-parametric, Bayesian approach to modelling. This 
+  article will derive from basic Gaussian distribution to the Gaussian process 
+  regression model, implement the model and visualise the result with D3JS. 
 ---
 
 <!-- https://distill.pub/2019/visual-exploration-gaussian-processes/ -->
@@ -35,11 +39,23 @@ abstract: |
 
 # Introduction
 
+Gaussian process (GP) is a very useful technique in regression, classification, 
+optimisation, etc. It is a non-parametric Bayesian approach to modelling. This
+article will derive from basic Gaussian distribution to its regression model, 
+Gaussian process regression (GPR) model. We will also implement this method to 
+regress a 1 dimensional $\sin$ function with some sample data and visualise the
+result with d3js.
 
 <div class="banner-plot">
 </div>
+<p style="position: relative; font-size:7pt; margin:0; bottom:30px;">*Refresh for another plot*</p>
 
-# Multivariate Normal Distribution
+We will first review some basics of Gaussian distributions, then we will introduce
+the GPR model and kernels, followed by the implementation of the model to 
+regress a 1 dimensional $\sin$ function. Finally, we will cover the derivation
+of the GPR model. 
+
+# Multivariate Gaussian Distribution
 
 $$
 \newcommand\cov{\text{Cov}}
@@ -670,7 +686,7 @@ lines from the GPR.
 <script src="./implement.js"></script>
 </div>
 
-# Proofs
+# Derivation
 
 ## Bayes Theorem for Gaussian Variables
 
@@ -744,9 +760,7 @@ $$
 \end{align*}
 $$
 
-
-
-# Gaussian Process Regression
+## Gaussian Process Regression
 
 Let $X_{train}$ and $\mathbf{y}_{train}$ be the observed points from an 
 underlying function $f$ such that 

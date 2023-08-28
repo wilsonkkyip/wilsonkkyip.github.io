@@ -1,5 +1,5 @@
-const boxWidth = 630;
-const boxHeight = 200;
+const boxWidth = 700;
+const boxHeight = 220;
 const ribbonColor = "#3a3a9f44";
 const dotColor = "#00990044";
 const lineColor = "#ff669988";
