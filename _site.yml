@@ -23,5 +23,7 @@ google_analytics: "G-XQNDRLY681"
 favicon: favicons/favicon.ico
 output: 
   distill::distill_article:
+    includes: 
+        in_header: _header.html
     css: style.css
 
