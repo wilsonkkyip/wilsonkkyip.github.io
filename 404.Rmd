@@ -1,3 +1,8 @@
 ---
-title: 404
+title: "404"
+output:
+  distill::distill_article:
+    includes: 
+      in_header: _header.html
+    self_contained: false
 ---
