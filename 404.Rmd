@@ -6,3 +6,7 @@ output:
       in_header: _header.html
     self_contained: false
 ---
+
+<script>
+window.location.replace("https://wilsonkkyip.github.io")
+</script>
