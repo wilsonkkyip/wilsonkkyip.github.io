@@ -15,7 +15,7 @@ output:
 bibliography: ../../citation.bib
 notice: |
   @Rasmussen_Williams_2006 @BISHOP_2006
-draft: true
+draft: false
 tags: [gaussian-process, multivariate-normal, bayesian-method, d3js]
 categories:
   - gaussian-process
