@@ -1,6 +1,7 @@
 _posts/*/*_files/* linguist-vendored
 _posts/*/*.html linguist-vendored
 posts/* linguist-vendored
+site_libs/* linguist-vendored
 .git/* linguist-vendored
 *.html linguist-vendored
 
