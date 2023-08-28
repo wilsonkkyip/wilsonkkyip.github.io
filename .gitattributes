@@ -7,8 +7,9 @@ site_libs/* linguist-vendored
 *.html linguist-vendored
 
 # *.[Rr]md   linguist-detectable
-*.js linguist-vendored
-*.css linguist-vendored
+# *.js linguist-vendored
+# *.css linguist-vendored
+*.scss linguist-vendored
 
 *.html text eol=lf
 *.md text eol=lf
