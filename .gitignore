@@ -15,3 +15,5 @@ ehthumbs.db
 
 *.Rhistory
 *_cache/
+
+_posts/*/*_files/*
