@@ -4,6 +4,8 @@
 *.css linguist-vendored
 *.scss linguist-vendored
 
+*.[Rr]md   linguist-detectable
+
 *.html text eol=lf
 *.md text eol=lf
 *.css text eol=lf
