@@ -20,7 +20,7 @@ navbar:
     - icon: fab fa-brands fa-linkedin fa-1x
       href: https://www.linkedin.com/in/wilsonkkyip/
 google_analytics: "G-XQNDRLY681"
-favicon: favicon.ico
+favicon: favicons/favicon.ico
 output: 
   distill::distill_article:
     css: style.css
