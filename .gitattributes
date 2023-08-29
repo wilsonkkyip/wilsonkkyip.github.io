@@ -5,6 +5,7 @@ site_libs/** linguist-vendored=true
 *.js linguist-vendored=true
 *.css linguist-vendored=true
 *.scss linguist-vendored=true
+posts/2023-08-03-github-actions-with-example/** linguist-vendored=true
 
 # *.[Rr]md   linguist-detectable
 
