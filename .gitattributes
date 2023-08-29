@@ -1,9 +1,8 @@
-_posts/*/*_files/** linguist-vendored=true
 posts/** linguist-vendored=true
-site_libs/**/** linguist-vendored=true
+site_libs/** linguist-vendored=true
 .git/* linguist-vendored=true
 *.html linguist-vendored=true
-# *.js linguist-vendored=true
+*.js linguist-vendored=true
 *.css linguist-vendored=true
 *.scss linguist-vendored=true
 
