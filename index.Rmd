@@ -25,3 +25,7 @@ Math, Data, Infra
 </div>
 <script src="preview.js"></script>
 
+<script type="module">
+  import { test } from './index.js'
+  test();
+</script>
