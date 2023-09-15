@@ -5,8 +5,8 @@ output:
     includes:
       before_body: before-body.html
       after_body: footer.html
-export_fname: null
-to_index: true
+export_fname: resume20230915.html
+to_index: false
 ---
 
 Aside
@@ -23,6 +23,17 @@ Contact info
 
 Skills
 ------------------------------------
+
+<!---  
+class="[type] [rank]" val="[value]"
+
+type: Either `icn` or `svg`
+rank: How skillful it is s1 to s5
+value: If type==icn, look for icons from https://icon-sets.iconify.design/
+        If type==svg, path to svg file
+
+Javascript in footer.html
+--->
 
 <table class="skills">
   <tr id="Data-Analytics" class="h"></tr>
@@ -61,6 +72,7 @@ Skills
 <table class="skills">
   <tr id="Miscellaneous" class="h"></tr>
   <tr id="Linux-Bash" class="icn s3" val="devicon-plain:bash"></tr>
+  <tr id="Javascript" class="icn s3" val="simple-icons:javascript"></tr>
   <tr id="Rust" class="icn s3" val="fa6-brands:rust"></tr>
   <tr id="Ruby" class="icn s3" val="devicon-plain:ruby"></tr>
   <tr id="Google-Script" class="svg s3" val="icons/googleappscript2.svg"></tr>
