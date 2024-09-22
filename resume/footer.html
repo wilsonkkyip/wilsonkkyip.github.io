@@ -9,7 +9,7 @@
     if (cls.includes("icn")) {
       return `<span class="iconify" data-icon="${val}"></span>`;
     } else if (cls.includes("svg")) {
-      return `<img src="${val}" width="13" height="13" />`;
+      return `<img src="${val}" width="13" height="13" style="vertical-align: -0.125em; transform: rotate(360deg);"/>`;
     } else {
       return "";
     }

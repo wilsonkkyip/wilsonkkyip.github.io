@@ -101,6 +101,21 @@
     flex-wrap: wrap;
   }
 
+  [data-id="main"] ul {
+    padding-left: 0.07in;
+    margin: 0.01in 0;
+  }
+
+  [data-id="main"] li {
+    margin: 0 0 0.01in 0;
+  }
+
+  [data-id="main"] li::before {
+    position: relative;
+    margin-left: -6.25pt;
+    content: '• ';
+  }
+
   .main-block:not(.concise) .details div {
     margin-top: 20pt;
   }
@@ -142,5 +157,9 @@
 
   .skills th {
     text-align: left;
+  }
+
+  #main a {
+    color: black;
   }
 </style>
