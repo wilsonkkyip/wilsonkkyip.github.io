@@ -1,0 +1,354 @@
+:root {
+    --main-font: "Open Sans", sans-serif;
+    --font-size-base: 14px;
+    --line-height-base: 1.5;
+    --margin-page: 1in;
+    --margin-header: 0.5in;
+    --margin-footer: 0.5in;
+    --sheet-width: 816px;
+    --sheet-height: 1056px;
+    --padding-side: 38px;
+    --padding-top-bottom: 48px;
+    --font-color: #444444;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background-color: #bbbbbb;
+    font-weight: 300;
+}
+
+.back {
+    font-size: 10px;
+    display: flex;
+    color: var(--font-color);
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.sheet {
+    font-family: var(--main-font);
+    height: var(--sheet-height);
+    width: var(--sheet-width);
+    background-color: #ffffff;
+    box-shadow: #666666 0px 0px 10px 2px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: row;
+}
+
+section#main {
+    width: 65%;
+    padding-left: var(--padding-side);
+    padding-right: 28px;
+    padding-top: var(--padding-top-bottom);
+    padding-bottom: var(--padding-top-bottom);
+    box-shadow: #000000 0px 10px 0px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    font-size: 10px;
+}
+
+p {
+  margin: 0px;
+}
+
+section#main .achievements {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+h4 {
+    font-size: 1.08em;
+    font-weight: 550;
+    margin: 3px 0px;
+}
+
+h2 {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 16px;
+    font-weight: 320;
+    text-transform: uppercase;
+    margin: 0px 0px 8px 0px;
+}
+
+h1 {
+  font-size: 28px;
+  text-transform: uppercase;
+  margin: 0px 0px 4px 0px;
+  font-weight: 300;
+}
+
+strong {
+  font-weight: 580;
+}
+
+em {
+  font-style: italic;
+  /* text-decoration: #d7d7d7 underline dotted; */
+}
+
+code {
+  font-size: 0.9em;
+}
+
+.job-item .icon-container, .education-item .icon-container {
+  font-size: 1.2em;
+}
+
+.job-heading, .education-heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.job-heading a, .education-heading a {
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    font-weight: 300;
+    color: var(--font-color);
+}
+
+.job-company-role, .education-school-degree {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.job-location-date, .education-location-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.job-company a, .job-company, .job-location, .education-school a, .education-school, .education-location {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.job-role, .job-date, .education-degree, .education-date {
+    font-size: 11px;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.job-list, .education-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.job-item, .education-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.job-content li ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.job-content ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.job-item ul {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left: 10px;
+}
+
+li::marker {
+  font-size: 8px;
+  color: var(--font-color);
+  content: "•  ";
+}
+
+section#side {
+    width: 27%;
+    background-color: #dcdcdc;
+    padding-top: var(--padding-top-bottom);
+    padding-bottom: var(--padding-top-bottom);
+    padding-left: 25px;
+    padding-right: var(--padding-side);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-size: 12px;
+}
+
+section .section-title {
+    font-size: 16px;
+    font-weight: 400;
+    /* letter-spacing: 2px; */
+    margin-bottom: 10px;
+    /* border-bottom: 1px solid #888888;
+    padding-bottom: 4px; */
+    text-transform: uppercase;
+}
+
+#contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 11px;
+}
+
+.icon-text-wrapper {
+  display: inline-flex;  /* Keeps the wrapper only as wide as its content */
+  align-items: center;   /* Vertically centers the icon and text */
+  gap: 5px;              /* Space between icon and text */
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1em;           /* Matches the height of the current text font-size */
+  width: 1em;            /* Keeps the icon container square */
+}
+
+.icon-container i {
+  font-size: 1em;      /* Slightly smaller icon often looks better balanced */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a {
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    font-weight: 300;
+}
+
+.skill-list, .language-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.skill-category-title {
+    font-weight: 700;
+    margin-top: 12px;
+    margin-bottom: 10px;
+    /* border-bottom: 1px solid #888888;
+    padding-bottom: 2px; */
+}
+
+.skill-name-level {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* gap: 0.5rem; */
+    /* border: 2px solid #333333; */
+}
+
+/* Make the name+icon and level each take up available width */
+.skill-name-level > .skill-name-icon {
+    display: flex;
+    min-width: 0;
+}
+
+
+.skill-level {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+
+@media print {
+    @page {
+        margin: 0;
+    }
+
+    html,
+    body {
+        height: auto;
+        background: #ffffff;
+        margin: 0;
+    }
+
+    /* Print only what is inside the sheet */
+    body * {
+        visibility: hidden;
+    }
+
+    .sheet,
+    .sheet * {
+        visibility: visible;
+    }
+
+    /* Remove screen-only framing */
+    .back {
+        display: block;
+        min-height: auto;
+        padding: 0;
+        overflow: visible;
+    }
+
+    .sheet {
+        box-shadow: none;
+        margin: 0;
+        width: var(--sheet-width);
+        height: var(--sheet-height);
+        overflow: hidden;
+    }
+
+    section#side {
+        height: var(--sheet-height);
+    }
+}
+
+
+
+
+.tex sub,
+.latex sub,
+.latex sup {
+  text-transform: uppercase;
+}
+
+.tex sub,
+.latex sub {
+  vertical-align: -0.5ex;
+  margin-left: -0.1667em;
+  margin-right: -0.125em;
+}
+
+.tex,
+.latex,
+.tex sub,
+.latex sub {
+  font-size: 1em;
+}
+
+.latex sup {
+  font-size: 0.85em;
+  vertical-align: 0.15em;
+  margin-left: -0.36em;
+  margin-right: -0.15em;
+}
