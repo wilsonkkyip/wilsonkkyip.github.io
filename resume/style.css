@@ -1,6 +1,12 @@
+html {
+  /* Prevents iOS from changing the font size automatically */
+  -webkit-text-size-adjust: 90%;
+  text-size-adjust: 90%;
+}
+
 :root {
     --main-font: "Open Sans", sans-serif;
-    --font-size-base: 14px;
+    --font-size-base: 0.65rem;
     --line-height-base: 1.5;
     --margin-page: 1in;
     --margin-header: 0.5in;
@@ -21,13 +27,14 @@ body {
 }
 
 .back {
-    font-size: 10px;
+    font-size: 0.65rem;
     display: flex;
     color: var(--font-color);
     justify-content: center;
     align-items: center;
     width: 100%;
     min-height: 100vh;
+    min-width: var(--sheet-width);
     padding: 2rem;
     box-sizing: border-box;
     overflow: auto;
@@ -43,6 +50,7 @@ body {
     overflow-y: hidden;
     display: flex;
     flex-direction: row;
+    font-size: var(--font-size-base);
 }
 
 section#main {
@@ -54,40 +62,50 @@ section#main {
     box-shadow: #000000 0px 10px 0px 0px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    font-size: 10px;
+    gap: 1rem;
+    font-size: 0.65rem;
+}
+
+.description {
+  font-style: italic;
+  font-size: 0.65rem;
 }
 
 p {
-  margin: 0px;
+  margin: 0rem;
 }
 
 section#main .achievements {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 1rem;
 }
 
 h4 {
-    font-size: 1.08em;
-    font-weight: 550;
-    margin: 3px 0px;
+  font-size: 0.7rem;
+  font-weight: 550;
+  margin: 0.2rem 0rem;
 }
 
 h2 {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-size: 16px;
-    font-weight: 320;
-    text-transform: uppercase;
-    margin: 0px 0px 8px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  font-size: 1.2rem;
+  font-weight: 320;
+  text-transform: uppercase;
+  margin: 0rem 0rem 0.5rem 0rem;
+}
+
+h2 .icon-container {
+  font-size: 1.3rem;
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 1.4rem;
   text-transform: uppercase;
-  margin: 0px 0px 4px 0px;
+  margin: 0rem 0rem 0.25rem 0rem;
   font-weight: 300;
 }
 
@@ -101,11 +119,11 @@ em {
 }
 
 code {
-  font-size: 0.9em;
+  font-size: 0.6rem;
 }
 
 .job-item .icon-container, .education-item .icon-container {
-  font-size: 1.2em;
+  font-size: 0.65rem;
 }
 
 .job-heading, .education-heading {
@@ -135,13 +153,21 @@ code {
   align-items: flex-end;
 }
 
+.job-company .icon-container, .education-school .icon-container, .job-location .icon-container, .education-location .icon-container {
+  font-size: 0.95rem;
+}
+
+.job-role .icon-container, .job-date .icon-container, .education-degree .icon-container, .education-date .icon-container {
+  font-size: 0.85rem;
+}
+
 .job-company a, .job-company, .job-location, .education-school a, .education-school, .education-location {
-    font-size: 12px;
+    font-size: 0.8rem;
     font-weight: 600;
 }
 
 .job-role, .job-date, .education-degree, .education-date {
-    font-size: 11px;
+    font-size: 0.75rem;
     font-weight: 300;
     font-style: italic;
 }
@@ -149,35 +175,35 @@ code {
 .job-list, .education-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.5rem;
 }
 
 .job-item, .education-item {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 0.25rem;
 }
 
 .job-content li ul {
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  gap: 0rem;
 }
 
 .job-content ul {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
 }
 
 .job-item ul {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding-left: 10px;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  padding-left: 1rem;
 }
 
 li::marker {
-  font-size: 8px;
+  font-size: 0.65rem;
   color: var(--font-color);
   content: "•  ";
 }
@@ -192,15 +218,15 @@ section#side {
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    font-size: 12px;
+    gap: 1.75rem;
+    font-size: 0.75rem;
 }
 
 section .section-title {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     /* letter-spacing: 2px; */
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
     /* border-bottom: 1px solid #888888;
     padding-bottom: 4px; */
     text-transform: uppercase;
@@ -209,8 +235,8 @@ section .section-title {
 #contacts {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    font-size: 11px;
+    gap: 0.25rem;
+    font-size: 0.7rem;
 }
 
 .icon-text-wrapper {
@@ -228,7 +254,7 @@ section .section-title {
 }
 
 .icon-container i {
-  font-size: 1em;      /* Slightly smaller icon often looks better balanced */
+  font-size: 0.85rem;      /* Slightly smaller icon often looks better balanced */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -243,13 +269,13 @@ a {
 .skill-list, .language-list {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 0.35rem;
 }
 
 .skill-category-title {
     font-weight: 700;
-    margin-top: 12px;
-    margin-bottom: 10px;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
     /* border-bottom: 1px solid #888888;
     padding-bottom: 2px; */
 }
@@ -343,11 +369,11 @@ a {
 .latex,
 .tex sub,
 .latex sub {
-  font-size: 1em;
+  font-size: 0.75rem;
 }
 
 .latex sup {
-  font-size: 0.85em;
+  font-size: 0.75rem;
   vertical-align: 0.15em;
   margin-left: -0.36em;
   margin-right: -0.15em;
