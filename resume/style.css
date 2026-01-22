@@ -44,6 +44,7 @@ body {
   font-family: var(--main-font);
   height: var(--sheet-height);
   width: var(--sheet-width);
+  min-width: var(--sheet-width);
   background-color: #ffffff;
   box-shadow: #666666 0px 0px 10px 2px;
   overflow-x: hidden;
