@@ -359,6 +359,14 @@ a {
   width: 0.9rem;
 }
 
+.web-link {
+  display: inline;
+}
+
+.pdf-link {
+  display: none;
+}
+
 @media print {
   @page {
     margin: 0;
@@ -399,6 +407,14 @@ a {
 
   section#side {
     height: var(--sheet-height);
+  }
+
+  .web-link {
+    display: none;
+  }
+
+  .pdf-link {
+    display: inline;
   }
 }
 
